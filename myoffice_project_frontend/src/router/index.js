@@ -63,20 +63,6 @@ export default new Router({
       component: Login,
       hidden: true,
     },
-    
-    //头部导航栏
-    {
-      path:"/header/ChangePassword",
-      name: '修改密码页面',
-      component: ChangePassword,
-      hidden: true,
-    },
-    {
-      path:"/header/Help",
-      name: '帮助页面',
-      component: Help,
-      hidden: true,
-    },
     {
       //所有页面共享的组件，实现路由嵌套，各个子页面
       path: '/home',
@@ -88,6 +74,22 @@ export default new Router({
         requireAuth: true
       },
       children: [
+        //头部导航栏
+        {
+          path:"/header/ChangePassword",
+          name: '修改密码页面',
+          component: ChangePassword,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true}
+        },
+        {
+          path:"/header/Help",
+          name: '帮助页面',
+          component: Help,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true}
+        },
+
         //人事管理
         {
           path:"/person/mechanism/MechanismIndex",
@@ -107,6 +109,27 @@ export default new Router({
           path:"/person/employee/EmployeeIndex",
           name: '员工管理主页面',
           component: EmployeeIndex,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/person/department/DepartmentSave",
+          name: '部门信息保存界面',
+          component: DepartmentSave,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/person/employee/EmployeeSave",
+          name: '员工信息保存界面',
+          component: EmployeeSave,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        { 
+          path:"/person/employee/EmployeeInfomation",
+          name: '员工信息详情界面',
+          component: EmployeeInfomation,
           hidden: true,
           meta: {keepAlive: false, requireAuth: true} 
         },
@@ -133,6 +156,20 @@ export default new Router({
           hidden: true,
           meta: {keepAlive: false, requireAuth: true} 
         },
+        {
+          path:"/schedule/myself/MyselfAdd",
+          name: '添加我的日程界面',
+          component: MyselfAdd,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/schedule/note/NoteAdd",
+          name: '添加便签界面',
+          component: NoteAdd,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
 
         //文档管理
         {
@@ -156,6 +193,27 @@ export default new Router({
           hidden: true,
           meta: {keepAlive: false, requireAuth: true} 
         },
+        {
+          path:"/file/file/FileMain",
+          name: '文件内容界面',
+          component: FileMain,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/file/file/FileInfomation",
+          name: '文件属性界面',
+          component: FileInfomation,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/file/file/FileFolderAdd",
+          name: '添加文件夹界面',
+          component: FileFolderAdd,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
 
         //消息管理
         {
@@ -169,6 +227,41 @@ export default new Router({
           path:"/news/mailbox/MailboxIndex",
           name: '信箱主页面',
           component: MailboxIndex,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/news/news/NewsEdit",
+          name: '消息填写界面',
+          component: NewsEdit,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/news/mailbox/ReceiveMail",
+          name: '已收件界面',
+          component: ReceiveMail,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/news/mailbox/SendMail",
+          name: '已发送界面',
+          component: SendMail,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/news/mailbox/DraftMail",
+          name: '草稿箱界面',
+          component: DraftMail,
+          hidden: true,
+          meta: {keepAlive: false, requireAuth: true} 
+        },
+        {
+          path:"/news/mailbox/DeleteMail",
+          name: '已删除界面',
+          component: DeleteMail,
           hidden: true,
           meta: {keepAlive: false, requireAuth: true} 
         },
