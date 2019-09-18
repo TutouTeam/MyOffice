@@ -59,9 +59,9 @@
                       <span>人事管理</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="1-1" >机构管理</el-menu-item>
-                      <el-menu-item index="1-2">部门管理</el-menu-item>
-                      <el-menu-item index="1-3">员工管理</el-menu-item>
+                      <el-menu-item index="1-1" ><router-link to="/person/mechanism/MechanismIndex" style="text-decoration:none;">机构管理</router-link></el-menu-item>
+                      <el-menu-item index="1-2"><router-link to="/person/department/DepartmentIndex" style="text-decoration:none;">部门管理</router-link></el-menu-item>
+                      <el-menu-item index="1-3"><router-link to="/person/employee/EmployeeIndex" style="text-decoration:none;">员工管理</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
@@ -72,9 +72,9 @@
                       <span>日程管理</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="2-1">我的日程</el-menu-item>
-                      <el-menu-item index="2-2">部门日程</el-menu-item>
-                      <el-menu-item index="2-3">我的便签</el-menu-item>
+                      <el-menu-item index="2-1"><router-link to="/schedule/myself/MyselfIndex" style="text-decoration:none;">我的日程</router-link></el-menu-item>
+                      <el-menu-item index="2-2"><router-link to="/schedule/department/DepartmentIndex2" style="text-decoration:none;">部门日程</router-link></el-menu-item>
+                      <el-menu-item index="2-3"><router-link to="/schedule/note/NoteIndex" style="text-decoration:none;">我的便签</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
@@ -85,9 +85,9 @@
                       <span>文档管理</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="3-1">文档管理</el-menu-item>
-                      <el-menu-item index="3-2">回收站</el-menu-item>
-                      <el-menu-item index="3-3">文件搜索</el-menu-item>
+                      <el-menu-item index="3-1"><router-link to="/file/file/FileTree" style="text-decoration:none;">文档管理</router-link></el-menu-item>
+                      <el-menu-item index="3-2"><router-link to="/file/recycle_bin/RecycleBinIndex" style="text-decoration:none;">回收站</router-link></el-menu-item>
+                      <el-menu-item index="3-3"><router-link to="/file/file_search/FileSearchIndex" style="text-decoration:none;">文件搜索</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
@@ -100,8 +100,8 @@
                       <span>消息传递</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="4-1">消息管理</el-menu-item>
-                      <el-menu-item index="4-2">信箱</el-menu-item>
+                      <el-menu-item index="4-1"><router-link to="/news/news/NewsIndex" style="text-decoration:none;">消息管理</router-link></el-menu-item>
+                      <el-menu-item index="4-2"><router-link to="/news/mailbox/MailboxIndex" style="text-decoration:none;">信箱</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
@@ -113,10 +113,10 @@
                       <span>系统管理</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="5-1">角色管理</el-menu-item>
-                      <el-menu-item index="5-2">登录日志</el-menu-item>
-                      <el-menu-item index="5-3">菜单排序</el-menu-item>
-                      <el-menu-item index="5-4">操作日志</el-menu-item>
+                      <el-menu-item index="5-1"><router-link to="/system/role/RoleIndex" style="text-decoration:none;">角色管理</router-link></el-menu-item>
+                      <el-menu-item index="5-2"><router-link to="/system/login_record/LoginRecordIndex" style="text-decoration:none;">登录日志</router-link></el-menu-item>
+                      <el-menu-item index="5-3"><router-link to="/system/menu_sort/MenuSortIndex" style="text-decoration:none;">菜单排序</router-link></el-menu-item>
+                      <el-menu-item index="5-4"><router-link to="/system/operation_record/OperationRecordIndex" style="text-decoration:none;">操作日志</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
@@ -128,8 +128,8 @@
                       <span>考勤管理</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="6-1">考勤统计</el-menu-item>
-                      <el-menu-item index="6-2">考勤历史记录查询</el-menu-item>
+                      <el-menu-item index="6-1"><router-link to="/attendance/attendance_statistics/AttendanceStatisticsIndex" style="text-decoration:none;">考勤统计</router-link></el-menu-item>
+                      <el-menu-item index="6-2"><router-link to="/attendance/attendance_record/AttendanceRecordIndex" style="text-decoration:none;">考勤历史记录查询</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
