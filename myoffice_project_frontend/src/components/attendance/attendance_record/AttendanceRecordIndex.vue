@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 <el-container class="home-container">
    <div class="head">
@@ -320,4 +321,21 @@ li {
 a {
   color: #42b983;
 }
+=======
+<!--内容-->
+<template>
+    <h1>考勤记录主界面</h1>
+</template>
+
+<!--逻辑-->
+<script>
+export default {
+    
+}
+</script>
+
+<!--样式-->
+<style scoped>
+
+>>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
 </style>
