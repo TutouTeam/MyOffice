@@ -205,10 +205,6 @@
     left: 0px;
     width: 100%;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
   .home-header {
     background-color: #20a0ff;
     color: #333;
@@ -219,17 +215,11 @@
     box-sizing: content-box;
     padding: 0px;
   }
-<<<<<<< HEAD
-  .home-aside {
-    background-color: #ECECEC;
-  }
-=======
 
   .home-aside {
     background-color: #ECECEC;
   }
 
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
   .home-main {
     background-color: #fff;
     color: #000;
@@ -237,42 +227,22 @@
     margin: 0px;
     padding: 0px;;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
   .home_title {
     color: #fff;
     font-size: 22px;
     display: inline;
     margin-left: 20px;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
   .home_userinfo {
     color: #fff;
     cursor: pointer;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
   .home_userinfoContainer {
     display: inline;
     margin-right: 20px;
   }
-<<<<<<< HEAD
-=======
-
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
   .el-submenu .el-menu-item {
     width: 180px;
     min-width: 175px;
   }
-<<<<<<< HEAD
 </style>
-=======
-</style>
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32

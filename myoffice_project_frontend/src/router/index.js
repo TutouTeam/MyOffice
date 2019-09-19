@@ -322,8 +322,4 @@ export default new Router({
     },
 
   ]
-<<<<<<< HEAD
 })
-=======
-})
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32

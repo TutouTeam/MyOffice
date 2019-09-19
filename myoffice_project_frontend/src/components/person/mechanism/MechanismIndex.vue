@@ -1,20 +1,5 @@
 <!--内容-->
 <template>
-<<<<<<< HEAD
-    <h1>机构管理主界面</h1>
-</template>
-
-<!--逻辑-->
-<script>
-export default {
-    
-}
-</script>
-
-<!--样式-->
-<style scoped>
-
-=======
     
     <div>
         <!--标题-->
@@ -592,5 +577,4 @@ export default {
     #header{
         font-size:30px;
     }
->>>>>>> 8f144d33444345adc49560f07c9b3e0aa1570b32
 </style>
