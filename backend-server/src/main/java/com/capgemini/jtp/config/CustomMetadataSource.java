@@ -3,6 +3,9 @@ package com.capgemini.jtp.config;//package com.capgemini.cn.myoffice.config;
 //import Menu;
 //import Role;
 //import com.capgemini.jtp.service.MenuService;
+import com.capgemini.jtp.entity.Menu;
+import com.capgemini.jtp.entity.Role;
+import com.capgemini.jtp.service.MenuService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.ConfigAttribute;
 import org.springframework.security.access.SecurityConfig;
@@ -23,8 +26,8 @@ import java.util.List;
 @Component
 public class CustomMetadataSource implements FilterInvocationSecurityMetadataSource {
 
-//    @Autowired
-//    MenuService menuService;
+    @Autowired
+    MenuService menuService;
 
     AntPathMatcher antPathMatcher = new AntPathMatcher();
 
@@ -34,19 +37,19 @@ public class CustomMetadataSource implements FilterInvocationSecurityMetadataSou
         if ("/login_p".equals(requestUrl)) {
             return null;
         }
-//        List<Menu> allMenu = menuService.getAllMenu();
-//        for (Menu menu : allMenu) {
-//            if (antPathMatcher.match(menu.getUrl(), requestUrl)
-//                    &&menu.getRoles().size()>0) {
-//                List<Role> roles = menu.getRoles();
-//                int size = roles.size();
-//                String[] values = new String[size];
-//                for (int i = 0; i < size; i++) {
-//                    values[i] = roles.get(i).getName();
-//                }
-//                return SecurityConfig.createList(values);
-//            }
-//        }
+        List<Menu> allMenu = menuService.getAllMenu();
+        for (Menu menu : allMenu) {
+            if (antPathMatcher.match(menu.getNodeURL(), requestUrl)
+                    &&menu.getRoles().size()>0) {
+                List<Role> roles = menu.getRoles();
+                int size = roles.size();
+                String[] values = new String[size];
+                for (int i = 0; i < size; i++) {
+                    values[i] = roles.get(i).getRoleName();
+                }
+                return SecurityConfig.createList(values);
+            }
+        }
         //没有匹配上的资源，都是登录访问
         return SecurityConfig.createList("ROLE_LOGIN");
     }

@@ -1,5 +1,6 @@
 package com.capgemini.jtp.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.io.Serializable;
@@ -16,6 +17,8 @@ public class Menu implements Serializable {
     private int nodeId;
     private String displayName;
     private String nodeURL;
+    private String path;
+    private Object component;
     private int displayOrder;
     private int parentNodeId;
     private List<Menu> children;
@@ -44,6 +47,23 @@ public class Menu implements Serializable {
 
     public void setNodeURL(String nodeURL) {
         this.nodeURL = nodeURL;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
+    }
+
+    @JsonFormat(shape = JsonFormat.Shape.OBJECT)
+    public Object getComponent() {
+        return component;
+    }
+
+    public void setComponent(Object component) {
+        this.component = component;
     }
 
     public int getDisplayOrder() {
