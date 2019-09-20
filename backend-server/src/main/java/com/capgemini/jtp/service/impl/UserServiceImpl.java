@@ -12,6 +12,7 @@ package com.capgemini.jtp.service.impl;
 import com.capgemini.jtp.entity.User;
 import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.UserService;
+import com.capgemini.jtp.vo.request.UserEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -43,6 +44,22 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户名不对");
         }
         return user;
+    }
+
+
+    @Override
+    public int updateUser(UserEditVo userEditVo) {
+        User user = new User();
+        user.setUserId(userEditVo.getUserId());
+        user.setChineseName(userEditVo.getChineseName());
+        if(userEditVo.getPassword() != null && !("".equals(userEditVo.getPassword()))){
+            System.out.println("密码不为空，执行密码加密");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encode = encoder.encode(userEditVo.getPassword());
+            user.setPassword(encode);
+        }
+        user.setUsername(userEditVo.getUsername());
+        return userMapper.updateUser(user);
     }
 
 //    @Autowired

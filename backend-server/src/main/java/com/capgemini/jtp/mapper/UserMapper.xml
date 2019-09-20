@@ -63,21 +63,21 @@
 <!--        `h_r` on ((`h`.`id` = `h_r`.`userid`))) left join `role` `r` on ((`h_r`.`rid` = `r`.`id`))) where h.`id`=#{userId}-->
 <!--    </select>-->
 
-<!--    <update id="updateUser" parameterType="com.capgemini.jtp.entity.User">-->
-<!--        update users-->
-<!--        <set>-->
+    <update id="updateUser" parameterType="com.capgemini.jtp.entity.User">
+        update user
+        <set>
 <!--            <if test="user.name != null">-->
 <!--                name = #{user.name,jdbcType=VARCHAR},-->
 <!--            </if>-->
 <!--            <if test="user.username != null">-->
 <!--                username = #{user.username,jdbcType=VARCHAR},-->
 <!--            </if>-->
-<!--            <if test="user.password != null and user.password !='' ">-->
-<!--                password = #{user.password,jdbcType=VARCHAR},-->
-<!--            </if>-->
-<!--        </set>-->
-<!--        where id = #{user.id,jdbcType=BIGINT}-->
-<!--    </update>-->
+            <if test="user.password != null and user.password !='' ">
+                password = #{user.password,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where userId = #{user.userId,jdbcType=INTEGER}
+    </update>
 
 
 <!--&lt;!&ndash;    待定&ndash;&gt;-->
