@@ -5,6 +5,7 @@ package com.capgemini.jtp.service;
 //import com.capgemini.jtp.vo.employee.request.HrEditVo;
 //import com.capgemini.jtp.vo.employee.request.HrSearchVo;
 //import com.capgemini.jtp.vo.employee.response.HrResponseVo;
+import com.capgemini.jtp.vo.request.UserEditVo;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public interface UserService extends UserDetailsService {
 //
 //    List<Hr> getHrsByKeywords(String keywords);
 //
-//    int updateHr(HrEditVo hrEditVo);
+    int updateUser(UserEditVo userEditVo);
 //
 //    int updateHrRoles(Long hrId, Long[] rids);
 //

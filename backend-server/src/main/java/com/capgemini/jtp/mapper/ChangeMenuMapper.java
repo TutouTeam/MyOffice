@@ -13,7 +13,7 @@ import java.util.List;
  * @date: 2019/5/19 11:45 PM
  */
 @Repository
-public interface MenuMapper {
+public interface ChangeMenuMapper {
 
     List<Menu> getAllMenu();
 
@@ -22,9 +22,9 @@ public interface MenuMapper {
 //    List<Menu> menuTree();
 //
 //    List<Long> getMenusByRid(Long rid);
-//    List<Integer> getDisplayOrderBynodeId(int nodeId);
-//
-//    void setOneDisplayOrder(@Param("menu") Menu menu);
-//
-//    Menu selectMenuByParentNodeIdAndDisplayOrder(@Param("menu") Menu menu);
+    List<Integer> getDisplayOrderBynodeId(int nodeId);
+
+    void setOneDisplayOrder(@Param("menu") Menu menu);
+
+    Menu selectMenuByParentNodeIdAndDisplayOrder(@Param("menu") Menu menu);
 }

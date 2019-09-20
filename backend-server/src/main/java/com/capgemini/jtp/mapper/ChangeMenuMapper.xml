@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.capgemini.jtp.mapper.MenuMapper">
+<mapper namespace="com.capgemini.jtp.mapper.ChangeMenuMapper">
     <resultMap id="BaseResultMap" type="com.capgemini.jtp.entity.Menu">
         <id column="nodeId" property="nodeId" jdbcType="INTEGER"/>
         <result column="nodeURL" property="nodeURL" jdbcType="VARCHAR"/>
@@ -44,15 +44,15 @@
 <!--    <select id="getMenusByRid" resultType="Long">-->
 <!--        SELECT mid from menu_role WHERE rid=#{rid}-->
 <!--    </select>-->
-<!--    <select id="getDisplayOrderBynodeId" parameterType="int" resultType="integer">-->
-<!--        select sf1.`displayOrder` from sys_fun sf1,sys_fun sf2 where sf2.`nodeId` = #{nodeId} and sf1.`parentNodeId` = sf2.`parentNodeId` order by sf1.`displayOrder`-->
-<!--    </select>-->
+    <select id="getDisplayOrderBynodeId" parameterType="int" resultType="integer">
+        select sf1.`displayOrder` from sys_fun sf1,sys_fun sf2 where sf2.`nodeId` = #{nodeId} and sf1.`parentNodeId` = sf2.`parentNodeId` order by sf1.`displayOrder`
+    </select>
 
-<!--    <update id="setOneDisplayOrder" parameterType="com.capgemini.jtp.entity.Menu">-->
-<!--        update sys_fun set diplayOrder = #{menu.displayOrder,jdbcType=INTEGER} where parentNodeId = #{menu.nodeId,jdbcType=INTEGER}-->
-<!--    </update>-->
-<!--    -->
-<!--    <select id="selectMenuByParentNodeIdAndDisplayOrder" resultType="com.capgemini.jtp.entity.Menu">-->
-<!--        select * from sys_fun where displayOrder = #{menu.displayOrder,,jdbcType=INTEGER} and parentNodeId = #{menu.parentNodeId,,jdbcType=INTEGER}-->
-<!--    </select>-->
+    <update id="setOneDisplayOrder" parameterType="com.capgemini.jtp.entity.Menu">
+        update sys_fun set displayOrder = #{menu.displayOrder,jdbcType=INTEGER} where nodeId = #{menu.nodeId,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectMenuByParentNodeIdAndDisplayOrder" resultType="com.capgemini.jtp.entity.Menu">
+        select * from sys_fun where displayOrder = #{menu.displayOrder,jdbcType=INTEGER} and parentNodeId = #{menu.parentNodeId,jdbcType=INTEGER} and nodeId != #{menu.nodeId,jdbcType=INTEGER}
+    </select>
 </mapper>

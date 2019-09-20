@@ -29,7 +29,7 @@ public interface UserMapper {
 //
 //    List<User> getUsersByKeywords(@Param("keywords") String keywords);
 //
-//    int updateUser(@Param("user") User user);
+    int updateUser(@Param("user") User user);
 //
 //    int deleteRoleByUserId(Long userId);
 //
