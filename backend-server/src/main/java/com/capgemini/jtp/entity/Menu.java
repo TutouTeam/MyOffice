@@ -74,7 +74,7 @@ public class Menu implements Serializable {
         this.displayOrder = displayOrder;
     }
 
-    @JsonIgnore
+    //@JsonIgnore注释掉
     public int getParentNodeId() {
         return parentNodeId;
     }

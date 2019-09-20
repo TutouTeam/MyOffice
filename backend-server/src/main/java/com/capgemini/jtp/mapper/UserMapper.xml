@@ -8,7 +8,7 @@
         <result column="departId" property="departId"/>
         <result column="chineseName" property="chineseName"/>
         <result column="username" property="username"/>
-        <result column="passWord" property="passWord"/>
+        <result column="password" property="password"/>
     </resultMap>
 
     <resultMap id="lazyLoadRoles" type="com.capgemini.jtp.entity.User" extends="BaseResultMap">
