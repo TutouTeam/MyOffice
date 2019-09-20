@@ -35,7 +35,7 @@ public interface UserMapper {
 //
 //    int addRolesForUser(@Param("userId") Long userId, @Param("rids") Long[] rids);
 //
-//    User getUserById(Long userId);
+ //   User getUserById(Long userId);
 //
 //    int deleteUser(Long UserId);
 //
