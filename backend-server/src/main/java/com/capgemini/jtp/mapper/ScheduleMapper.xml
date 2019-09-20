@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.jtp.mapper.ScheduleMapper">
+    <resultMap id="BaseResultMap" type="com.capgemini.jtp.entity.Schedule">
+        <id column="scheduleId" jdbcType="INTEGER" property="scheduleId"/>
+        <result column="title" jdbcType="VARCHAR" property="title" />
+        <result column="address" jdbcType="VARCHAR" property="address" />
+        <result column="meetingId" jdbcType="INTEGER" property="meetingId" />
+        <result column="beginTime" jdbcType="TIMESTAMP" property="beginTime" />
+        <result column="endTime" jdbcType="TIMESTAMP" property="endTime" />
+        <result column="schContent" jdbcType="VARCHAR" property="schContent" />
+        <result column="createUser" jdbcType="VARCHAR" property="createUser" />
+        <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="ifPrivate" jdbcType="VARCHAR" property="ifPrivate" />
+    </resultMap>
+    <select id="listSchedule" resultMap="BaseResultMap">
+       select * from schedule where scheduleId != 0
+   </select>
+    <select id="listByScheduleId" resultMap="BaseResultMap">
+       select * from schedule where scheduleId = #{scheduleId}
+   </select>
+    <select id="listScheduleByName" resultMap="BaseResultMap">
+       select * from schedule where createUser = #{userName}
+   </select>
+
+    <insert id="insertSchedule">
+        insert into schedule (`title`, `address`,`meetingId`,`beginTime`,`endTime`,`schContent`,`createUser`,`createTime`,`ifPrivate`)
+        values
+
+            (
+            #{Schedule.title,jdbcType=VARCHAR}, #{Schedule.address,jdbcType=VARCHAR}, #{Schedule.meetingId,jdbcType=INTEGER}, #{Schedule.beginTime,jdbcType=TIMESTAMP},
+            #{Schedule.endTime,jdbcType=TIMESTAMP}, #{Schedule.schContent,jdbcType=VARCHAR}, #{Schedule.createUser,jdbcType=VARCHAR}, #{Schedule.createTime,jdbcType=TIMESTAMP},
+            #{Schedule.ifPrivate,jdbcType=VARCHAR}
+            )
+
+    </insert>
+
+    <delete id="deleteScheduleById" parameterType="int">
+        DELETE FROM schedule WHERE scheduleId=#{scheduleId}
+    </delete>
+
+    <update id="updateScheduleById" parameterType="com.capgemini.jtp.entity.Schedule">
+        update schedule
+        <set>
+            `title`=#{Schedule.title,jdbcType=VARCHAR},
+            `address`=#{Schedule.address,jdbcType=VARCHAR},
+            `meetingId`=#{Schedule.meetingId,jdbcType=INTEGER},
+            `beginTime`=#{Schedule.beginTime,jdbcType=TIMESTAMP},
+            `endTime`=#{Schedule.endTime,jdbcType=TIMESTAMP},
+            `schContent`=#{Schedule.schContent,jdbcType=VARCHAR},
+            `createTime`=#{Schedule.createTime,jdbcType=TIMESTAMP},
+            `ifPrivate`=#{Schedule.ifPrivate,jdbcType=VARCHAR}
+
+        </set>
+        where scheduleId = #{Schedule.scheduleId,jdbcType=INTEGER}
+    </update>
+
+    <select id="getScheduleByName" resultMap="BaseResultMap">
+       select DISTINCT * from schedule
+        where (createUser in (select userName from userinfo where departId = #{departSchedule.departId,jdbcType=INTEGER}))
+        <if test="departSchedule.userName != null">and (createUser like concat(concat('%',#{departSchedule.userName,jdbcType=VARCHAR}),'%'))</if>
+        <if test="departSchedule.selectTime != null">and  (date(beginTime) = date(#{departSchedule.selectTime}))</if>
+        <if test="departSchedule.selectTime != null">and   (#{departSchedule.selectTime} BETWEEN beginTime AND endTime)</if>
+        or (createUser = (select userName from userinfo where userId=#{departSchedule.userId,jdbcType=VARCHAR}))
+
+
+   </select>
+    <select id="getLastSchedule" resultType="Integer">
+        select scheduleId from schedule order by scheduleId desc LIMIT 1
+
+    </select>
+    <select id="getScheduleIdByCreateTime" resultType="Integer">
+        select scheduleId from schedule where createTime = #{createTimes}
+
+
+    </select>
+<!--    (createUser in (select userName from userinfo where departId = #{departSchedule.departId,jdbcType=INTEGER}))-->
+<!--    and createUser like concat('％',#{departSchedule.userName,jdbcType=VARCHAR},'％')-->
+<!--    and createUser = (select userName from userinfo where userId=#{departSchedule.userId,jdbcType=VARCHAR})-->
+<!--    and  date_format(`beginTime`,%Y) = date_format(#{departSchedule.selectTime},%Y)-->
+<!--    and  date_format(`beginTime`,%m) = date_format(#{departSchedule.selectTime},%m)-->
+<!--    and  date_format(`beginTime`,%d) = date_format(#{departSchedule.selectTime},%d)-->
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
