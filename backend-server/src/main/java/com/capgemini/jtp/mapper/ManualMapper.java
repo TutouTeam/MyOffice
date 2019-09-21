@@ -1,6 +1,10 @@
 package com.capgemini.jtp.mapper;
 
 import com.capgemini.jtp.entity.ManualSign;
+import com.capgemini.jtp.vo.request.CountSignSearchVo;
+import com.capgemini.jtp.vo.response.BranchVo;
+import com.capgemini.jtp.vo.response.CountSignVo;
+import com.capgemini.jtp.vo.response.DepartVo;
 import com.capgemini.jtp.vo.request.ManualSearchVo;
 import com.capgemini.jtp.vo.request.ManualSignInSearchVo;
 import com.capgemini.jtp.vo.response.ManualVo;
@@ -14,4 +18,10 @@ public interface ManualMapper {
     Integer insertManualSignOff(@Param("manualSign") ManualSign manualSign);
     ManualSignInSearchVo searchManual(int userId);
     List<ManualVo>  SearchManualHistory(@Param("manualSearchVo") ManualSearchVo manualSearchVo);
+    List<BranchVo> listBranch();
+    List<DepartVo> listDepart(String branchName);
+    List<CountSignVo> listCountSign(@Param("CountSignSearchVo") CountSignSearchVo countSignSearchVo);
+    Integer countLate(@Param("CountSignSearchVo")CountSignSearchVo countSignSearchVo);
+    Integer countLeaveEarly(@Param("CountSignSearchVo")CountSignSearchVo countSignSearchVo);
+    Integer listYearTime(@Param("CountSignSearchVo")CountSignSearchVo countSignSearchVo);
 }
