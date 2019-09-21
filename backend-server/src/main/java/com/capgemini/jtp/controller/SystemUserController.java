@@ -1,17 +1,12 @@
-package com.capgemini.jtp.controller.system;
+package com.capgemini.jtp.controller;
 
-import com.capgemini.jtp.entity.User;
 import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.vo.base.RespBean;
-
 import com.capgemini.jtp.vo.request.UserEditVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 
 /**
@@ -19,7 +14,7 @@ import java.util.List;
  * description:
  * create time: 10:13 2019/9/20
  */
-@Api("用户账户设置")
+@Api("系统用户账户设置")
 @RestController
 @RequestMapping("/system/user")
 public class SystemUserController {

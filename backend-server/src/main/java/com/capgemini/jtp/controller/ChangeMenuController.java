@@ -1,11 +1,10 @@
-package com.capgemini.jtp.controller.changemenu;
+package com.capgemini.jtp.controller;
 
 //import com.capgemini.jtp.entity.Employee;
 //import com.capgemini.jtp.service.StaffService;
 
 import com.capgemini.jtp.entity.Menu;
 import com.capgemini.jtp.service.ChangeMenuService;
-import com.capgemini.jtp.service.MenuService;
 import com.capgemini.jtp.vo.base.RespBean;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
