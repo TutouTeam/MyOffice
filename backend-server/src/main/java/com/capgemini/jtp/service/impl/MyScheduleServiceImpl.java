@@ -29,6 +29,8 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     ScheduleRespVo scheduleRespVo;
     @Autowired
     MeetingInfoMapper meetingInfoMapper;
+    @Autowired
+    DepartScheduleVo departScheduleVo;
     /**
      * 返回所有的个人日程信息
      * @return
@@ -101,8 +103,8 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         schedule.setBeginTime(scheduleVo.getBeginTime());
         schedule.setEndTime(scheduleVo.getEndTime());
         schedule.setSchContent(scheduleVo.getSchContent());
-        schedule.setCreateUser(scheduleVo.getCreateUser());
-        schedule.setCreateTime(scheduleVo.getCreateTime());
+        //schedule.setCreateUser(scheduleVo.getCreateUser());
+        //schedule.setCreateTime(scheduleVo.getCreateTime());
         schedule.setIfPrivate(scheduleVo.getIfPrivate());
         //修改日程数据库
         Integer integer =scheduleMapper.updateScheduleById(schedule);
