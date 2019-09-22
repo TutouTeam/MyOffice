@@ -3,12 +3,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.capgemini.jtp.mapper.ManualMapper">
     <insert id="insertManualSign" parameterType="com.capgemini.jtp.entity.ManualSign">
-    insert into manual_sign (userId, signTime,signDesc, signTag)
+    insert into manual_sign (userId,signTime,signDesc, signTag)
     values (#{manualSign.userId,jdbcType=INTEGER}, #{manualSign.signTime},
       #{manualSign.signDesc,jdbcType=VARCHAR}, 1);
   </insert>
     <insert id="insertManualSignOff" parameterType="com.capgemini.jtp.entity.ManualSign">
-    insert into manual_sign (userId, signTime,
+    insert into manual_sign (userId,signTime,
       signDesc, signTag)
     values (#{manualSign.userId,jdbcType=INTEGER}, #{manualSign.signTime,jdbcType=TIMESTAMP},
       #{manualSign.signDesc,jdbcType=VARCHAR}, 2);

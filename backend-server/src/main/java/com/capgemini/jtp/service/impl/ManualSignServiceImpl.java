@@ -31,6 +31,7 @@ public class ManualSignServiceImpl implements ManualSignService {
     public Integer insertManualSign(ManualSignInVo manualSignInVo) {
         ManualSign manualSign = ConvertSignUtils.convertAddManualSignToManualSign(manualSignInVo);
         manualSign.setSignTime(new Date());
+        manualSign.setUserId(manualSignInVo.getUserId());
         return manualMapper.insertManualSign(manualSign);
     }
 
@@ -38,6 +39,7 @@ public class ManualSignServiceImpl implements ManualSignService {
     public Integer insertManualSignOff(ManualSignOffVo manualSignOffVo) {
         ManualSign manualSign= ConvertSignUtils.convertAddManualSignToManualSignOff(manualSignOffVo);
         manualSign.setSignTime(new Date());
+        manualSign.setUserId(manualSignOffVo.getUserId());
         return manualMapper.insertManualSignOff(manualSign);
     }
 
