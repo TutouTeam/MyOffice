@@ -66,9 +66,16 @@ public class ManualSignController {
 
         }
     }
-   @GetMapping("/signIn/{userId}")
+    @RequestMapping("/signIn/userId")
    @ApiOperation(value="个人签到信息")
-   public ManualSignInSearchVo listExperience(@PathVariable int userId) {
+   public ManualSignInSearchVo listExperience(HttpServletRequest request) {
+       Object object = request.getSession().getAttribute("operationUserId");
+       int userId = 0;
+       if (object != null) {
+           userId = Integer.valueOf(String.valueOf(object));
+       }
+
+
        ManualSignInSearchVo manualSignInSearchVo = manualSignService.listSignInVo(userId);
 
        return manualSignInSearchVo;
