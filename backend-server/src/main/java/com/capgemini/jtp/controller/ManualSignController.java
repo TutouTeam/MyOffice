@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Api("考勤信息")
@@ -25,7 +26,14 @@ public class ManualSignController {
 
     @RequestMapping(value = "/sign/in", method = RequestMethod.POST)
     @ApiOperation(value = "签到")
-    public String insertSignIn(@RequestBody ManualSignInVo manualSignInVo) {
+    public String insertSignIn(@RequestBody ManualSignInVo manualSignInVo, HttpServletRequest request) {
+        Object object = request.getSession().getAttribute("operationUserId");
+        int userId = 0;
+        if (object != null) {
+            userId = Integer.valueOf(String.valueOf(object));
+        }
+
+        manualSignInVo.setUserId(userId);
         if (manualSignInVo != null) {
             if (manualSignService.insertManualSign(manualSignInVo) != 0) {
                 return "签到成功";
@@ -39,7 +47,14 @@ public class ManualSignController {
 
     @RequestMapping(value = "/sign/off", method = RequestMethod.POST)
     @ApiOperation(value = "签退")
-    public String insertSignOff(@RequestBody ManualSignOffVo manualSignOffVo) {
+    public String insertSignOff(@RequestBody ManualSignOffVo manualSignOffVo, HttpServletRequest request) {
+        Object object = request.getSession().getAttribute("operationUserId");
+        int userId = 0;
+        if (object != null) {
+            userId = Integer.valueOf(String.valueOf(object));
+        }
+
+        manualSignOffVo.setUserId(userId);
         if (manualSignOffVo != null) {
             if (manualSignService.insertManualSignOff(manualSignOffVo) != 0) {
                 return "签退成功";
@@ -51,9 +66,16 @@ public class ManualSignController {
 
         }
     }
-   @GetMapping("/signIn/{userId}")
+    @RequestMapping("/signIn/userId")
    @ApiOperation(value="个人签到信息")
-   public ManualSignInSearchVo listExperience(@PathVariable int userId) {
+   public ManualSignInSearchVo listExperience(HttpServletRequest request) {
+       Object object = request.getSession().getAttribute("operationUserId");
+       int userId = 0;
+       if (object != null) {
+           userId = Integer.valueOf(String.valueOf(object));
+       }
+
+
        ManualSignInSearchVo manualSignInSearchVo = manualSignService.listSignInVo(userId);
 
        return manualSignInSearchVo;
