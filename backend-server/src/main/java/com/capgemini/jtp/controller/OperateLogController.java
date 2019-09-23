@@ -4,6 +4,7 @@ import com.capgemini.jtp.vo.request.OperateLogReq;
 import com.capgemini.jtp.vo.response.OperateLogResp;
 import com.capgemini.jtp.service.OperateLogService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,6 +29,7 @@ public class OperateLogController {
      * @param operateId
      * @return
      */
+    @ApiOperation(value = "根据操作日志的 id 删除操作日志")
     @DeleteMapping("/deleteoperatelogbyid/{operateId}")
     public String deleteOperateLogByOperateLogId(@PathVariable Integer operateId) {
         int result = operateLogService.deleteByPrimaryKey(operateId);
@@ -42,6 +44,7 @@ public class OperateLogController {
      * 查询所有的操作日志
      * @return
      */
+    @ApiOperation(value = "查询所有的操作日志")
     @PostMapping("/selectalloperatelog")
     public List<OperateLogResp> loadAllOperateLog(@RequestBody OperateLogReq operateLogReq) {
         return operateLogService.selectAllOperateLog(operateLogReq);
