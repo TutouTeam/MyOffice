@@ -156,6 +156,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         LoginLog loginLog = new LoginLog();
                         loginLog.setUserId(user.getUserId());
                         loginLog.setChineseName(user.getChineseName());
+
                         loginLog.setLoginDesc("登录成功");
                         loginLog.setLoginUserIp(TrueIP.getIpAddr(req));
                         loginLog.setLoginTime(new Date());
