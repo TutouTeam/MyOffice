@@ -12,16 +12,16 @@
           <router-link to="/testElement" style="margin-left: 100px;text-decoration:none; color: #fff" class="el-icon-view">显示/隐藏通知栏&emsp;&emsp;</router-link>
           <router-link to="/header/Help" style="margin-left: 100px;text-decoration:none; color: #fff" class="el-icon-question">帮助&emsp;&emsp;</router-link >
           
-          <span class="el-icon-date">今天是：2019-9-17 星期二</span>
+          <span class="el-icon-date">今天是:{{today}}</span>
         </div>
 
         <span>
         <el-dropdown>
         <i class="el-icon-setting" style="margin-right: 15px;margin-left: 15px; color: #fff"></i>
-        <span class="user colorWhite" style="margin-right: 15px;color: #fff">方荣福</span>
+        <span class="user colorWhite" style="margin-right: 15px;color: #fff"></span>
         <el-dropdown-menu slot="dropdown">
         <el-dropdown-item @click.native="changePasswd()">修改密码</el-dropdown-item>
-        <el-dropdown-item @click.native="lagout()">退出系统</el-dropdown-item>
+        <el-dropdown-item @click.native="logout()">退出系统</el-dropdown-item>
         </el-dropdown-menu>
         </el-dropdown>
         </span>
@@ -34,7 +34,7 @@
 
           <div style="display: flex;justify-content: flex-start;width: 180px;text-align: left;">
             <p id="welcome">
-              <span class="el-icon-success">欢迎：系统管理员</span>
+              <span class="el-icon-success">欢迎：</span>
               <span class="el-icon-user">角色：系统管理员</span>
               <span class="el-icon-location-outline">部门：研发部</span>
               <span class="el-icon-message">您共有0条新消息</span>
@@ -128,8 +128,9 @@
                       <span>考勤管理</span>
                     </template>
                     <el-menu-item-group>
-                      <el-menu-item index="6-1"><router-link to="/attendance/attendance_statistics/AttendanceStatisticsIndex" style="text-decoration:none;">考勤统计</router-link></el-menu-item>
-                      <el-menu-item index="6-2"><router-link to="/attendance/attendance_record/AttendanceRecordIndex" style="text-decoration:none;">考勤历史记录查询</router-link></el-menu-item>
+                      <el-menu-item index="6-1"><router-link to="/attendance/attendance_card/AttendanceCardIndex" style="text-decoration:none;">员工签到、签退</router-link></el-menu-item>
+                      <el-menu-item index="6-2"><router-link to="/attendance/attendance_record/AttendanceRecordIndex" style="text-decoration:none;">考勤历史查询</router-link></el-menu-item>
+                      <el-menu-item index="6-2"><router-link to="/attendance/attendance_statistics/AttendanceStatisticIndex" style="text-decoration:none;">考勤统计</router-link></el-menu-item>
                     </el-menu-item-group>
                   </el-submenu>
 
@@ -164,7 +165,7 @@
     mounted: function () {
     },
     methods: {
-      lagout() {
+      logout() {
         this.$router.push({
         path: '../'
         })
@@ -176,13 +177,32 @@
         isDot: false
       }
     },
-    computed: {
+      computed: {
       user(){
         return this.$store.state.user;
       },
+      
       routes(){
-        return this.$store.state.routes
+        return this.$store.state.routes;
+      },
+
+      today () {
+      var date = new Date()
+      var seperator1 = '-'
+      var year = date.getFullYear()
+      var month = date.getMonth() + 1
+      var strDate = date.getDate()
+      var week = date.getDay() // 返回表示星期的某一天的数字
+      if (month >= 1 && month <= 9) {
+        month = '0' + month
       }
+      if (strDate >= 0 && strDate <= 9) {
+        strDate = '0' + strDate
+      }
+      var weekday = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六']
+      var currentdate = year + seperator1 + month + seperator1 + strDate + '  ' + weekday[week]
+      return currentdate
+    },
     }
   }
 </script>

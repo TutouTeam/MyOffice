@@ -22,10 +22,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class JtpManagementSystemApplicationTests {
     @Autowired
     private MenuMapper menuMapper;
-    @Test
-    public void aaaTest(){
-        menuMapper.getAllMenu();
-    }
+//    @Test
+//    public void aaaTest(){
+//        menuMapper.getAllMenu();
+//    }
 
 //    @Autowired
 //    EmpService empService;

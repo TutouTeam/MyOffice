@@ -56,23 +56,30 @@ Vue.use(Router)
 
 export default new Router({
   mode: 'history',//这样路径就不会生成“#”号
+
+
   routes: [
+
+    //起始登录页面
     {
       path: '/',
-      name: 'Login',
+      name: '登陆',
       component: Login,
       hidden: true,
     },
+
+
+
     {
       //所有页面共享的组件，实现路由嵌套，各个子页面
       path: '/home',
       name: '主页',
       component: Home,
-      hidden: true,
-      meta: {
-        //keepAlive: false,//keepAlive:false此组件不需要被缓存
-        requireAuth: true
-      },
+      // hidden: true,
+      //  meta: {
+      // keepAlive: false,//keepAlive:false此组件不需要被缓存
+      //    requireAuth: true
+      //  },
       children: [
         //头部导航栏
         {
@@ -299,21 +306,21 @@ export default new Router({
         //考勤管理
         {
           path:"/attendance/attendance_card/AttendanceCardIndex",
-          name: '考勤打卡主页面',
+          name: '员工签到、签退',
           component: AttendanceCardIndex,
-          hidden: true,
+         // hidden: true,
           meta: {keepAlive: false, requireAuth: true} 
         },
         {
           path:"/attendance/attendance_record/AttendanceRecordIndex",
-          name: '考勤记录主页面',
+          name: '考勤历史查询',
           component: AttendanceRecordIndex,
           hidden: true,
           meta: {keepAlive: false, requireAuth: true} 
         },
         {
           path:"/attendance/attendance_statistics/AttendanceStatisticsIndex",
-          name: '考勤统计信息主页面',
+          name: '考勤统计',
           component: AttendanceStatisticsIndex,
           hidden: true,
           meta: {keepAlive: false, requireAuth: true} 

@@ -1,27 +1,19 @@
 package com.capgemini.jtp.service.impl;
 
-//import com.capgemini.jtp.common.HrUtils;
-//import com.capgemini.jtp.entity.Hr;
-//import com.capgemini.jtp.entity.Message;
-//import com.capgemini.jtp.mapper.HrMapper;
-//import com.capgemini.jtp.service.HrService;
-//import com.capgemini.jtp.service.UserService;
-//import com.capgemini.jtp.vo.employee.request.HrEditVo;
-//import com.capgemini.jtp.vo.employee.request.HrSearchVo;
-//import com.capgemini.jtp.vo.employee.response.HrResponseVo;
+
 import com.capgemini.jtp.entity.User;
 import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.UserService;
+import com.capgemini.jtp.vo.request.UserEditVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
 
 /**
  * @Description: TODO
@@ -43,6 +35,22 @@ public class UserServiceImpl implements UserService {
             throw new UsernameNotFoundException("用户名不对");
         }
         return user;
+    }
+
+
+    @Override
+    public int updateUser(UserEditVo userEditVo) {
+        User user = new User();
+        user.setUserId(userEditVo.getUserId());
+        user.setChineseName(userEditVo.getChineseName());
+        if(userEditVo.getPassword() != null && !("".equals(userEditVo.getPassword()))){
+            System.out.println("密码不为空，执行密码加密");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encode = encoder.encode(userEditVo.getPassword());
+            user.setPassword(encode);
+        }
+        user.setUsername(userEditVo.getUsername());
+        return userMapper.updateUser(user);
     }
 
 //    @Autowired
