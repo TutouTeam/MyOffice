@@ -1,3 +1,5 @@
+package com.capgemini.jtp.vo.request;
+
 import com.capgemini.jtp.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

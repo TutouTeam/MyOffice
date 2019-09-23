@@ -8,10 +8,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 @MapperScan("com.capgemini.jtp.mapper")
-//@EnableCaching
-@EnableAutoConfiguration(exclude = {
-		org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
-})
+@EnableCaching
 public class JtpSysApplication {
 
 	public static void main(String[] args) {
