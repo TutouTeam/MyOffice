@@ -28,27 +28,31 @@ public class ManualSignServiceImpl implements ManualSignService {
     ManualMapper manualMapper;
 
     @Override
-    public Integer insertManualSign(ManualSignInVo manualSignInVo) {
+    public ManualSignInSearchVo insertManualSign(ManualSignInVo manualSignInVo) {
         ManualSign manualSign = ConvertSignUtils.convertAddManualSignToManualSign(manualSignInVo);
         manualSign.setSignTime(new Date());
         manualSign.setUserId(manualSignInVo.getUserId());
-        return manualMapper.insertManualSign(manualSign);
+        manualMapper.insertManualSignOff(manualSign);
+        ManualSignInSearchVo manualSignInSearchVo= manualMapper.searchManual(manualSignInVo.getUserId());
+        return manualSignInSearchVo;
     }
 
     @Override
-    public Integer insertManualSignOff(ManualSignOffVo manualSignOffVo) {
+    public ManualSignInSearchVo insertManualSignOff(ManualSignOffVo manualSignOffVo) {
         ManualSign manualSign= ConvertSignUtils.convertAddManualSignToManualSignOff(manualSignOffVo);
         manualSign.setSignTime(new Date());
         manualSign.setUserId(manualSignOffVo.getUserId());
-        return manualMapper.insertManualSignOff(manualSign);
-    }
-
-    @Override
-    public ManualSignInSearchVo listSignInVo(int userId) {
-
-        ManualSignInSearchVo manualSignInSearchVo= manualMapper.searchManual(userId);
+        manualMapper.insertManualSignOff(manualSign);
+        ManualSignInSearchVo manualSignInSearchVo= manualMapper.searchManual(manualSignOffVo.getUserId());
         return manualSignInSearchVo;
     }
+
+//    @Override
+//    public ManualSignInSearchVo listSignInVo(int userId) {
+//
+//        ManualSignInSearchVo manualSignInSearchVo= manualMapper.searchManual(userId);
+//        return manualSignInSearchVo;
+//    }
 
     @Override
     public List<ManualVo> listManualSearch(ManualSearchVo manualSearchVo) {

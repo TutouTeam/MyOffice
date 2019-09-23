@@ -26,7 +26,7 @@ public class ManualSignController {
 
     @RequestMapping(value = "/sign/in", method = RequestMethod.POST)
     @ApiOperation(value = "签到")
-    public String insertSignIn(@RequestBody ManualSignInVo manualSignInVo, HttpServletRequest request) {
+    public ManualSignInSearchVo insertSignIn(@RequestBody ManualSignInVo manualSignInVo, HttpServletRequest request) {
         Object object = request.getSession().getAttribute("operationUserId");
         int userId = 0;
         if (object != null) {
@@ -34,52 +34,35 @@ public class ManualSignController {
         }
 
         manualSignInVo.setUserId(userId);
-        if (manualSignInVo != null) {
-            if (manualSignService.insertManualSign(manualSignInVo) != 0) {
-                return "签到成功";
-            } else {
-                return "签到失败";
-            }
-        } else {
-            return "签到失败";
-        }
+
+                ManualSignInSearchVo manualSignInSearchVo = manualSignService.insertManualSign(manualSignInVo);
+                return manualSignInSearchVo;
+
+
+
     }
 
     @RequestMapping(value = "/sign/off", method = RequestMethod.POST)
     @ApiOperation(value = "签退")
-    public String insertSignOff(@RequestBody ManualSignOffVo manualSignOffVo, HttpServletRequest request) {
+    public ManualSignInSearchVo insertSignOff(@RequestBody ManualSignOffVo manualSignOffVo, HttpServletRequest request) {
         Object object = request.getSession().getAttribute("operationUserId");
         int userId = 0;
+
         if (object != null) {
             userId = Integer.valueOf(String.valueOf(object));
         }
-
         manualSignOffVo.setUserId(userId);
-        if (manualSignOffVo != null) {
-            if (manualSignService.insertManualSignOff(manualSignOffVo) != 0) {
-                return "签退成功";
-            } else {
-                return "签退失败";
-            }
-        } else {
-            return "签退失败";
 
-        }
+            ManualSignInSearchVo manualSignInSearchVo = manualSignService.insertManualSignOff(manualSignOffVo);
+            return manualSignInSearchVo;
+
+
+
+
     }
-    @RequestMapping("/signIn/userId")
-   @ApiOperation(value="个人签到信息")
-   public ManualSignInSearchVo listExperience(HttpServletRequest request) {
-       Object object = request.getSession().getAttribute("operationUserId");
-       int userId = 0;
-       if (object != null) {
-           userId = Integer.valueOf(String.valueOf(object));
-       }
 
 
-       ManualSignInSearchVo manualSignInSearchVo = manualSignService.listSignInVo(userId);
 
-       return manualSignInSearchVo;
-   }
 
    @RequestMapping("/ManualSearch")
     @ApiOperation("历史签到记录")
