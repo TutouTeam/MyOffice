@@ -1,6 +1,7 @@
 package com.capgemini.jtp.controller;
 
 import com.capgemini.jtp.service.LoginLogService;
+import com.capgemini.jtp.vo.base.RespBean;
 import com.capgemini.jtp.vo.request.LoadLoginLogReq;
 import com.capgemini.jtp.vo.response.LoginLogResp;
 import io.swagger.annotations.Api;
@@ -27,9 +28,14 @@ public class SystemLoginLogController {
      */
     @ApiOperation("加载日志信息")
     @PostMapping("/loadLoginLog")
-    public List<LoginLogResp> loadUserLoginLog(@RequestBody LoadLoginLogReq loadLoginLogReq) {
+    public RespBean loadUserLoginLog(@RequestBody LoadLoginLogReq loadLoginLogReq) {
         List<LoginLogResp> loginLogs = loginLogService.selectLoginLog(loadLoginLogReq);
-        return loginLogs;
+        if(loginLogs != null){
+            return RespBean.ok(loginLogs);
+        }else {
+            return RespBean.error("查询失败！");
+        }
+
     }
 
     /**
