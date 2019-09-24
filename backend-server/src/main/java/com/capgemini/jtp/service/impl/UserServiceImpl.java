@@ -78,6 +78,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public Integer addUser(UserEditVo userEditVo){
         User user = ConvertUtils.convertUserVoToEntity(userEditVo);
+        if(userEditVo.getPassword() != null && !("".equals(userEditVo.getPassword()))){
+            System.out.println("密码不为空，执行密码加密");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encode = encoder.encode(userEditVo.getPassword());
+            user.setPassword(encode);
+        }
         return userMapper.addUser(user);
     }
     @Override

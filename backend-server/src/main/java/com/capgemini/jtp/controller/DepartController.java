@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
-@Api("")
+@Api("部门信息")
 @RestController
 @RequestMapping("/home/departmessage")
 public class DepartController {

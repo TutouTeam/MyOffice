@@ -331,6 +331,8 @@ public class ConvertUtils {
 
     public static DepartListVo convertDepartEntityToListVo(Depart depart) {
         DepartListVo departListVo = new DepartListVo();
+        departListVo.setDepartId(depart.getDepartId());
+
         departListVo.setDepartName(depart.getDepartName());
         departListVo.setPrincipalUser(depart.getPrincipalUser());
         departListVo.setConnectTelNo(depart.getConnectTelNo());

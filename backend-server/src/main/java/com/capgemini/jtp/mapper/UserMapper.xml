@@ -9,6 +9,7 @@
         <result column="chineseName" property="chineseName"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="roleId" property="roleId"/>
     </resultMap>
 
     <resultMap id="lazyLoadRoles" type="com.capgemini.jtp.entity.User" extends="BaseResultMap">
@@ -78,8 +79,22 @@
         </set>
         where userId = #{user.userId,jdbcType=INTEGER}
     </update>
+    <select id="listUserVo" resultMap="BaseResultMap">
+        select * from `user` where userId !=0
 
+    </select>
+    <insert id="addUser">
+        insert into `user` (`chineseName`, `username`,`password`,`gender`,departId,roleId,userState)
+        values
 
+            (
+            #{user.chineseName},#{user.username},#{user.password,jdbcType=VARCHAR},#{user.gender},#{user.departId},#{user.roleId},#{user.userStateId}
+            )
+
+    </insert>
+    <delete id="deleteUserByUserId" parameterType="com.capgemini.jtp.entity.User">
+        DELETE FROM `user` WHERE userId=#{user.userId}
+    </delete>
 <!--&lt;!&ndash;    待定&ndash;&gt;-->
 <!--    <delete id="deleteRoleByUserId" parameterType="Long">-->
 <!--        DELETE FROM user_role where userid=#{userId}-->
