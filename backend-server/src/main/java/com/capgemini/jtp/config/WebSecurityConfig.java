@@ -1,9 +1,12 @@
 package com.capgemini.jtp.config;
 
+import com.capgemini.jtp.aop.OperationLogAspect;
 import com.capgemini.jtp.common.UserUtils;
 //import RespBean;
 //import com.capgemini.jtp.entity.Hr;
+import com.capgemini.jtp.entity.LoginLog;
 import com.capgemini.jtp.entity.User;
+import com.capgemini.jtp.service.LoginLogService;
 import com.capgemini.jtp.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 //import com.capgemini.jtp.service.HrService;
@@ -32,6 +35,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Description: TODO
@@ -42,6 +48,9 @@ import java.io.PrintWriter;
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    LoginLogService loginLogService;
 
     @Autowired
     UserService userService;
@@ -102,12 +111,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         } else {
                             respBean = RespBean.error("登录失败!");
                         }
+
+                        // 写入登录失败信息
                         resp.setStatus(401);
                         ObjectMapper om = new ObjectMapper();
                         PrintWriter out = resp.getWriter();
                         out.write(om.writeValueAsString(respBean));
                         out.flush();
                         out.close();
+
+                        // 登录日志的信息
+                        LoginLog loginLog = new LoginLog();
+                        loginLog.setUserId(0);
+                        loginLog.setLoginDesc(respBean.getMsg());
+                        loginLog.setLoginUserIp(TrueIP.getIpAddr(req));
+                        loginLog.setLoginTime(new Date());
+                        loginLog.setIfSuccess("0");
+                        loginLogService.insertSelective(loginLog);
                     }
                 })
                 .successHandler(new AuthenticationSuccessHandler() {
@@ -132,6 +152,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         out.write(om.writeValueAsString(respBean));
                         out.flush();
                         out.close();
+
+                        LoginLog loginLog = new LoginLog();
+                        loginLog.setUserId(user.getUserId());
+                        loginLog.setChineseName(user.getChineseName());
+
+                        loginLog.setLoginDesc("登录成功");
+                        loginLog.setLoginUserIp(TrueIP.getIpAddr(req));
+                        loginLog.setLoginTime(new Date());
+                        loginLog.setIfSuccess("1");
+                        loginLogService.insertSelective(loginLog);
+
+                        Map<Integer, String> usera = new HashMap<>();
+                        usera.put(user.getUserId(), user.getChineseName());
+                        OperationLogAspect.setUserInfo(usera);
+
                     }
                 })
                 .permitAll()

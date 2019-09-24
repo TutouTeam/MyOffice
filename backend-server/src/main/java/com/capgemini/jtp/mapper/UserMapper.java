@@ -39,13 +39,13 @@ public interface UserMapper {
 //
 //    List<User> getUsersByKeywords(@Param("keywords") String keywords);
 //
-//    int updateUser(@Param("user") User user);
+    int updateUser(@Param("user") User user);
 //
 //    int deleteRoleByUserId(Long userId);
 //
 //    int addRolesForUser(@Param("userId") Long userId, @Param("rids") Long[] rids);
 //
-//    User getUserById(Long userId);
+ //   User getUserById(Long userId);
 //
 //    int deleteUser(Long UserId);
 //

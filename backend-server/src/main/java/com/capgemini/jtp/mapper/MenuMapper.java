@@ -1,6 +1,7 @@
 package com.capgemini.jtp.mapper;
 
 import com.capgemini.jtp.entity.Menu;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,4 +22,9 @@ public interface MenuMapper {
 //    List<Menu> menuTree();
 //
 //    List<Long> getMenusByRid(Long rid);
+//    List<Integer> getDisplayOrderBynodeId(int nodeId);
+//
+//    void setOneDisplayOrder(@Param("menu") Menu menu);
+//
+//    Menu selectMenuByParentNodeIdAndDisplayOrder(@Param("menu") Menu menu);
 }

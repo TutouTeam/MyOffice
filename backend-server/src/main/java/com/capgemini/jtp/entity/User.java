@@ -24,7 +24,7 @@ public class User implements UserDetails {
     //用户名
     private String username;
     //密码
-    private String passWord;
+    private String password;
     //中文名
     private String chineseName;
     //所在部门
@@ -78,7 +78,7 @@ public class User implements UserDetails {
     @JsonIgnore
     @Override
     public String getPassword() {
-        return passWord;
+        return password;
     }
 
 
@@ -102,12 +102,9 @@ public class User implements UserDetails {
         this.username = username;
     }
 
-    public String getPassWord() {
-        return passWord;
-    }
 
-    public void setPassWord(String passWord) {
-        this.passWord = passWord;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getChineseName() {

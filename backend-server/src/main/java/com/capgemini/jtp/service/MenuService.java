@@ -19,4 +19,8 @@ public interface MenuService {
 //    public List<Menu> menuTree();
 //
 //    public List<Long> getMenusByRid(Long rid);
+
+//    public Boolean isCanUpMenu(Menu menu);
+//
+//    public int upMenu(Menu menu);
 }
