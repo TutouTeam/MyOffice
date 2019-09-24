@@ -6,7 +6,7 @@
 
     <insert id="addDepart" parameterType="com.capgemini.jtp.entity.Depart">
         INSERT INTO user(`departId`,`departName`,`principalUser`,`connectTelNo`,`connectMobileTelNo`,`faxes`,`branchId`)
-        Values (#{depart.departId,jdbcType=BIGINT},
+        Values (
         #{depart.departName,jdbcType=VARCHAR},
         #{depart.principalUser,jdbcType=VARCHAR},
         #{depart.connectTelNo,jdbcType=BIGINT},

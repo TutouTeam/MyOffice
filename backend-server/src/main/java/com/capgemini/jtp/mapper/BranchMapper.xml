@@ -5,8 +5,8 @@
 <mapper namespace="com.capgemini.jtp.mapper.BranchMapper">
 
     <insert id="addBranch" parameterType="com.capgemini.jtp.entity.Branch">
-        INSERT INTO branch(`branchId`,`branchName`,`branchShortName`)
-        Values (#{branch.branchId,jdbcType=BIGINT},
+        INSERT INTO branch(`branchName`,`branchShortName`)
+        Values (
         #{branch.branchName,jdbcType=VARCHAR},
         #{branch.branchShortName,jdbcType=VARCHAR})
     </insert>
