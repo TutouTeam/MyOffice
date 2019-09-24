@@ -5,6 +5,11 @@ package com.capgemini.jtp.service;
 //import com.capgemini.jtp.vo.employee.request.HrEditVo;
 //import com.capgemini.jtp.vo.employee.request.HrSearchVo;
 //import com.capgemini.jtp.vo.employee.response.HrResponseVo;
+import com.capgemini.jtp.vo.request.UserDeleteVo;
+import com.capgemini.jtp.vo.request.UserEditVo;
+import com.capgemini.jtp.vo.response.UserListVo;
+import com.capgemini.jtp.vo.response.UserResponseVo;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -22,7 +27,18 @@ public interface UserService extends UserDetailsService {
 //
 //    List<Hr> getHrsByKeywords(String keywords);
 //
-//    int updateHr(HrEditVo hrEditVo);
+    int updateUser(UserEditVo userEditVo);
+
+    List<UserListVo> listUserVo();
+
+    UserDetails loadUserMessage(UserResponseVo userResponseVo);
+
+//    public MultipartFile updUserProfile(UserEditVo userEditVo);
+
+
+    Integer addUser(UserEditVo userEditVo);
+
+    Integer deleteUserByUserId(UserDeleteVo userDeleteVo);
 //
 //    int updateHrRoles(Long hrId, Long[] rids);
 //

@@ -1,27 +1,25 @@
 package com.capgemini.jtp.service.impl;
 
-//import com.capgemini.jtp.common.HrUtils;
-//import com.capgemini.jtp.entity.Hr;
-//import com.capgemini.jtp.entity.Message;
-//import com.capgemini.jtp.mapper.HrMapper;
-//import com.capgemini.jtp.service.HrService;
-//import com.capgemini.jtp.service.UserService;
-//import com.capgemini.jtp.vo.employee.request.HrEditVo;
-//import com.capgemini.jtp.vo.employee.request.HrSearchVo;
-//import com.capgemini.jtp.vo.employee.response.HrResponseVo;
+
 import com.capgemini.jtp.entity.User;
 import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.UserService;
+import com.capgemini.jtp.utils.ConvertUtils;
+import com.capgemini.jtp.vo.request.UserDeleteVo;
+import com.capgemini.jtp.vo.request.UserEditVo;
+import com.capgemini.jtp.vo.response.UserListVo;
+import com.capgemini.jtp.vo.response.UserResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * @Description: TODO
@@ -44,6 +42,56 @@ public class UserServiceImpl implements UserService {
         }
         return user;
     }
+
+    @Override
+    public List<UserListVo> listUserVo() {
+        List<User> userList = userMapper.listUserVo();
+        List<UserListVo> userListVos = new ArrayList<UserListVo>();
+        for (User user : userList) {
+            userListVos.add(ConvertUtils.convertUserEntityToListVo(user));
+        }
+        return userListVos;
+    }
+
+    @Override
+    public int updateUser(UserEditVo userEditVo) {
+        User user = new User();
+        user.setUserId(userEditVo.getUserId());
+        user.setChineseName(userEditVo.getChineseName());
+        user.setPassword(userEditVo.getPassword());
+        user.setChineseName(userEditVo.getChineseName());
+        user.setDepartId(userEditVo.getDepartId());
+        user.setGender(userEditVo.getGender());
+        user.setRoleId(userEditVo.getRoleId());
+        user.setUserStateId(userEditVo.getUserStateId());
+        if(userEditVo.getPassword() != null && !("".equals(userEditVo.getPassword()))){
+            System.out.println("密码不为空，执行密码加密");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encode = encoder.encode(userEditVo.getPassword());
+            user.setPassword(encode);
+        }
+        user.setUsername(userEditVo.getUsername());
+        return userMapper.updateUser(user);
+    }
+
+
+    @Override
+    public Integer addUser(UserEditVo userEditVo){
+        User user = ConvertUtils.convertUserVoToEntity(userEditVo);
+        return userMapper.addUser(user);
+    }
+    @Override
+    public Integer deleteUserByUserId(UserDeleteVo userDeleteVo){
+        User user=new User();
+        user.setUserId(userDeleteVo.getUserId());
+        return userMapper.deleteUserByUserId(user);
+    }
+
+    @Override
+    public UserDetails loadUserMessage(UserResponseVo userResponseVo){
+        return userMapper.loadUserMessage(userResponseVo);
+    }
+
 
 //    @Autowired
 //    HrMapper hrMapper;

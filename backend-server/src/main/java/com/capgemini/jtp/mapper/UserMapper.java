@@ -4,7 +4,9 @@ package com.capgemini.jtp.mapper;
 import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.entity.User;
 //import com.capgemini.jtp.vo.employee.request.UserEditVo;
+import com.capgemini.jtp.vo.response.UserResponseVo;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -20,6 +22,14 @@ import java.util.List;
 public interface UserMapper {
 
     User loadUserByUsername(String username);
+
+    UserDetails loadUserMessage(UserResponseVo userResponseVo);
+
+    List<User> listUserVo();
+
+    Integer addUser(@Param("user") User user);
+
+    Integer deleteUserByUserId(@Param("user") User user);
 
 //    User loadUserByEmpId(Long empId);
 //
