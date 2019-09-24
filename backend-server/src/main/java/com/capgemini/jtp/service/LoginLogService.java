@@ -1,6 +1,7 @@
 package com.capgemini.jtp.service;
 
 import com.capgemini.jtp.entity.LoginLog;
+import com.capgemini.jtp.vo.request.DeleteBatchVo;
 import com.capgemini.jtp.vo.request.LoadLoginLogReq;
 import com.capgemini.jtp.vo.response.LoginLogResp;
 
@@ -29,4 +30,12 @@ public interface LoginLogService {
      * create time: 14:50 2019/9/20
      */
     public int deleteByPrimaryKey(int loginId);
+
+
+    /**
+     * create by: MmmLll_Shen
+     * description:批量删除
+     * create time: 16:41 2019/9/24
+     */
+    public Integer deleteLoginLofBatch(DeleteBatchVo deleteBatchVo);
 }

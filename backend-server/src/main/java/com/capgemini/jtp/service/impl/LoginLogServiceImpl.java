@@ -5,10 +5,12 @@ import com.capgemini.jtp.mapper.LoginLogMapper;
 import com.capgemini.jtp.service.LoginLogService;
 import com.capgemini.jtp.utils.ConverLog;
 import com.capgemini.jtp.utils.TimeFrame;
+import com.capgemini.jtp.vo.request.DeleteBatchVo;
 import com.capgemini.jtp.vo.request.LoadLoginLogReq;
 import com.capgemini.jtp.vo.response.LoginLogResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -67,5 +69,19 @@ public class LoginLogServiceImpl implements LoginLogService {
     @Override
     public int deleteByPrimaryKey(int loginId) {
         return  loginLogMapper.deleteByPrimaryKey(loginId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer deleteLoginLofBatch(DeleteBatchVo deleteBatchVo) {
+        String[] list = deleteBatchVo.getDeleteList().split(",");
+        Integer affectedRows = 0;
+        for(String id : list){
+            int loginId = Integer.valueOf(id);
+            //删除该登录日志信息
+            loginLogMapper.deleteByPrimaryKey(loginId);
+            affectedRows++;
+        }
+        return affectedRows;
     }
 }
