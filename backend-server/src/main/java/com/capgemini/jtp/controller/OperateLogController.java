@@ -1,6 +1,7 @@
 package com.capgemini.jtp.controller;
 
 import com.capgemini.jtp.vo.base.RespBean;
+import com.capgemini.jtp.vo.request.DeleteBatchVo;
 import com.capgemini.jtp.vo.request.OperateLogReq;
 import com.capgemini.jtp.vo.response.OperateLogResp;
 import com.capgemini.jtp.service.OperateLogService;
@@ -56,5 +57,15 @@ public class OperateLogController {
         }else {
             return RespBean.error("查询失败");
         }
+    }
+
+
+    @ApiOperation(value = "批量删除操作日志信息")
+    @RequestMapping(value = "/deleteOperateLoginLogs", method = RequestMethod.POST)
+    public RespBean deleteBatchExp(@RequestBody DeleteBatchVo deleteBatchVo) {
+        if (operateLogService.deleteOperateLogBatch(deleteBatchVo) != 0) {
+            return RespBean.ok("删除成功！");
+        }
+        return RespBean.error("删除失败！");
     }
 }

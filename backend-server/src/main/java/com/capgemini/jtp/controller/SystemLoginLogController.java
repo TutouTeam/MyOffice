@@ -2,6 +2,7 @@ package com.capgemini.jtp.controller;
 
 import com.capgemini.jtp.service.LoginLogService;
 import com.capgemini.jtp.vo.base.RespBean;
+import com.capgemini.jtp.vo.request.DeleteBatchVo;
 import com.capgemini.jtp.vo.request.LoadLoginLogReq;
 import com.capgemini.jtp.vo.response.LoginLogResp;
 import io.swagger.annotations.Api;
@@ -9,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Api("系统登录日志操作")
@@ -46,5 +48,16 @@ public class SystemLoginLogController {
     @DeleteMapping("/deleteLoginLogById/{loginLogId}")
     public Integer deleteLoginLogById(@PathVariable("loginLogId") Integer loginLogId) {
         return loginLogService.deleteByPrimaryKey(loginLogId);
+    }
+
+
+
+    @ApiOperation(value = "批量删除登录日志信息")
+    @RequestMapping(value = "/deleteBatchLoginLogs", method = RequestMethod.POST)
+    public RespBean deleteBatchExp(@RequestBody DeleteBatchVo deleteBatchVo) {
+        if (loginLogService.deleteLoginLofBatch(deleteBatchVo) != 0) {
+            return RespBean.ok("删除成功！");
+        }
+        return RespBean.error("删除失败！");
     }
 }
