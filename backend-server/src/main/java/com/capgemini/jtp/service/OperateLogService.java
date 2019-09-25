@@ -1,6 +1,7 @@
 package com.capgemini.jtp.service;
 
 import com.capgemini.jtp.entity.OperateLog;
+import com.capgemini.jtp.vo.request.DeleteBatchVo;
 import com.capgemini.jtp.vo.request.OperateLogReq;
 import com.capgemini.jtp.vo.response.OperateLogResp;
 
@@ -23,4 +24,11 @@ public interface OperateLogService {
      * @return
      */
     List<OperateLogResp> selectAllOperateLog(OperateLogReq operateLogReq);
+
+    /**
+     * create by: MmmLll_Shen
+     * description:批量删除
+     * create time: 16:41 2019/9/24
+     */
+    public Integer deleteOperateLogBatch(DeleteBatchVo deleteBatchVo);
 }

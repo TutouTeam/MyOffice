@@ -23,10 +23,10 @@ public class MyNoteVo {
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
-    private Date createTime;
-    /**
-     * 创建者
-     */
-    private String createUser;
+//    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+//    private Date createTime;
+//    /**
+//     * 创建者
+//     */
+//    private String createUser;
 }

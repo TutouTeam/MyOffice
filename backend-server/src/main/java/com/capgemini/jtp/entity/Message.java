@@ -1,0 +1,56 @@
+package com.capgemini.jtp.entity;
+
+import com.capgemini.jtp.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+
+@Data
+@Component
+public class Message {
+    /**
+     * 消息Id
+     */
+    private int messageId;
+    /**
+     * 消息标题
+     */
+    private String title;
+    /**
+     * 消息内容
+     */
+    private String content;
+    /**
+     * 消息类型
+     */
+    private int type;
+    /**
+     * 开始有效时间
+     */
+    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date beginTime;
+    /**
+     * 有效结束时间
+     */
+    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date endTime;
+    /**
+     * 发送者
+     */
+    private String fromUserId;
+    /**
+     * 是否已发布（0未发布，1已发布）
+     */
+    private String ifPublish;
+    /**
+     * 发送时间
+     */
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date recordTime;
+}

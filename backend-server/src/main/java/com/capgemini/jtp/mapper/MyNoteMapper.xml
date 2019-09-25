@@ -14,9 +14,12 @@
  <select id="listNote" resultMap="BaseResultMap">
        select * from my_note where noteId != 0
    </select>
-    <select id="listNoteByUserId" resultMap="BaseResultMap">
-       select * from my_note where createUser in
-       (select userName from `user` where userId=#{userId})
+    <select id="listNoteByUserName" resultMap="BaseResultMap">
+       select * from my_note where createUser = #{userName}
+   </select>
+
+    <select id="noteByNoteId" resultMap="BaseResultMap">
+       select * from my_note where noteId = #{noteId}
    </select>
 
     <insert id="insertNote">
@@ -36,13 +39,13 @@
     <update id="updateNoteById" parameterType="com.capgemini.jtp.entity.MyNote">
         update my_note
         <set>
-            <if test="MyNote.noteTitle != null">`noteTitle` = #{myNote.noteTitle,jdbcType=VARCHAR},</if>
-            <if test="MyNote.noteTitle != null">`noteContent`=#{myNote.noteContent,jdbcType=VARCHAR},</if>
-            <if test="MyNote.noteTitle != null">`createTime`=#{myNote.createTime,jdbcType=TIMESTAMP}</if>
+            <if test="myNote.noteTitle != null and myNote.noteTitle != ''">`noteTitle` = #{myNote.noteTitle,jdbcType=VARCHAR},</if>
+            <if test="myNote.noteContent != null and myNote.noteContent != '' ">`noteContent`=#{myNote.noteContent,jdbcType=VARCHAR},</if>
+
         </set>
         where noteId = #{myNote.noteId,jdbcType=INTEGER}
     </update>
-
+<!--    <if test="MyNote.noteTitle != null">`createTime`=#{myNote.createTime,jdbcType=TIMESTAMP}</if>-->
 
 </mapper>
 

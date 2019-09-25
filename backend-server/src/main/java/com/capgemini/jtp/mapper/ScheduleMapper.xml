@@ -44,14 +44,14 @@
     <update id="updateScheduleById" parameterType="com.capgemini.jtp.entity.Schedule">
         update schedule
         <set>
-            `title`=#{Schedule.title,jdbcType=VARCHAR},
-            `address`=#{Schedule.address,jdbcType=VARCHAR},
-            `meetingId`=#{Schedule.meetingId,jdbcType=INTEGER},
-            `beginTime`=#{Schedule.beginTime,jdbcType=TIMESTAMP},
-            `endTime`=#{Schedule.endTime,jdbcType=TIMESTAMP},
-            `schContent`=#{Schedule.schContent,jdbcType=VARCHAR},
-            `createTime`=#{Schedule.createTime,jdbcType=TIMESTAMP},
-            `ifPrivate`=#{Schedule.ifPrivate,jdbcType=VARCHAR}
+            <if test="Schedule.title != null and Schedule.title != '' ">`title`=#{Schedule.title,jdbcType=VARCHAR},</if>
+            <if test="Schedule.address != null and Schedule.address != '' ">`address`=#{Schedule.address,jdbcType=VARCHAR},</if>
+            <if test="Schedule.meetingId != null  ">`meetingId`=#{Schedule.meetingId,jdbcType=INTEGER},</if>
+            <if test="Schedule.beginTime != null  ">`beginTime`=#{Schedule.beginTime,jdbcType=TIMESTAMP},</if>
+            <if test="Schedule.endTime != null  ">`endTime`=#{Schedule.endTime,jdbcType=TIMESTAMP},</if>
+            <if test="Schedule.schContent != null and Schedule.schContent != '' ">`schContent`=#{Schedule.schContent,jdbcType=VARCHAR},</if>
+
+            <if test="Schedule.ifPrivate != null and Schedule.ifPrivate != '' ">`ifPrivate`=#{Schedule.ifPrivate,jdbcType=VARCHAR}</if>
 
         </set>
         where scheduleId = #{Schedule.scheduleId,jdbcType=INTEGER}
@@ -59,11 +59,11 @@
 
     <select id="getScheduleByName" resultMap="BaseResultMap">
        select DISTINCT * from schedule
-        where (createUser in (select userName from userinfo where departId = #{departSchedule.departId,jdbcType=INTEGER}))
-        <if test="departSchedule.userName != null">and (createUser like concat(concat('%',#{departSchedule.userName,jdbcType=VARCHAR}),'%'))</if>
-        <if test="departSchedule.selectTime != null">and  (date(beginTime) = date(#{departSchedule.selectTime}))</if>
-        <if test="departSchedule.selectTime != null">and   (#{departSchedule.selectTime} BETWEEN beginTime AND endTime)</if>
-        or (createUser = (select userName from userinfo where userId=#{departSchedule.userId,jdbcType=VARCHAR}))
+        where <if test="departSchedule.departId != null  " >(createUser in (select userName from `user` where departId = #{departSchedule.departId,jdbcType=INTEGER}))</if>
+        <if test="departSchedule.userName != null and departSchedule.userName != '' ">and ((select chineseName from `user` where userName= schedule.createUser) like concat(concat('%',#{departSchedule.userName,jdbcType=VARCHAR}),'%'))</if>
+        <if test="departSchedule.selectTime != null ">and  (date(beginTime) = date(#{departSchedule.selectTime}))</if>
+        <if test="departSchedule.selectTime != null  ">and   (#{departSchedule.selectTime} BETWEEN beginTime AND endTime)</if>
+        or (createUser =#{departSchedule.userName,jdbcType=VARCHAR})
 
 
    </select>
@@ -82,6 +82,8 @@
 <!--    and  date_format(`beginTime`,%Y) = date_format(#{departSchedule.selectTime},%Y)-->
 <!--    and  date_format(`beginTime`,%m) = date_format(#{departSchedule.selectTime},%m)-->
 <!--    and  date_format(`beginTime`,%d) = date_format(#{departSchedule.selectTime},%d)-->
+
+<!--    `createTime`=#{Schedule.createTime,jdbcType=TIMESTAMP},-->
 </mapper>
 
 

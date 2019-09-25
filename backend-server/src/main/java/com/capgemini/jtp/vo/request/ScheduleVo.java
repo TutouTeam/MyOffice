@@ -39,15 +39,15 @@ public class ScheduleVo {
      * 日程内容
      */
     private String schContent;
-    /**
-     * 创建者
-     */
-    private String createUser;
+//    /**
+//     * 创建者
+//     */
+//    private String createUser;
     /**
      * 创建时间
      */
-    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
-    private Date createTime;
+//    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+//    private Date createTime;
     /**
      * 是否私有（0:否；1：私有）
      */

@@ -30,6 +30,7 @@ public class ManualSignController {
         Object object = request.getSession().getAttribute("operationUserId");
         int userId = 0;
         if (object != null) {
+
             userId = Integer.valueOf(String.valueOf(object));
         }
 

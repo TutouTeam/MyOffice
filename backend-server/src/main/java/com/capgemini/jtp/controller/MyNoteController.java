@@ -34,9 +34,19 @@ public class MyNoteController {
     }
     @ApiOperation(value = "指定便签列表")
     @ResponseBody
-    @GetMapping("/listnotebyid/{userId}")
-    public RespBean listNoteByUserId(@PathVariable("userId")int userId) {
-        List<MyNote> list=myNoteService.listNoteByUserId(userId);
+    @GetMapping("/listnotebyName/{userName}")
+    public RespBean listNoteByUserName(@PathVariable("userName")String  userName) {
+        List<MyNote> list=myNoteService.listNoteByUserName(userName);
+        if (list.size()>0)
+            return RespBean.ok("便签查询成功",list);
+        else
+            return RespBean.error("便签查询失败");
+    }
+    @ApiOperation(value = "指定便签id的信息")
+    @ResponseBody
+    @GetMapping("/notebynoteid/{noteId}")
+    public RespBean noteByNoteId(@PathVariable("noteId")int noteId  ) {
+        List<MyNote> list=myNoteService.noteByNoteId(noteId);
         if (list.size()>0)
             return RespBean.ok("便签查询成功",list);
         else
@@ -73,9 +83,9 @@ public class MyNoteController {
     public RespBean updateNote(@Valid @RequestBody MyNoteVo myNoteVo) {
 
         if(myNoteService.updateNote(myNoteVo)!=0)
-            return RespBean.okMessage("便签删除成功");
+            return RespBean.okMessage("便签修改成功");
         else
-            return RespBean.error("便签删除失败");
+            return RespBean.error("便签修改失败");
     }
 }
 

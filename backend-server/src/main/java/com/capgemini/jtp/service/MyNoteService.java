@@ -10,7 +10,8 @@ import java.util.List;
 
 public interface MyNoteService {
     public List<MyNote> listNote();
-    public List<MyNote> listNoteByUserId(int userId);
+    public List<MyNote> listNoteByUserName(String  userName);
+    public List<MyNote> noteByNoteId(int noteId);
     public Integer addNote(MyNoteAddVo myNoteAddVo);
     public Integer deleteNote(int noteId);
     public void findNote();
