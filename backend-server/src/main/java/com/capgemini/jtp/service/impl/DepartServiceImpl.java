@@ -1,6 +1,7 @@
 package com.capgemini.jtp.service.impl;
 
 import com.capgemini.jtp.entity.Depart;
+import com.capgemini.jtp.mapper.BranchMapper;
 import com.capgemini.jtp.mapper.DepartMapper;
 import com.capgemini.jtp.service.DepartService;
 import com.capgemini.jtp.utils.ConvertUtils;
@@ -20,6 +21,8 @@ public class DepartServiceImpl implements DepartService {
 
     @Autowired
     DepartMapper departMapper;
+    @Autowired
+    BranchMapper branchMapper;
 
 
     @Override
@@ -27,7 +30,10 @@ public class DepartServiceImpl implements DepartService {
         List<Depart> departList = departMapper.listDepartVo();
         List<DepartListVo> departListVos = new ArrayList<DepartListVo>();
         for (Depart depart : departList) {
-            departListVos.add(ConvertUtils.convertDepartEntityToListVo(depart));
+            DepartListVo departListVo= ConvertUtils.convertDepartEntityToListVo(depart);
+            departListVo.setBranchName(branchMapper.getBranchNameById(depart.getBranchId()));
+
+            departListVos.add(departListVo);
         }
         return departListVos;
     }

@@ -4,6 +4,7 @@ package com.capgemini.jtp.mapper;
 import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.entity.User;
 //import com.capgemini.jtp.vo.employee.request.UserEditVo;
+import com.capgemini.jtp.vo.response.UserMassageRespVo;
 import com.capgemini.jtp.vo.response.UserResponseVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +25,8 @@ public interface UserMapper {
     User loadUserByUsername(String username);
 
     UserDetails loadUserMessage(UserResponseVo userResponseVo);
+
+    UserMassageRespVo getMassageById(@Param("userId")int userId);
 
     List<User> listUserVo();
 

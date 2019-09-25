@@ -4,7 +4,10 @@ import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.vo.base.RespBean;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
+import com.capgemini.jtp.vo.request.UserMassageVo;
 import com.capgemini.jtp.vo.response.UserListVo;
+import com.capgemini.jtp.vo.response.UserMassageRespVo;
+import com.capgemini.jtp.vo.response.UserResponseVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
 
 
 
@@ -47,6 +51,17 @@ public class UserController {
         List<UserListVo> userListVos = userService.listUserVo();
         if (userListVos != null) {
             return RespBean.ok(userListVos);
+        }
+        return RespBean.error("查询失败！");
+    }
+    @ApiOperation(value = "员工详细信息")
+    @ResponseBody
+    @RequestMapping(value = "/userMassage", method = RequestMethod.GET)
+    public RespBean userMassage(@Valid @RequestBody UserMassageVo userMassageVo) {
+        UserMassageRespVo userMassageRespVo = userService.userMassage(userMassageVo);
+
+        if (userMassageRespVo != null) {
+            return RespBean.ok(userMassageRespVo);
         }
         return RespBean.error("查询失败！");
     }

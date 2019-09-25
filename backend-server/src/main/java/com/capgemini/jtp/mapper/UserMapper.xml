@@ -95,6 +95,13 @@
     <delete id="deleteUserByUserId" parameterType="com.capgemini.jtp.entity.User">
         DELETE FROM `user` WHERE userId=#{user.userId}
     </delete>
+    <select id="getMassageById" resultType="com.capgemini.jtp.vo.response.UserMassageRespVo">
+       select  * from
+       (select a.userId,a.username,a.chineseName,a.password,a.departId,b.departName,a.gender,a.roleId,c.roleName,a.userState,d.userStateName
+       from `user` a,depart b,role c,user_state d
+       where (a.departId=b.departId and a.roleId=c.roleId and a.userState=d.userStateId))as tabel1
+       where userId=#{userId}
+   </select>
 <!--&lt;!&ndash;    待定&ndash;&gt;-->
 <!--    <delete id="deleteRoleByUserId" parameterType="Long">-->
 <!--        DELETE FROM user_role where userid=#{userId}-->

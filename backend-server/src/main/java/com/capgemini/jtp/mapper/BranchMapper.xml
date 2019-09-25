@@ -25,7 +25,10 @@
     </update>
 
     <select id="listBranchVo" resultType="com.capgemini.jtp.entity.Branch">
-        select branchName,branchShortName from branch
+        select branchId,branchName,branchShortName from branch
+    </select>
+    <select id="getBranchNameById" resultType="String">
+        select branchName from branch where branchId=#{branchId}
     </select>
 
 

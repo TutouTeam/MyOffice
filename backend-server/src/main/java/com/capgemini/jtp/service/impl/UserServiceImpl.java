@@ -7,7 +7,9 @@ import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.utils.ConvertUtils;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
+import com.capgemini.jtp.vo.request.UserMassageVo;
 import com.capgemini.jtp.vo.response.UserListVo;
+import com.capgemini.jtp.vo.response.UserMassageRespVo;
 import com.capgemini.jtp.vo.response.UserResponseVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -97,6 +99,10 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserMessage(UserResponseVo userResponseVo){
         return userMapper.loadUserMessage(userResponseVo);
     }
+    public UserMassageRespVo userMassage(UserMassageVo userMassageVo)
+    {
+       return userMapper.getMassageById(userMassageVo.getUserId());
+    };
 
 
 //    @Autowired

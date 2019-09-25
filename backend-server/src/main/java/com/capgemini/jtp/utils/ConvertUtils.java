@@ -2,8 +2,11 @@ package com.capgemini.jtp.utils;
 
 
 import com.capgemini.jtp.entity.*;
+import com.capgemini.jtp.mapper.BranchMapper;
+import com.capgemini.jtp.mapper.DepartMapper;
 import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * create by: MmmLll_Shen
@@ -324,6 +327,7 @@ public class ConvertUtils {
 
     public static BranchListVo convertBranchEntityToListVo(Branch branch) {
         BranchListVo branchListVo = new BranchListVo();
+        branchListVo.setBranchId(branch.getBranchId());
         branchListVo.setBranchName(branch.getBranchName());
         branchListVo.setBranchShortName(branch.getBranchShortName());
         return branchListVo;
@@ -339,6 +343,7 @@ public class ConvertUtils {
         departListVo.setConnectMobileTelNo(depart.getConnectMobileTelNo());
         departListVo.setFaxes(depart.getFaxes());
         departListVo.setBranchId(depart.getBranchId());
+
         return departListVo;
     }
 

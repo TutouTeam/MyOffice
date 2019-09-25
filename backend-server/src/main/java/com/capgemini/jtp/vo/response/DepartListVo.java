@@ -15,6 +15,7 @@ public class DepartListVo {
     private long connectMobileTelNo;
     private long faxes;
     private int branchId;
+    private String branchName;
 
 //    public String getBranchName() {
 //        return branchName;

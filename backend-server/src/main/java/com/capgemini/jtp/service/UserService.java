@@ -7,7 +7,9 @@ package com.capgemini.jtp.service;
 //import com.capgemini.jtp.vo.employee.response.HrResponseVo;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
+import com.capgemini.jtp.vo.request.UserMassageVo;
 import com.capgemini.jtp.vo.response.UserListVo;
+import com.capgemini.jtp.vo.response.UserMassageRespVo;
 import com.capgemini.jtp.vo.response.UserResponseVo;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -32,6 +34,8 @@ public interface UserService extends UserDetailsService {
     List<UserListVo> listUserVo();
 
     UserDetails loadUserMessage(UserResponseVo userResponseVo);
+
+    UserMassageRespVo userMassage(UserMassageVo userMassageVo);
 
 //    public MultipartFile updUserProfile(UserEditVo userEditVo);
 

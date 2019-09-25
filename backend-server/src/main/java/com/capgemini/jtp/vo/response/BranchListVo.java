@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class BranchListVo {
+    private int branchId;
 
     private String branchName;
 
