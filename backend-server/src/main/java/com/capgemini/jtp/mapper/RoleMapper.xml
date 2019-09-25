@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.jtp.mapper.RoleMapper">
+   <select id="listRole" resultType="com.capgemini.jtp.vo.response.RoleListVo">
+       select roleName,roleDesc
+       from role
+   </select>
+    <update id="updateRoleById" parameterType="com.capgemini.jtp.vo.request.RoleAddVo">
+        update role
+        <set>
+            <if test="roleAdd.roleName != null and roleAdd.roleName != ''">`roleName` = #{roleAdd.roleName,jdbcType=VARCHAR},</if>
+            <if test="roleAdd.roleDesc != null and roleAdd.roleDesc != '' ">`roleDesc`=#{roleAdd.roleDesc,jdbcType=VARCHAR},</if>
+
+        </set>
+        where roleId = #{roleAdd.roleId,jdbcType=INTEGER}
+    </update>
+    <delete id="deleteRoleById" parameterType="int">
+       DELETE FROM role WHERE roleId=#{roleId}
+
+    </delete>
+    <insert id="addRoleById" parameterType="com.capgemini.jtp.vo.request.RoleAddVo">
+     insert into role (`roleName`, `roleDesc`)
+        values
+
+            (
+            #{roleAddVo.roleName,jdbcType=VARCHAR}, #{roleAddVo.roleDesc,jdbcType=VARCHAR}
+            )
+    </insert>
+</mapper>

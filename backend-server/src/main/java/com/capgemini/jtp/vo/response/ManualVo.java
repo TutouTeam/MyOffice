@@ -9,7 +9,7 @@ import java.util.Date;
 @Getter
 @Setter
 public class ManualVo {
-    private String userName;
+    private String username;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date signTime;
     private Integer signTag;
