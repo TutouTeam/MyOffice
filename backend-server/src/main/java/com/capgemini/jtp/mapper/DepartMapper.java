@@ -21,5 +21,7 @@ public interface DepartMapper {
     Integer deleteDepartByDepartId(@Param("depart") Depart depart);
 
 
+    Depart getDepartment(@Param("departmentId") int departmentId);
+
 
 }

@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Component
@@ -14,7 +15,12 @@ public class Message {
     /**
      * 消息Id
      */
+
     private int messageId;
+    /**
+     * 消息类型
+     */
+    private int type;
     /**
      * 消息标题
      */
@@ -23,10 +29,7 @@ public class Message {
      * 消息内容
      */
     private String content;
-    /**
-     * 消息类型
-     */
-    private int type;
+
     /**
      * 开始有效时间
      */
@@ -42,7 +45,7 @@ public class Message {
     /**
      * 发送者
      */
-    private String fromUserId;
+    private int fromUserId;
     /**
      * 是否已发布（0未发布，1已发布）
      */
@@ -53,4 +56,10 @@ public class Message {
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD,timezone=DateUtils.DEFAULT_ZONE)
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date recordTime;
+
+
+    /**
+     * 接收用户ID
+     */
+    private List<Integer> recipientIds;
 }

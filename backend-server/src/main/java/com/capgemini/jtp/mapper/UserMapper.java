@@ -31,35 +31,21 @@ public interface UserMapper {
 
     Integer deleteUserByUserId(@Param("user") User user);
 
-//    User loadUserByEmpId(Long empId);
-//
+
     List<Role> getRolesByUserId(int userId);
 
-//    int userReg(@Param("userEdit") UserEditVo userEditVo);
-//
-//    List<User> getUsersByKeywords(@Param("keywords") String keywords);
-//
+
     int updateUser(@Param("user") User user);
-//
-//    int deleteRoleByUserId(Long userId);
-//
-//    int addRolesForUser(@Param("userId") Long userId, @Param("rids") Long[] rids);
-//
- //   User getUserById(Long userId);
-//
-//    int deleteUser(Long UserId);
-//
-//    List<User> getAllUser(@Param("currentId") Long currentId);
-//
-//    //本系统不需要多角色，权限向下继承，不需要List
-//    Long getRoleByUserId(@Param("id") Long id);
-//
-////    List<UserVo> listAllUser(@Param("search") UserSearchVo UserSearchVo);
-//
-////    Long countHr(@Param("search") HrSearchVo hrSearchVo);
-//
-//    Employee getEmpByEmpId(Long empId);
-//
-//    Long getEmpIdById(@Param("id") Long id);
+
+
+
+    /**
+     * create by: MmmLll_Shen
+     * description:以下方法为消息类增加和更改
+     * create time: 11:06 2019/9/25
+     */
+    List<Integer> getAllUserIds();
+
+    User getUser(@Param("userId") int userId);
 }
 

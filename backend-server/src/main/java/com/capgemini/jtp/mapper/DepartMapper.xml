@@ -58,4 +58,10 @@
     <delete id="deleteDepartByDepartId" parameterType="com.capgemini.jtp.entity.Depart">
         DELETE FROM depart where departId=#{depart.departId}
     </delete>
+
+    <!-- 根据departmentId获取Department -->
+    <select id="getDepartment" resultType="com.capgemini.jtp.entity.Depart">
+        SELECT * FROM depart WHERE departId = #{departmentId}
+    </select>
+
 </mapper>
