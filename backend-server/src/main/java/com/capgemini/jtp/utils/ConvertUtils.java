@@ -1,14 +1,9 @@
 package com.capgemini.jtp.utils;
 
 
-import com.capgemini.jtp.entity.AccessoryInfo;
-import com.capgemini.jtp.entity.FileInfo;
-import com.capgemini.jtp.entity.FileTypeInfo;
+import com.capgemini.jtp.entity.*;
 import com.capgemini.jtp.vo.request.*;
-import com.capgemini.jtp.vo.response.FileDetailResp;
-import com.capgemini.jtp.vo.response.FileSearchResp;
-import com.capgemini.jtp.vo.response.ListFileInfoResp;
-import com.capgemini.jtp.vo.response.ListRecycleBinResp;
+import com.capgemini.jtp.vo.response.*;
 
 /**
  * create by: MmmLll_Shen
@@ -282,4 +277,91 @@ public class ConvertUtils {
         fileInfo.setFileName(deleteFileReq.getFilePathAndName());
         return fileInfo;
     }
+
+
+    public static User convertUserVoToEntity(UserEditVo userEditVo) {
+        User user = new User();
+        user.setUserId(userEditVo.getUserId());
+        user.setUsername(userEditVo.getUsername());
+        user.setPassword(userEditVo.getPassword());
+        user.setChineseName(userEditVo.getChineseName());
+        user.setDepartId(userEditVo.getDepartId());
+        user.setGender(userEditVo.getGender());
+        user.setRoleId(userEditVo.getRoleId());
+        user.setUserStateId(userEditVo.getUserStateId());
+        return user;
+    }
+
+    public static UserVo convertUserEntityToVo(User user) {
+        UserVo userVo = new UserVo();
+        userVo.setUserId(user.getUserId());
+        userVo.setUsername(user.getUsername());
+        userVo.setPassword(user.getPassword());
+        userVo.setChineseName(user.getChineseName());
+        userVo.setDepartId(user.getDepartId());
+        userVo.setGender(user.getGender());
+        userVo.setRoleId(user.getRoleId());
+        userVo.setUserStateId(user.getUserStateId());
+        return userVo;
+    }
+
+    /**
+     * @Description: 将Employee实体类中各属性的值对应赋给EmpListVo
+     * @Classname : ConvertUtils
+     * @author: Jason Jin
+     * @date: 2019/6/23 12:01 PM
+     */
+    public static UserListVo convertUserEntityToListVo(User user) {
+        UserListVo userListVo = new UserListVo();
+        userListVo.setUserId(user.getUserId());
+        userListVo.setUsername(user.getUsername());
+        userListVo.setPassword(user.getPassword());
+        userListVo.setChineseName(user.getChineseName());
+        userListVo.setRoleId(user.getRoleId());
+        return userListVo;
+    }
+
+
+    public static BranchListVo convertBranchEntityToListVo(Branch branch) {
+        BranchListVo branchListVo = new BranchListVo();
+        branchListVo.setBranchName(branch.getBranchName());
+        branchListVo.setBranchShortName(branch.getBranchShortName());
+        return branchListVo;
+    }
+
+    public static DepartListVo convertDepartEntityToListVo(Depart depart) {
+        DepartListVo departListVo = new DepartListVo();
+        departListVo.setDepartId(depart.getDepartId());
+
+        departListVo.setDepartName(depart.getDepartName());
+        departListVo.setPrincipalUser(depart.getPrincipalUser());
+        departListVo.setConnectTelNo(depart.getConnectTelNo());
+        departListVo.setConnectMobileTelNo(depart.getConnectMobileTelNo());
+        departListVo.setFaxes(depart.getFaxes());
+        departListVo.setBranchId(depart.getBranchId());
+        return departListVo;
+    }
+
+
+    public static Branch convertBranchVoToEntity(BranchEditVo branchEditVo) {
+        Branch branch = new Branch();
+        branch.setBranchId(branchEditVo.getBranchId());
+        branch.setBranchName(branchEditVo.getBranchName());
+        branch.setBranchShortName(branchEditVo.getBranchShortName());
+        return branch;
+    }
+
+    public static Depart convertDepartVoToEntity(DepartEditVo departEditVo) {
+        Depart depart = new Depart();
+        depart.setDepartId(departEditVo.getDepartId());
+        depart.setDepartName(departEditVo.getDepartName());
+        depart.setPrincipalUser(departEditVo.getPrincipalUser());
+        depart.setConnectTelNo(departEditVo.getConnectTelNo());
+        depart.setConnectMobileTelNo(departEditVo.getConnectMobileTelNo());
+        depart.setFaxes(departEditVo.getFaxes());
+        depart.setBranchId(departEditVo.getBranchId());
+        return depart;
+
+    }
+
 }

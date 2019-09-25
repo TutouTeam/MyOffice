@@ -5,7 +5,13 @@ package com.capgemini.jtp.service;
 //import com.capgemini.jtp.vo.employee.request.HrEditVo;
 //import com.capgemini.jtp.vo.employee.request.HrSearchVo;
 //import com.capgemini.jtp.vo.employee.response.HrResponseVo;
+import com.capgemini.jtp.entity.User;
+import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
+import com.capgemini.jtp.vo.response.UserListVo;
+import com.capgemini.jtp.vo.response.UserResponseVo;
+import com.capgemini.jtp.vo.response.UserVo;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.util.List;
@@ -24,36 +30,27 @@ public interface UserService extends UserDetailsService {
 //    List<Hr> getHrsByKeywords(String keywords);
 //
     int updateUser(UserEditVo userEditVo);
-//
-//    int updateHrRoles(Long hrId, Long[] rids);
-//
-//    int addRolesForHr(Long hrId, Long[] rids);
-//
-//    Hr getHrById(Long hrId);
-//
-//    int deleteHr(Long hrId);
-//
-//    List<Hr> getAllHrExceptAdmin();
-//
-//    List<Hr> getAllHr();
-//
-//    Map<Long, Hr> getAllHrMap();
-//
-//    int hrRole(String username);
-//
-//    int isAdmin(Long hrId);
-//
-//    Long getLength(Long[] longs);
-//
-//    HrResponseVo listHr(HrSearchVo hrSearchVo);
-//
-//    String getRemark(Long hrId);
-//
-//    List<Message> getMessages(Long[] longs);
-//
-//    void updateRemark(String str);
-//
-////    void updateRemarkZero(He);
-//
-//    void deleteRemark(Long id);
+
+    List<UserListVo> listUserVo();
+
+    UserDetails loadUserMessage(UserResponseVo userResponseVo);
+
+//    public MultipartFile updUserProfile(UserEditVo userEditVo);
+
+
+    Integer addUser(UserEditVo userEditVo);
+
+    Integer deleteUserByUserId(UserDeleteVo userDeleteVo);
+
+
+    /**
+     * create by: MmmLll_Shen
+     * description:以下方法为消息新增
+     * create time: 11:09 2019/9/25
+     */
+    List<Integer> getAllUserIds();
+
+    UserVo convertToVo(User user);
+
+
 }
