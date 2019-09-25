@@ -1,16 +1,18 @@
 package com.capgemini.jtp.controller;
 
+import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.service.LoginLogService;
+import com.capgemini.jtp.service.RoleInfoService;
 import com.capgemini.jtp.vo.base.RespBean;
-import com.capgemini.jtp.vo.request.DeleteBatchVo;
-import com.capgemini.jtp.vo.request.LoadLoginLogReq;
+import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.LoginLogResp;
+import com.capgemini.jtp.vo.response.RoleListVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.List;
 
 @Api("系统登录日志操作")
@@ -21,7 +23,8 @@ public class SystemLoginLogController {
     @Autowired
     LoginLogService loginLogService;
 
-
+    @Autowired
+    RoleInfoService roleInfoService;
     /**
      * 根据指定的时间范围查询登录日志信息
      * @Date: 2019-09-02
@@ -60,4 +63,52 @@ public class SystemLoginLogController {
         }
         return RespBean.error("删除失败！");
     }
+
+    /**
+     * 角色管理
+     * @Date: 2019-09-02
+
+     * @return
+     */
+ @ApiOperation(value="查询所有角色信息")
+    @RequestMapping(value = "/roleList",method = RequestMethod.POST)
+    public RespBean listRoleInfo(){
+      List<RoleListVo> roleListVoList=roleInfoService.roleInfolist();
+     return RespBean.ok(roleListVoList);
+ }
+
+
+    @ApiOperation(value="修改所有角色信息")
+    @RequestMapping(value = "/roleList/update",method = RequestMethod.POST)
+    public RespBean UpdateRoleById(@RequestBody RoleAddVo roleAddVo){
+        if(roleInfoService.updateRole(roleAddVo)!=0)
+            return RespBean.okMessage("角色修改成功");
+        else
+            return RespBean.error("角色修改失败");
+
+    }
+
+
+
+    @ApiOperation(value = "删除角色")
+    @ResponseBody
+    @RequestMapping(value = "/roleList/delete", method = RequestMethod.POST)
+    public RespBean deleteNote(@Valid @RequestBody RoleDeleteVo roleDeleteVo) {
+        if(roleInfoService.deleteRole(roleDeleteVo.getRoleId())!=0)
+            return RespBean.okMessage("便签删除成功");
+        else
+            return RespBean.error("便签删除失败");
+    }
+
+
+    @ApiOperation(value="添加角色信息")
+    @RequestMapping(value = "/roleList/add",method = RequestMethod.POST)
+    public RespBean addRoleById(@RequestBody RoleAddVo roleAddVo){
+        if(roleInfoService.addRole(roleAddVo)!=0)
+            return RespBean.okMessage("角色添加成功");
+        else
+            return RespBean.error("角色添加失败");
+
+    }
+
 }
