@@ -11,7 +11,7 @@
             AND title LIKE concat(concat('%', #{messageSearchVo.query}), '%')
         </if>
         <if test="messageSearchVo.startTime != null and messageSearchVo.endTime != null">
-            AND `recordTime` BETWEEN #{messageSearchVo.startTime} AND #{messageSearchVo.endTime}
+            AND `createTime` BETWEEN #{messageSearchVo.startTime} AND #{messageSearchVo.endTime}
         </if>
     </sql>
     
@@ -50,7 +50,8 @@
              content,
              beginTime,
              endTime,
-             fromUserId
+             fromUserId,
+             createTime
             )
         VALUES
             (
@@ -60,7 +61,8 @@
             #{messageEditVo.messageContent},
             #{messageEditVo.beginTime},
             #{messageEditVo.endTime},
-            #{messageEditVo.createUserId}
+            #{messageEditVo.createUserId},
+            #{messageEditVo.createTime}
             )
     </insert>
     

@@ -146,7 +146,7 @@ public class MessageServiceImpl implements MessageService {
                 }});
             }
         }
-
+        messageEditVo.setCreateTime(new Date());
         Integer res1 = messageMapper.insertMessage(messageEditVo);
         Integer res2 = messageTransMapper.insertMessageTranses(messageTranses);
 

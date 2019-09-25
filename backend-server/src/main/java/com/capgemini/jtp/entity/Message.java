@@ -46,6 +46,14 @@ public class Message {
      * 发送者
      */
     private int fromUserId;
+
+    /**
+     * 创建时间
+     */
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
     /**
      * 是否已发布（0未发布，1已发布）
      */
@@ -54,7 +62,7 @@ public class Message {
      * 发送时间
      */
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD,timezone=DateUtils.DEFAULT_ZONE)
-    @DateTimeFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date recordTime;
 
 
