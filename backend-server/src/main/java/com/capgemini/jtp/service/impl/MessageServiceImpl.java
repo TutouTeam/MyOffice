@@ -127,6 +127,38 @@ public class MessageServiceImpl implements MessageService {
         return respVos;
     }
 
+    @Override
+    public RespVos<MessageVo> getMessagesByFromUserIdAndNotPublish(int fromUserId) {
+        List<Message> messages = messageTransMapper.getMessagesByFromUserIdAndNotPublish(fromUserId);
+        List<MessageVo> messageVos = new ArrayList<>();
+        RespVos<MessageVo> respVos = new RespVos<>();
+
+        for (Message message : messages) {
+            messageVos.add(convertToVo(message));
+        }
+
+        respVos.setSize(messageVos.size());
+        respVos.setVos(messageVos);
+
+        return respVos;
+    }
+
+    @Override
+    public RespVos<MessageVo> getDeletedMessages(int fromUserId) {
+        List<Message> messages = messageTransMapper.getDeletedMessages(fromUserId);
+        List<MessageVo> messageVos = new ArrayList<>();
+        RespVos<MessageVo> respVos = new RespVos<>();
+
+        for (Message message : messages) {
+            messageVos.add(convertToVo(message));
+        }
+
+        respVos.setSize(messageVos.size());
+        respVos.setVos(messageVos);
+
+        return respVos;
+    }
+
     /**
      * 添加消息
      * 如果recipients为null 则表示发送给所有人
@@ -138,7 +170,7 @@ public class MessageServiceImpl implements MessageService {
         int messageId = messageId2.intValue();
         messageEditVo.setMessageId(messageId);
 
-        if (messageEditVo.getRecipientIds() != null) {
+        if (messageEditVo.getRecipientIds() != null && messageEditVo.getRecipientIds().size() != 0) {
             for (int recipientId : messageEditVo.getRecipientIds()) {
                 messageTranses.add(new MessageTrans(){{
                     Long nextId2 = IdWorker.get().nextId();
@@ -176,6 +208,11 @@ public class MessageServiceImpl implements MessageService {
         messageTransMapper.deleteMessageTransesByMessageId(messageIds);
 
         return messageMapper.deleteMessages(messageIds);
+    }
+
+    @Override
+    public Integer deleteMessagesToCollection(List<Integer> messageIds) {
+        return messageTransMapper.deleteMessagesToCollection(messageIds);
     }
 
     @Override

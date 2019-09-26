@@ -63,7 +63,7 @@ public class MessageController {
         return RespBean.error("查询失败!");
     }
 
-    @ApiOperation("获取发送给当前用户的消息!")
+    @ApiOperation("获取发送给当前用户的所有消息!")
     @GetMapping("/")
     RespBean getMessagesByRecipientId() {
         RespVos<MessageVo> respVos = messageService.getMessagesByRecipientId(
@@ -75,7 +75,7 @@ public class MessageController {
         return RespBean.ok("没有我的相关消息!");
     }
 
-    @ApiOperation("获取当前用户已经发送的信息")
+    @ApiOperation("获取当前用户已经发送的所有信息")
     @GetMapping("/getPublishedMessages")
     RespBean getPublishedMessages() {
         RespVos<MessageVo> respVos = messageService.getMessagesByFromUserId(
@@ -87,11 +87,36 @@ public class MessageController {
         return RespBean.ok("我还没有发布过消息!");
     }
 
+    @ApiOperation("获取当前用户草稿箱的所有信息")
+    @GetMapping("/getNotPublishedMessages")
+    RespBean getNotPublishedMessages() {
+        RespVos<MessageVo> respVos = messageService.getMessagesByFromUserIdAndNotPublish(
+                UserUtils.getCurrentUser().getUserId()
+        );
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok(respVos);
+        }
+        return RespBean.ok("我的草稿箱没有消息!");
+    }
+
+    @ApiOperation("获取当前用回收站的所有信息")
+    @GetMapping("/getDeletedMessages")
+    RespBean getDeletedMessages() {
+        RespVos<MessageVo> respVos = messageService.getDeletedMessages(
+                UserUtils.getCurrentUser().getUserId()
+        );
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok(respVos);
+        }
+        return RespBean.ok("我的回收站没有消息!");
+    }
+
 
 //    @ControllerLog(name = "添加信息为草稿")
     @ApiOperation("添加消息为草稿")
     @PostMapping("/add")
     RespBean addMessage(@RequestBody MessageEditVo messageEditVo) {
+        messageEditVo.setCreateUserId(UserUtils.getCurrentUser().getUserId());
         return messageService.addMessage(messageEditVo) > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
 
@@ -103,10 +128,18 @@ public class MessageController {
     }
 
 //    @ControllerLog(name = "删除消息")
-    @ApiOperation("删除消息")
+    @ApiOperation("彻底删除消息")
     @PostMapping("/deleteMessages")
     RespBean deleteMessages(@RequestBody DeleteVo deleteVo) {
         Integer res = messageService.deleteMessages(deleteVo.getIds());
+
+        return res > 0 ? RespBean.ok("成功删除" + res + "条消息!") : RespBean.error("删除失败!");
+    }
+
+    @ApiOperation("删除消息到回收站")
+    @PostMapping("/deleteMessagesToCollection")
+    RespBean deleteMessagesToCollection(@RequestBody DeleteVo deleteVo) {
+        Integer res = messageService.deleteMessagesToCollection(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条消息!") : RespBean.error("删除失败!");
     }
@@ -130,13 +163,13 @@ public class MessageController {
     }
 
 //    @ControllerLog(name = "删除收件箱里的消息")
-    @ApiOperation("删除收件箱里的消息")
-    @PostMapping("/deleteMessageTranses")
-    RespBean deleteMessageTranses(@RequestBody DeleteVo deleteVo) {
-        Integer res = messageService.deleteMessageTranses(deleteVo);
-
-        return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
-    }
+//    @ApiOperation("删除收件箱里的消息")
+//    @PostMapping("/deleteMessageTranses")
+//    RespBean deleteMessageTranses(@RequestBody DeleteVo deleteVo) {
+//        Integer res = messageService.deleteMessageTranses(deleteVo);
+//
+//        return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
+//    }
 
     @ApiOperation("根据搜索项查找对应的users")
     @PostMapping("/selectUsers")

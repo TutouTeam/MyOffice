@@ -26,9 +26,18 @@ public interface MessageTransMapper {
 
     List<Message> getMessagesByFromUserId(@Param("fromUserId") int fromUserId);
 
+    List<Message> getMessagesByFromUserIdAndNotPublish(@Param("fromUserId") int fromUserId);
+
+    List<Message> getDeletedMessages(@Param("fromUserId") int fromUserId);
+
     Integer readMessages(@Param("messageReadVo") MessageReadVo messageReadVo);
+
 
     Integer deleteMessageTranses(@Param("messageTransIds") List<Integer> messageTransIds);
 
     Integer deleteMessageTransesByMessageId(@Param("messageIds") List<Integer> messageIds);
+
+    Integer deleteMessagesToCollection(@Param("messageIds") List<Integer> messageIds);
+
+
 }

@@ -31,11 +31,17 @@ public interface MessageService {
 
     public RespVos<MessageVo> getMessagesByFromUserId(int fromUserId);
 
+    public RespVos<MessageVo> getMessagesByFromUserIdAndNotPublish(int fromUserId);
+
+    public RespVos<MessageVo> getDeletedMessages(int fromUserId);
+
     Integer addMessage(MessageEditVo messageEditVo);
 
     Integer updateMessage(MessageEditVo messageEditVo);
 
     Integer deleteMessages(List<Integer> messageIds);
+
+    Integer deleteMessagesToCollection(List<Integer> messageIds);
 
     Integer publishMessage(int messageId);
 
