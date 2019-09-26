@@ -52,7 +52,7 @@
                 password = #{user.password,jdbcType=VARCHAR},
             </if>
         </set>
-        where userId = #{user.userId,jdbcType=INTEGER}
+        where username = #{user.username,jdbcType=VARCHAR}
     </update>
     <select id="listUserVo" resultMap="BaseResultMap">
         select * from `user` where userId !=0
