@@ -1,6 +1,9 @@
 package com.capgemini.jtp.vo.response;
 
+import com.capgemini.jtp.utils.DateUtils;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.List;
@@ -40,11 +43,15 @@ public class MessageVo {
     /**
      * 开始时间
      */
+    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date beginTime;
 
     /**
      * 结束时间
      */
+    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date endTime;
 
     /**
@@ -70,5 +77,7 @@ public class MessageVo {
     /**
      * 消息发布时间
      */
+    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
 }
