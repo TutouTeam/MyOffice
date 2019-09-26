@@ -111,6 +111,22 @@ public class MessageServiceImpl implements MessageService {
         return respVos;
     }
 
+    @Override
+    public RespVos<MessageVo> getMessagesByFromUserId(int fromUserId) {
+        List<Message> messages = messageTransMapper.getMessagesByFromUserId(fromUserId);
+        List<MessageVo> messageVos = new ArrayList<>();
+        RespVos<MessageVo> respVos = new RespVos<>();
+
+        for (Message message : messages) {
+            messageVos.add(convertToVo(message));
+        }
+
+        respVos.setSize(messageVos.size());
+        respVos.setVos(messageVos);
+
+        return respVos;
+    }
+
     /**
      * 添加消息
      * 如果recipients为null 则表示发送给所有人

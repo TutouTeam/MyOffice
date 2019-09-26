@@ -24,6 +24,8 @@ public interface MessageTransMapper {
 
     List<Message> getMessagesByRecipientId(@Param("recipientId") int recipientId);
 
+    List<Message> getMessagesByFromUserId(@Param("fromUserId") int fromUserId);
+
     Integer readMessages(@Param("messageReadVo") MessageReadVo messageReadVo);
 
     Integer deleteMessageTranses(@Param("messageTransIds") List<Integer> messageTransIds);

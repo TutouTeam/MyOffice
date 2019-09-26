@@ -29,6 +29,8 @@ public interface MessageService {
 
     RespVos<MessageVo> getMessagesByRecipientId(int recipientId);
 
+    public RespVos<MessageVo> getMessagesByFromUserId(int fromUserId);
+
     Integer addMessage(MessageEditVo messageEditVo);
 
     Integer updateMessage(MessageEditVo messageEditVo);

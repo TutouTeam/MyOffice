@@ -69,13 +69,24 @@ public class MessageController {
         RespVos<MessageVo> respVos = messageService.getMessagesByRecipientId(
                 UserUtils.getCurrentUser().getUserId()
         );
-
         if (respVos != null && respVos.getSize() > 0) {
             return RespBean.ok(respVos);
         }
-
         return RespBean.ok("没有我的相关消息!");
     }
+
+    @ApiOperation("获取当前用户已经发送的信息")
+    @GetMapping("/getPublishedMessages")
+    RespBean getPublishedMessages() {
+        RespVos<MessageVo> respVos = messageService.getMessagesByFromUserId(
+                UserUtils.getCurrentUser().getUserId()
+        );
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok(respVos);
+        }
+        return RespBean.ok("我还没有发布过消息!");
+    }
+
 
 //    @ControllerLog(name = "添加信息为草稿")
     @ApiOperation("添加消息为草稿")
@@ -137,8 +148,10 @@ public class MessageController {
         }else {
             return RespBean.error("无搜索项");
         }
-
-
     }
+
+
+
+
 
 }

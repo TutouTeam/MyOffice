@@ -26,6 +26,13 @@
         SELECT messageId FROM message_to_user WHERE toUserId = #{recipientId}
       )
   </select>
+
+
+  <!-- 根据fromUserId获取消息列表 -->
+  <select id="getMessagesByFromUserId" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.Message">
+    SELECT * FROM message WHERE fromUserId = #{fromUserId}
+  </select>
   
   <!-- 标记信息为已读状态 -->
   <update id="readMessages">
