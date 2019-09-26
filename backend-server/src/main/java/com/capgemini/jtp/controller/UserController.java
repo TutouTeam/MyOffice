@@ -48,9 +48,9 @@ public class UserController {
     @ResponseBody
     @RequestMapping(value = "/listUserVo", method = RequestMethod.POST)
     public RespBean listUserVo() {
-        List<UserListVo> userListVos = userService.listUserVo();
+        List<UserMassageRespVo> userListVos = userService.userlistMassage();
         if (userListVos != null) {
-            return RespBean.ok(userListVos);
+            return RespBean.ok("查询成功",userListVos);
         }
         return RespBean.error("查询失败！");
     }

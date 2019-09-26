@@ -103,7 +103,9 @@ public class UserServiceImpl implements UserService {
     {
        return userMapper.getMassageById(userMassageVo.getUserId());
     };
-
+    public List<UserMassageRespVo> userlistMassage(){
+        return userMapper.getMassage();
+    };
 
 //    @Autowired
 //    HrMapper hrMapper;

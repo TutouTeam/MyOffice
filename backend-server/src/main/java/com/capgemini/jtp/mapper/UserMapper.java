@@ -27,6 +27,7 @@ public interface UserMapper {
     UserDetails loadUserMessage(UserResponseVo userResponseVo);
 
     UserMassageRespVo getMassageById(@Param("userId")int userId);
+    List<UserMassageRespVo> getMassage();
 
     List<User> listUserVo();
 

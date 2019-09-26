@@ -36,6 +36,8 @@ public interface UserService extends UserDetailsService {
     UserDetails loadUserMessage(UserResponseVo userResponseVo);
 
     UserMassageRespVo userMassage(UserMassageVo userMassageVo);
+    List<UserMassageRespVo> userlistMassage();
+
 
 //    public MultipartFile updUserProfile(UserEditVo userEditVo);
 
