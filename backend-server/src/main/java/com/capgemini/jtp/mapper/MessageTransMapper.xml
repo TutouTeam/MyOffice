@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.capgemini.jtp.mapper.MessageTransMapper">
+  
+  <!-- 插入信息发送记录 -->
+  <insert id="insertMessageTranses" parameterType="java.util.List">
+    INSERT INTO message_to_user (id, messageId, toUserId)
+    VALUES
+      <foreach collection="messageTranses" item="messageTrans" separator=",">
+        (#{messageTrans.id}, #{messageTrans.messageId}, #{messageTrans.toUserId})
+      </foreach>
+  </insert>
+  
+  <!-- 根据messageId获取消息接收对象 -->
+  <select id="getRecipientsByMessageId" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.User">
+    SELECT * FROM user WHERE userId IN (
+        SELECT toUserId FROM message_to_user WHERE messageId = #{messageId}
+      )
+  </select>
+  
+  <!-- 根据recipientId获取消息列表 -->
+  <select id="getMessagesByRecipientId" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.Message">
+    SELECT * FROM message WHERE messageId IN (
+        SELECT messageId FROM message_to_user WHERE toUserId = #{recipientId}
+      )
+  </select>
+
+
+  <!-- 根据fromUserId获取消息列表 -->
+  <select id="getMessagesByFromUserId" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.Message">
+    SELECT * FROM message WHERE fromUserId = #{fromUserId}
+  </select>
+  
+  <!-- 标记信息为已读状态 -->
+  <update id="readMessages">
+    UPDATE message_to_user SET ifRead = '1'
+    WHERE toUserId = #{messageReadVo.currentUserId} AND messageId IN
+      <foreach collection="messageReadVo.messageIds" item="messageId" separator="," open="(" close=")">
+        #{messageId}
+      </foreach>
+  </update>
+  
+  <!-- 删除收件箱里的消息 -->
+  <delete id="deleteMessageTranses" parameterType="java.util.List">
+    DELETE FROM message_to_user WHERE id IN
+      <foreach collection="messageTransIds" item="messageTransId" separator="," open="(" close=")">
+        #{messageTransId}
+      </foreach>
+  </delete>
+  
+  <!-- 如果信息被删除, 那么将用户收件箱里的信息也删除掉 -->
+  <delete id="deleteMessageTransesByMessageId" parameterType="java.util.List">
+    DELETE FROM message_to_user WHERE messageId IN
+      <foreach collection="messageIds" item="messageId" separator="," open="(" close=")">
+        #{messageId}
+      </foreach>
+  </delete>
+  
+</mapper>

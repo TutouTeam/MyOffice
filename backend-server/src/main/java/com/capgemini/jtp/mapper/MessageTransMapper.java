@@ -1,0 +1,34 @@
+package com.capgemini.jtp.mapper;
+
+import com.capgemini.jtp.entity.Message;
+import com.capgemini.jtp.entity.MessageTrans;
+import com.capgemini.jtp.entity.User;
+import com.capgemini.jtp.vo.request.MessageReadVo;
+import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+
+/**
+ * create by: MmmLll_Shen
+ * description:
+ * create time: 9:53 2019/9/25
+ */
+@Service
+public interface MessageTransMapper {
+
+    Integer insertMessageTranses(@Param("messageTranses") List<MessageTrans> messageTranses);
+
+    List<User> getRecipientsByMessageId(@Param("messageId") int messageId);
+
+    List<Message> getMessagesByRecipientId(@Param("recipientId") int recipientId);
+
+    List<Message> getMessagesByFromUserId(@Param("fromUserId") int fromUserId);
+
+    Integer readMessages(@Param("messageReadVo") MessageReadVo messageReadVo);
+
+    Integer deleteMessageTranses(@Param("messageTransIds") List<Integer> messageTransIds);
+
+    Integer deleteMessageTransesByMessageId(@Param("messageIds") List<Integer> messageIds);
+}

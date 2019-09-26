@@ -8,7 +8,7 @@ import lombok.Setter;
 @Data
 @Getter
 @Setter
-public class UserVo extends BaseVo {
+public class UserVo{
     //用户名（用户唯一标识）
     private int userId;
     //用户名
