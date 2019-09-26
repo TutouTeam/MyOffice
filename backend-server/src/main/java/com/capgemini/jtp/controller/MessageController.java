@@ -11,23 +11,24 @@ package com.capgemini.jtp.controller;
 //import com.capgemini.cn.deemo.vo.request.MessageSearchVo;
 //import com.capgemini.cn.deemo.vo.response.MessageVo;
 import com.capgemini.jtp.common.UserUtils;
+import com.capgemini.jtp.entity.User;
 import com.capgemini.jtp.service.MessageService;
 import com.capgemini.jtp.vo.base.RespBean;
 import com.capgemini.jtp.vo.base.RespVos;
-import com.capgemini.jtp.vo.request.DeleteVo;
-import com.capgemini.jtp.vo.request.MessageEditVo;
-import com.capgemini.jtp.vo.request.MessageReadVo;
-import com.capgemini.jtp.vo.request.MessageSearchVo;
+import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.MessageVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @author hasaker
  * @since 2019/9/5 22:00
  */
-@Api
+@Api("消息系统")
 @RestController
 @RequestMapping("/message")
 public class MessageController {
@@ -125,4 +126,19 @@ public class MessageController {
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条信息!") : RespBean.error("删除失败!");
     }
+
+    @ApiOperation("根据搜索项查找对应的users")
+    @PostMapping("/selectUsers")
+    RespBean selectUsers(@RequestBody MessageUserSearchVo messageUserSearchVo) {
+        List<User> userList = new ArrayList<>();
+        userList = messageService.listUser(messageUserSearchVo);
+        if(userList != null){
+            return RespBean.ok(userList);
+        }else {
+            return RespBean.error("无搜索项");
+        }
+
+
+    }
+
 }

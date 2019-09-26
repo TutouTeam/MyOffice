@@ -79,4 +79,27 @@
     <select id="getUser" resultType="com.capgemini.jtp.entity.User">
         SELECT * FROM user WHERE userId = #{userId};
     </select>
+
+    <select id="selectUserListByMessageUser" parameterType="com.capgemini.jtp.vo.request.MessageUserSearchVo"
+            resultType="com.capgemini.jtp.entity.User">
+        select distinct u.* from user u, branch b, depart d
+        where u.userState = 1
+        <if test="messageUserSearchVo.branchName != null and messageUserSearchVo.branchName !='' ">
+            and b.branchName = #{messageUserSearchVo.branchName,jdbcType=VARCHAR}
+            and b.branchId = d.branchId
+        </if>
+        <if test="messageUserSearchVo.departName != null and messageUserSearchVo.departName !='' ">
+            and d.departName = #{messageUserSearchVo.departName,jdbcType=VARCHAR}
+            and u.departId = d.departId
+        </if>
+        <if test="messageUserSearchVo.chineseName != null and messageUserSearchVo.chineseName !='' ">
+            and u.chineseName like concat(concat('%',#{messageUserSearchVo.chineseName,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="messageUserSearchVo.userId != null and messageUserSearchVo.userId !=0 ">
+            and u.userId = #{messageUserSearchVo.userId,jdbcType=INTEGER}
+        </if>
+        order by u.userId
+    </select>
+
+
 </mapper>

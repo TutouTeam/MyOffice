@@ -33,7 +33,7 @@ public interface UserService extends UserDetailsService {
 
     List<UserListVo> listUserVo();
 
-    UserDetails loadUserMessage(UserResponseVo userResponseVo);
+//    UserDetails loadUserMessage(UserResponseVo userResponseVo);
 
 //    public MultipartFile updUserProfile(UserEditVo userEditVo);
 

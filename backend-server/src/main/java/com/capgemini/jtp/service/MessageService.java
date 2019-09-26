@@ -9,11 +9,9 @@ package com.capgemini.jtp.service;
 //import com.capgemini.cn.deemo.vo.response.MessageVo;
 
 import com.capgemini.jtp.entity.Message;
+import com.capgemini.jtp.entity.User;
 import com.capgemini.jtp.vo.base.RespVos;
-import com.capgemini.jtp.vo.request.DeleteVo;
-import com.capgemini.jtp.vo.request.MessageEditVo;
-import com.capgemini.jtp.vo.request.MessageReadVo;
-import com.capgemini.jtp.vo.request.MessageSearchVo;
+import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.MessageVo;
 
 import java.util.List;
@@ -46,4 +44,6 @@ public interface MessageService {
     Integer deleteMessageTransesByMessageId(List<Integer> messageIds);
 
     MessageVo convertToVo(Message message);
+
+    List<User> listUser(MessageUserSearchVo messageUserSearchVo);
 }

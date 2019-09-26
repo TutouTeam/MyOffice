@@ -32,4 +32,9 @@
     <delete id="deleteBranchByBranchId" parameterType="com.capgemini.jtp.entity.Branch">
         DELETE FROM branch where branchId=#{branch.branchId}
     </delete>
+
+
+    <select id="selectBranchIdByBranchName" resultType="integer">
+        select branchId from branch where branchName = #{branchName}
+    </select>
 </mapper>

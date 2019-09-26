@@ -17,4 +17,6 @@ public interface BranchMapper {
     Integer updateBranch(@Param("branch") Branch branch);
 
     Integer deleteBranchByBranchId(@Param("branch") Branch branch);
+
+    Integer selectBranchIdByBranchName(@Param("branchName") String branchName);
 }

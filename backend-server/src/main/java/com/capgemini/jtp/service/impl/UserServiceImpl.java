@@ -100,10 +100,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.deleteUserByUserId(user);
     }
 
-    @Override
-    public UserDetails loadUserMessage(UserResponseVo userResponseVo){
-        return userMapper.loadUserMessage(userResponseVo);
-    }
+//    @Override
+//    public UserDetails loadUserMessage(UserResponseVo userResponseVo){
+//        return userMapper.loadUserMessage(userResponseVo);
+//    }
 
     @Override
     public List<Integer> getAllUserIds() {

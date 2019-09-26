@@ -13,10 +13,7 @@ import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.utils.ConverLog;
 import com.capgemini.jtp.utils.TimeFrame;
 import com.capgemini.jtp.vo.base.RespVos;
-import com.capgemini.jtp.vo.request.DeleteVo;
-import com.capgemini.jtp.vo.request.MessageEditVo;
-import com.capgemini.jtp.vo.request.MessageReadVo;
-import com.capgemini.jtp.vo.request.MessageSearchVo;
+import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.LoginLogResp;
 import com.capgemini.jtp.vo.response.MessageVo;
 import org.springframework.stereotype.Service;
@@ -209,5 +206,13 @@ public class MessageServiceImpl implements MessageService {
         .stream().map(userService::convertToVo).collect(Collectors.toList()));
 
         return messageVo;
+    }
+
+
+    @Override
+    public List<User> listUser (MessageUserSearchVo messageUserSearchVo){
+        List<User> userList = new ArrayList<>();
+        userList = userMapper.selectUserListByMessageUser(messageUserSearchVo);
+        return userList;
     }
 }
