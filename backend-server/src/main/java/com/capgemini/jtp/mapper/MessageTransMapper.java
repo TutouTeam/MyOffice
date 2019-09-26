@@ -22,6 +22,8 @@ public interface MessageTransMapper {
 
     List<User> getRecipientsByMessageId(@Param("messageId") int messageId);
 
+    List<Message> getMessagesByUserId(@Param("userId") int userId);
+
     List<Message> getMessagesByRecipientId(@Param("recipientId") int recipientId);
 
     List<Message> getMessagesByFromUserId(@Param("fromUserId") int fromUserId);

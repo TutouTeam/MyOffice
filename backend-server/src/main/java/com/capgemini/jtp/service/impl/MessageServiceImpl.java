@@ -96,6 +96,22 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public RespVos<MessageVo> getMessagesByUserId(int userId) {
+        List<Message> messages = messageTransMapper.getMessagesByUserId(userId);
+        List<MessageVo> messageVos = new ArrayList<>();
+        RespVos<MessageVo> respVos = new RespVos<>();
+
+        for (Message message : messages) {
+            messageVos.add(convertToVo(message));
+        }
+
+        respVos.setSize(messageVos.size());
+        respVos.setVos(messageVos);
+
+        return respVos;
+    }
+
+    @Override
     public RespVos<MessageVo> getMessagesByRecipientId(int recipientId) {
         List<Message> messages = messageTransMapper.getMessagesByRecipientId(recipientId);
         List<MessageVo> messageVos = new ArrayList<>();

@@ -27,6 +27,8 @@ public interface MessageService {
 
     RespVos<MessageVo> getMessage(int messageId);
 
+    public RespVos<MessageVo> getMessagesByUserId(int userId);
+
     RespVos<MessageVo> getMessagesByRecipientId(int recipientId);
 
     public RespVos<MessageVo> getMessagesByFromUserId(int fromUserId);
