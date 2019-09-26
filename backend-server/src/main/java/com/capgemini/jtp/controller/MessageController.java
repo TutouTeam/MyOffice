@@ -134,7 +134,7 @@ public class MessageController {
 
 //    @ControllerLog(name = "修改草稿")
     @ApiOperation("修改草稿")
-    @PutMapping("/update")
+    @PostMapping("/update")
     RespBean updateMessage(@RequestBody MessageEditVo messageEditVo) {
         return messageService.updateMessage(messageEditVo) > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }

@@ -10,6 +10,7 @@
         (#{messageTrans.id}, #{messageTrans.messageId}, #{messageTrans.toUserId})
       </foreach>
   </insert>
+
   
   <!-- 根据messageId获取消息接收对象 -->
   <select id="getRecipientsByMessageId" parameterType="Integer"
