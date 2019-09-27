@@ -120,7 +120,7 @@ public class UserController {
         List<Role> listRole = roleMapper.getListRole();
         if (listRole != null) {
 
-            return RespBean.ok("查询成功！",listRole);
+            return RespBean.ok(listRole);
         }
         return RespBean.error("查询失败!");
     }
@@ -132,7 +132,7 @@ public class UserController {
         List<UserStateRespVo> listUserState = roleMapper.listUserState();
         if (listUserState != null) {
 
-            return RespBean.ok("查询成功！",listUserState);
+            return RespBean.ok(listUserState);
         }
         return RespBean.error("查询失败!");
     }
