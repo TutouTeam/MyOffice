@@ -111,7 +111,7 @@ public class MessageController {
         return RespBean.ok("我的草稿箱没有消息!");
     }
 
-    @ApiOperation("获取当前用回收站的所有信息")
+    @ApiOperation("获取当前用户回收站的所有信息")
     @GetMapping("/getDeletedMessages")
     RespBean getDeletedMessages() {
         RespVos<MessageVo> respVos = messageService.getDeletedMessages(

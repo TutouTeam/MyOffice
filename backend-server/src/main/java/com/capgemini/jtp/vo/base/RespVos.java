@@ -19,6 +19,10 @@ public class RespVos<T> {
     @ApiModelProperty(value = "数据总长度")
     private Integer size;
 
+    //新增
+    @ApiModelProperty(value = "未读数据长度")
+    private Integer notReadSize;
+
     @ApiModelProperty(value = "返回数据数组")
     private List<T> vos;
 }

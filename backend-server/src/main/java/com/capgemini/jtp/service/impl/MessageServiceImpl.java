@@ -121,7 +121,11 @@ public class MessageServiceImpl implements MessageService {
             messageVos.add(convertToVo(message));
         }
 
+        //获取未读消息长度
+        List<Message> notReadMessages = messageTransMapper.getMessagesByRecipientIdAndNotReadNotDeleted(recipientId);
+
         respVos.setSize(messageVos.size());
+        respVos.setNotReadSize(notReadMessages.size());
         respVos.setVos(messageVos);
 
         return respVos;
@@ -169,7 +173,11 @@ public class MessageServiceImpl implements MessageService {
             messageVos.add(convertToVo(message));
         }
 
+        //获取未读消息长度
+        List<Message> notReadMessages = messageTransMapper.getMessagesByRecipientIdAndNotReadDeleted(fromUserId);
+
         respVos.setSize(messageVos.size());
+        respVos.setNotReadSize(notReadMessages.size());
         respVos.setVos(messageVos);
 
         return respVos;
