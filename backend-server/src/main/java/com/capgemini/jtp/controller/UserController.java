@@ -4,6 +4,7 @@ import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.mapper.RoleMapper;
 import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.vo.base.RespBean;
+import com.capgemini.jtp.vo.request.UpdatePasswordVo;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
 import com.capgemini.jtp.vo.request.UserMassageVo;
@@ -112,6 +113,19 @@ public class UserController {
             return RespBean.ok("删除成功！");
         }
         return RespBean.error("删除失败!");
+    }
+    @ApiOperation(value = "修改员工密码")
+    @ResponseBody
+    @RequestMapping(value = "/updateUserPw", method = RequestMethod.POST)
+    public RespBean updateUserPassword(@Valid @RequestBody UpdatePasswordVo updatePasswordVo, HttpServletRequest request) {
+        int status = userService.updateUserPassword(updatePasswordVo);
+        if (status != 0) {
+            if (status == -1) {
+                return RespBean.error("无权操作！");
+            }
+            return RespBean.okMessage("修改成功！");
+        }
+        return RespBean.error("修改失败!");
     }
     @ApiOperation(value = "角色列表")
     @ResponseBody

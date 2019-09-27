@@ -8,6 +8,7 @@ import com.capgemini.jtp.mapper.DepartMapper;
 import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.utils.ConvertUtils;
+import com.capgemini.jtp.vo.request.UpdatePasswordVo;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
 import com.capgemini.jtp.vo.request.UserMassageVo;
@@ -90,6 +91,32 @@ public class UserServiceImpl implements UserService {
             user.setPassword(encode);
         }
         user.setUsername(userEditVo.getUsername());
+        return userMapper.updateUser(user);
+    }
+
+    /**
+     * 更改用户密码
+     * @param updatePasswordVo
+     * @return
+     */
+    @Override
+    public int updateUserPassword(UpdatePasswordVo updatePasswordVo){
+        User user = new User();
+        user.setUserId(updatePasswordVo.getUserId());
+        user.setChineseName(null);
+        user.setPassword(null);
+        user.setChineseName(null);
+        user.setDepartId(-1);
+        user.setGender(null);
+        user.setRoleId(-1);
+        user.setUserStateId(-1);
+        if(updatePasswordVo.getPassword() != null && !("".equals(updatePasswordVo.getPassword()))){
+            System.out.println("密码不为空，执行密码加密");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            String encode = encoder.encode(updatePasswordVo.getPassword());
+            user.setPassword(encode);
+        }
+        user.setUsername(null);
         return userMapper.updateUser(user);
     }
 
