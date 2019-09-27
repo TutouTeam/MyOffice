@@ -59,7 +59,7 @@ public class UserController {
     }
     @ApiOperation(value = "员工详细信息")
     @ResponseBody
-    @RequestMapping(value = "/userMassage", method = RequestMethod.GET)
+    @RequestMapping(value = "/userMassage", method = RequestMethod.POST)
     public RespBean userMassage(@Valid @RequestBody UserMassageVo userMassageVo) {
         UserMassageRespVo userMassageRespVo = userService.userMassage(userMassageVo);
 
