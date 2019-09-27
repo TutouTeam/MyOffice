@@ -1,5 +1,6 @@
 package com.capgemini.jtp.vo.base;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,14 +14,10 @@ import lombok.Setter;
 @Setter
 public class BaseSearchVo {
 
-    /**
-     * 搜索起始位置
-     */
-    private Integer start;
+    @ApiModelProperty(value = "分页起始位置")
+    private Integer start = 0;
 
-    /**
-     * 搜索数量
-     */
-    private Integer size;
+    @ApiModelProperty(value = "分页大小")
+    private Integer size = 15;
 
 }

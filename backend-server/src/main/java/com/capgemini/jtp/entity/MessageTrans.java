@@ -10,7 +10,7 @@ import java.util.Date;
 
 @Data
 @Component
-public class MessageToUser {
+public class MessageTrans {
     /**
      * 序号Id
      */
@@ -22,7 +22,7 @@ public class MessageToUser {
     /**
      * 发送给对象Id
      */
-    private String toUserId;
+    private int toUserId;
     /**
      * 是否已读，已读是1 未读是0；
      */

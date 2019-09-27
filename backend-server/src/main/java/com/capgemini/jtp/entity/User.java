@@ -32,7 +32,12 @@ public class User implements UserDetails {
     //性别
     private String gender;
 
+    private int roleId;
+
+    private int userStateId;
+
     private List<Role> roles;
+
 
 
 

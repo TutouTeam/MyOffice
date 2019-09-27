@@ -78,7 +78,7 @@ public class ManualSignController {
 
    }
     @ApiOperation(value = "列出所有机构名称")
-    @GetMapping("/attendsearch/branch")
+    @RequestMapping("/attendsearch/branch")
     public List<BranchVo> loadListBranch(){
         List<BranchVo> branchVoList =manualSignService.listBranch();
         if(branchVoList ==null){
