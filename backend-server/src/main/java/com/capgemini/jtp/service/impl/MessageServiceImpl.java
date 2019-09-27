@@ -96,6 +96,22 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
+    public RespVos<MessageVo> getMessagesByUserId(int userId) {
+        List<Message> messages = messageTransMapper.getMessagesByUserId(userId);
+        List<MessageVo> messageVos = new ArrayList<>();
+        RespVos<MessageVo> respVos = new RespVos<>();
+
+        for (Message message : messages) {
+            messageVos.add(convertToVo(message));
+        }
+
+        respVos.setSize(messageVos.size());
+        respVos.setVos(messageVos);
+
+        return respVos;
+    }
+
+    @Override
     public RespVos<MessageVo> getMessagesByRecipientId(int recipientId) {
         List<Message> messages = messageTransMapper.getMessagesByRecipientId(recipientId);
         List<MessageVo> messageVos = new ArrayList<>();
@@ -105,7 +121,11 @@ public class MessageServiceImpl implements MessageService {
             messageVos.add(convertToVo(message));
         }
 
+        //获取未读消息长度
+        List<Message> notReadMessages = messageTransMapper.getMessagesByRecipientIdAndNotReadNotDeleted(recipientId);
+
         respVos.setSize(messageVos.size());
+        respVos.setNotReadSize(notReadMessages.size());
         respVos.setVos(messageVos);
 
         return respVos;
@@ -153,7 +173,11 @@ public class MessageServiceImpl implements MessageService {
             messageVos.add(convertToVo(message));
         }
 
+        //获取未读消息长度
+        List<Message> notReadMessages = messageTransMapper.getMessagesByRecipientIdAndNotReadDeleted(fromUserId);
+
         respVos.setSize(messageVos.size());
+        respVos.setNotReadSize(notReadMessages.size());
         respVos.setVos(messageVos);
 
         return respVos;
@@ -200,7 +224,40 @@ public class MessageServiceImpl implements MessageService {
 
     @Override
     public Integer updateMessage(MessageEditVo messageEditVo) {
-        return messageMapper.updateMessage(messageEditVo);
+//        Long messageId2 = IdWorker.get().nextId();
+        List<MessageTrans> messageTranses = new ArrayList<>();
+//        int messageId = messageId2.intValue();
+//        messageEditVo.setMessageId(messageId);
+
+        if (messageEditVo.getRecipientIds() != null && messageEditVo.getRecipientIds().size() != 0) {
+            for (int recipientId : messageEditVo.getRecipientIds()) {
+                messageTranses.add(new MessageTrans(){{
+                    Long nextId2 = IdWorker.get().nextId();
+                    int nextId = nextId2.intValue();
+                    setId(nextId);
+                    setMessageId(messageEditVo.getMessageId());
+                    setToUserId(recipientId);
+                }});
+            }
+        } else {
+            for (int recipientId : userService.getAllUserIds()) {
+                messageTranses.add(new MessageTrans(){{
+                    Long nextId2 = IdWorker.get().nextId();
+                    int nextId = nextId2.intValue();
+                    setId(nextId);
+                    setMessageId(messageEditVo.getMessageId());
+                    setToUserId(recipientId);
+                }});
+            }
+        }
+//        messageEditVo.setCreateTime(new Date());
+        Integer res1 = messageMapper.updateMessage(messageEditVo);
+        List<Integer> messageIdList = new ArrayList<>();
+        messageIdList.add(messageEditVo.getMessageId());
+        Integer res = messageTransMapper.deleteMessageTransesByMessageId(messageIdList);
+        Integer res2 = messageTransMapper.insertMessageTranses(messageTranses);
+        return res1 + res2;
+
     }
 
     @Override
@@ -253,6 +310,8 @@ public class MessageServiceImpl implements MessageService {
         messageVo.setEndTime(message.getEndTime());
         messageVo.setCreateUserId(message.getFromUserId());
         messageVo.setCreateUserName(createUser == null ? null : createUser.getChineseName());
+        //
+        messageVo.setCreateTime(message.getCreateTime());
         messageVo.setIsPublished(message.getIfPublish());
         messageVo.setPublishTime(message.getRecordTime());
         messageVo.setRecipients(messageTransMapper.getRecipientsByMessageId(message.getMessageId())

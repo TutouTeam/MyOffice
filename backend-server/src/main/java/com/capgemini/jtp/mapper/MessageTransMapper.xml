@@ -10,12 +10,25 @@
         (#{messageTrans.id}, #{messageTrans.messageId}, #{messageTrans.toUserId})
       </foreach>
   </insert>
+
   
   <!-- 根据messageId获取消息接收对象 -->
   <select id="getRecipientsByMessageId" parameterType="Integer"
           resultType="com.capgemini.jtp.entity.User">
     SELECT * FROM user WHERE userId IN (
         SELECT toUserId FROM message_to_user WHERE messageId = #{messageId}
+      )
+  </select>
+
+  <!-- 根据userId获取所有相关的消息 -->
+  <select id="getMessagesByUserId" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.Message">
+    SELECT * FROM message WHERE fromUserId = #{userId}
+    and isDeleted = '0'
+    or messageId IN (
+        SELECT m.messageId FROM message_to_user mt,message m WHERE mt.toUserId = #{userId}
+        and m.messageId = mt.messageId
+        and m.isDeleted = '0'
       )
   </select>
   
@@ -26,6 +39,26 @@
         SELECT messageId FROM message_to_user WHERE toUserId = #{recipientId}
       )
       and isDeleted = '0'
+  </select>
+
+  <!-- 根据recipientId获取未读消息列表（未删除） -->
+  <select id="getMessagesByRecipientIdAndNotReadNotDeleted" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.Message">
+    SELECT * FROM message WHERE messageId IN (
+        SELECT messageId FROM message_to_user WHERE toUserId = #{recipientId}
+        and ifRead = '0'
+      )
+      and isDeleted = '0'
+  </select>
+
+  <!-- 根据recipientId获取未读消息列表（已删除） -->
+  <select id="getMessagesByRecipientIdAndNotReadDeleted" parameterType="Integer"
+          resultType="com.capgemini.jtp.entity.Message">
+    SELECT * FROM message WHERE messageId IN (
+        SELECT messageId FROM message_to_user WHERE toUserId = #{recipientId}
+        and ifRead = '0'
+      )
+      and isDeleted = '1'
   </select>
 
 

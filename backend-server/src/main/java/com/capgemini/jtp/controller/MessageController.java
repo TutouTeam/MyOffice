@@ -63,6 +63,18 @@ public class MessageController {
         return RespBean.error("查询失败!");
     }
 
+    @ApiOperation("获取与当前用户相关的所有消息!")
+    @GetMapping("/getMessagesByUserId")
+    RespBean getMessagesByUserId() {
+        RespVos<MessageVo> respVos = messageService.getMessagesByUserId(
+                UserUtils.getCurrentUser().getUserId()
+        );
+        if (respVos != null && respVos.getSize() > 0) {
+            return RespBean.ok(respVos);
+        }
+        return RespBean.ok("没有我的相关消息!");
+    }
+
     @ApiOperation("获取发送给当前用户的所有消息!")
     @GetMapping("/")
     RespBean getMessagesByRecipientId() {
@@ -99,7 +111,7 @@ public class MessageController {
         return RespBean.ok("我的草稿箱没有消息!");
     }
 
-    @ApiOperation("获取当前用回收站的所有信息")
+    @ApiOperation("获取当前用户回收站的所有信息")
     @GetMapping("/getDeletedMessages")
     RespBean getDeletedMessages() {
         RespVos<MessageVo> respVos = messageService.getDeletedMessages(
@@ -122,7 +134,7 @@ public class MessageController {
 
 //    @ControllerLog(name = "修改草稿")
     @ApiOperation("修改草稿")
-    @PutMapping("/update")
+    @PostMapping("/update")
     RespBean updateMessage(@RequestBody MessageEditVo messageEditVo) {
         return messageService.updateMessage(messageEditVo) > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }

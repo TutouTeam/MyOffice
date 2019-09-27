@@ -59,6 +59,11 @@ public class MessageVo {
      */
     private List<UserVo> recipients;
 
+    //创建时间
+    @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date createTime;
+
     /**
      * 消息创建用户ID
      */
