@@ -27,4 +27,11 @@
             #{roleAddVo.roleName,jdbcType=VARCHAR}, #{roleAddVo.roleDesc,jdbcType=VARCHAR}
             )
     </insert>
+    <select id="listUserState" resultType="com.capgemini.jtp.vo.response.UserStateRespVo">
+        select * from user_state where userStateId >= 0
+    </select>
+    <select id="getListRole" resultType="com.capgemini.jtp.entity.Role">
+       select *
+       from role
+   </select>
 </mapper>

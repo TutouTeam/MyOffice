@@ -1,13 +1,13 @@
 package com.capgemini.jtp.controller;
 
+import com.capgemini.jtp.entity.Role;
+import com.capgemini.jtp.mapper.RoleMapper;
 import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.vo.base.RespBean;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
 import com.capgemini.jtp.vo.request.UserMassageVo;
-import com.capgemini.jtp.vo.response.UserListVo;
-import com.capgemini.jtp.vo.response.UserMassageRespVo;
-import com.capgemini.jtp.vo.response.UserResponseVo;
+import com.capgemini.jtp.vo.response.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,8 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    RoleMapper roleMapper;
 
 
 
@@ -111,6 +113,31 @@ public class UserController {
         }
         return RespBean.error("删除失败!");
     }
+    @ApiOperation(value = "角色列表")
+    @ResponseBody
+    @RequestMapping(value = "/listRole", method = RequestMethod.GET)
+    public RespBean listRole() {
+        List<Role> listRole = roleMapper.getListRole();
+        if (listRole != null) {
+
+            return RespBean.ok("查询成功！",listRole);
+        }
+        return RespBean.error("查询失败!");
+    }
+
+    @ApiOperation(value = "用户状态列表")
+    @ResponseBody
+    @RequestMapping(value = "/userState", method = RequestMethod.GET)
+    public RespBean listUserState() {
+        List<UserStateRespVo> listUserState = roleMapper.listUserState();
+        if (listUserState != null) {
+
+            return RespBean.ok("查询成功！",listUserState);
+        }
+        return RespBean.error("查询失败!");
+    }
+
+
 
 //    @Override
 //    public MultipartFile updUserProfile(MultipartFile newProfile) {
