@@ -4,6 +4,7 @@ import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.mapper.RoleMapper;
 import com.capgemini.jtp.service.UserService;
 import com.capgemini.jtp.vo.base.RespBean;
+import com.capgemini.jtp.vo.request.UpdatePasswordVo;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
 import com.capgemini.jtp.vo.request.UserMassageVo;
@@ -58,7 +59,7 @@ public class UserController {
     }
     @ApiOperation(value = "员工详细信息")
     @ResponseBody
-    @RequestMapping(value = "/userMassage", method = RequestMethod.GET)
+    @RequestMapping(value = "/userMassage", method = RequestMethod.POST)
     public RespBean userMassage(@Valid @RequestBody UserMassageVo userMassageVo) {
         UserMassageRespVo userMassageRespVo = userService.userMassage(userMassageVo);
 
@@ -113,6 +114,19 @@ public class UserController {
         }
         return RespBean.error("删除失败!");
     }
+    @ApiOperation(value = "修改员工密码")
+    @ResponseBody
+    @RequestMapping(value = "/updateUserPw", method = RequestMethod.POST)
+    public RespBean updateUserPassword(@Valid @RequestBody UpdatePasswordVo updatePasswordVo, HttpServletRequest request) {
+        int status = userService.updateUserPassword(updatePasswordVo);
+        if (status != 0) {
+            if (status == -1) {
+                return RespBean.error("无权操作！");
+            }
+            return RespBean.okMessage("修改成功！");
+        }
+        return RespBean.error("修改失败!");
+    }
     @ApiOperation(value = "角色列表")
     @ResponseBody
     @RequestMapping(value = "/listRole", method = RequestMethod.GET)
@@ -120,7 +134,7 @@ public class UserController {
         List<Role> listRole = roleMapper.getListRole();
         if (listRole != null) {
 
-            return RespBean.ok("查询成功！",listRole);
+            return RespBean.ok(listRole);
         }
         return RespBean.error("查询失败!");
     }
@@ -132,7 +146,7 @@ public class UserController {
         List<UserStateRespVo> listUserState = roleMapper.listUserState();
         if (listUserState != null) {
 
-            return RespBean.ok("查询成功！",listUserState);
+            return RespBean.ok(listUserState);
         }
         return RespBean.error("查询失败!");
     }
