@@ -1,6 +1,7 @@
 package com.capgemini.jtp.service.impl;
 
 
+import com.capgemini.jtp.common.UserUtils;
 import com.capgemini.jtp.entity.Depart;
 import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.entity.User;
@@ -76,7 +77,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int updateUser(UserEditVo userEditVo) {
         User user = new User();
-        user.setUserId(userEditVo.getUserId());
+        user.setUserId(UserUtils.getCurrentUser().getUserId());
         user.setChineseName(userEditVo.getChineseName());
         user.setPassword(userEditVo.getPassword());
         user.setChineseName(userEditVo.getChineseName());
