@@ -1,5 +1,6 @@
 package com.capgemini.jtp.controller;
 
+import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.HeadPortraitService;
 import com.capgemini.jtp.vo.base.RespBean;
 import io.swagger.annotations.Api;
@@ -9,7 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintWriter;
 
 @RestController
 @Api("头像")
@@ -17,6 +22,9 @@ import java.io.IOException;
 public class HeadPortraitController {
     @Autowired
     HeadPortraitService headPortraitService;
+
+    @Autowired
+    UserMapper userMapper;
     @ApiOperation(value = "上传头像")
     @ResponseBody
     @RequestMapping(value = "/headUpload", method = RequestMethod.POST)
@@ -40,5 +48,43 @@ public class HeadPortraitController {
         }
 
     }
+
+    @ApiOperation(value = "显示头像")
+    @ResponseBody
+    @RequestMapping(value = "/getload", method = RequestMethod.POST)
+    public void getimg(HttpServletRequest request, HttpServletResponse response) throws IOException{
+
+        Object object = request.getSession().getAttribute("operationUserId");
+        int userId=0;
+        if(object != null){
+            userId = Integer.valueOf(String.valueOf(object));
+        }
+        String userName = userMapper.getMassageById(userId).getUsername();
+
+        String newFileName=userName+".jpg";
+        //ServletContext sc = request.getSession().getServletContext();
+        //String path = sc.getRealPath("/img/")+ DateUtils.getCurrentDateTime()+ File.separator;//设定文件保存的目录
+        String path = "d:/MyOffice/images/Users/";
+
+        try {
+            FileInputStream hFile=new FileInputStream(path+userName);
+            int i=hFile.available();
+            byte data[]=new byte[i];
+            hFile.read(data);
+            hFile.close();
+            response.setContentType("application/x-jpg");
+            OutputStream toClient=response.getOutputStream();
+            toClient.write(data);
+            toClient.close();
+        }catch (IOException e){
+            PrintWriter toClient=response.getWriter();
+            response.setContentType("text/html;charset=utf-8");
+            toClient.write("无法打开图片");
+            toClient.close();
+        }
+
+
+    }
+
 
 }

@@ -6,6 +6,7 @@ package com.capgemini.jtp.service;
 //import com.capgemini.jtp.vo.employee.request.HrSearchVo;
 //import com.capgemini.jtp.vo.employee.response.HrResponseVo;
 import com.capgemini.jtp.entity.User;
+import com.capgemini.jtp.vo.request.UpdatePasswordVo;
 import com.capgemini.jtp.vo.request.UserDeleteVo;
 import com.capgemini.jtp.vo.request.UserEditVo;
 import com.capgemini.jtp.vo.request.UserMassageVo;
@@ -32,6 +33,7 @@ public interface UserService extends UserDetailsService {
 //    List<Hr> getHrsByKeywords(String keywords);
 //
     int updateUser(UserEditVo userEditVo);
+    int updateUserPassword(UpdatePasswordVo updatePasswordVo);
 
     List<UserListVo> listUserVo();
 

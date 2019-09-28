@@ -2,9 +2,10 @@ package com.capgemini.jtp.mapper;
 
 
 
+import com.capgemini.jtp.entity.Role;
 import com.capgemini.jtp.vo.request.RoleAddVo;
-import com.capgemini.jtp.vo.request.RoleDeleteVo;
 import com.capgemini.jtp.vo.response.RoleListVo;
+import com.capgemini.jtp.vo.response.UserStateRespVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -16,4 +17,6 @@ public interface RoleMapper {
     Integer updateRoleById(@Param("roleAdd") RoleAddVo roleAdd);
     Integer deleteRoleById(int roleId);
     Integer addRoleById(@Param("roleAddVo") RoleAddVo roleAddVo);
+    List<UserStateRespVo> listUserState();
+    List<Role> getListRole();
 }

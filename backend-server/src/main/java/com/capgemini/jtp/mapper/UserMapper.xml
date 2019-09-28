@@ -67,14 +67,27 @@
     <update id="updateUser" parameterType="com.capgemini.jtp.entity.User">
         update user
         <set>
-<!--            <if test="user.name != null">-->
-<!--                name = #{user.name,jdbcType=VARCHAR},-->
-<!--            </if>-->
-<!--            <if test="user.username != null">-->
-<!--                username = #{user.username,jdbcType=VARCHAR},-->
-<!--            </if>-->
+
+            <if test="user.username != null">
+                username = #{user.username},
+            </if>
             <if test="user.password != null and user.password !='' ">
-                password = #{user.password,jdbcType=VARCHAR},
+                password = #{user.password},
+            </if>
+            <if test="user.chineseName != null">
+                chineseName = #{user.chineseName},
+            </if>
+            <if test="user.departId != 0 and user.departId != null">
+                departId = #{user.departId},
+            </if>
+            <if test="user.gender != null and user.password !='' ">
+                gender = #{user.gender},
+            </if>
+            <if test="user.roleId != 0 and user.roleId != null">
+                roleId = #{user.roleId},
+            </if>
+            <if test="user.userStateId != 0 and user.userStateId != null">
+                userState = #{user.userStateId},
             </if>
         </set>
         where userId = #{user.userId,jdbcType=INTEGER}
