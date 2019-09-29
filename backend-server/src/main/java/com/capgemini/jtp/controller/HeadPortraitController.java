@@ -72,7 +72,7 @@ public class HeadPortraitController {
             byte data[]=new byte[i];
             hFile.read(data);
             hFile.close();
-            response.setContentType("application/x-jpg");
+            response.setContentType("image/jpeg");
             OutputStream toClient=response.getOutputStream();
             toClient.write(data);
             toClient.close();

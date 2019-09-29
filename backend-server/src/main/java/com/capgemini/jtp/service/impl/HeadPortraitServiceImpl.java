@@ -81,9 +81,9 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
         {
             if(files.delete())
             {
-                System.out.println("删除成功");
+                System.out.println("临时文件删除成功");
             }else
-                System.out.println("删除失败");
+                System.out.println("临时文件删除失败");
         }
 
         return i;
