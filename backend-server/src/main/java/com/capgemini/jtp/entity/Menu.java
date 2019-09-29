@@ -3,6 +3,7 @@ package com.capgemini.jtp.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import java.util.List;
  * description:
  * create time: 11:18 2019/9/18
  */
+
 public class Menu implements Serializable {
 
     private int nodeId;
@@ -23,6 +25,8 @@ public class Menu implements Serializable {
     private int parentNodeId;
     private List<Menu> children;
     private List<Role> roles;
+
+
 
     public int getNodeId() {
         return nodeId;
