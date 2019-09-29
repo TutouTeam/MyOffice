@@ -3,10 +3,13 @@ package com.capgemini.jtp.entity;
 
 import com.capgemini.jtp.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -14,8 +17,7 @@ import java.util.Date;
  * description:文件管理的实体类
  * create time: 13:31 2019/9/22
  */
-@Getter
-@Setter
+@Data
 public class FileInfo {
     /**
      * 文件ID
@@ -62,4 +64,13 @@ public class FileInfo {
     private String ifDelete;
 
     private int lastParentId;//??????????????????????????????
+
+    private List<FileInfo> treeList =new ArrayList<>();
+
+
+
+
+
+
+
 }
