@@ -89,22 +89,20 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
         return i;
     }
     @Override
-   public int headDownload(HttpServletRequest request, HttpServletResponse response){
-//        Object object = request.getSession().getAttribute("operationUserId");
-//        int userId=0;
-//        if(object != null){
-//            userId = Integer.valueOf(String.valueOf(object));
-//        }
-//        String userName = userMapper.getMassageById(userId).getUsername();
-//        String fileName=userName+".jpg";
-//        String path = "d:/MyOffice/images/Users/";
-//        File file = new File(path+fileName);
-//        if(!file.exists()){
-//            return -1;//不存在
-//        }
-//        String  realName = file.getName();
-//        response.setHeader("Content-disposition","attachment;filename="+ URLEncoder.encode(realName,"UTF-8"));
-//        FileInputStream fis = new FileInputStream(fileName)
-       return 0;
+   public String  getHeadUrl(HttpServletRequest request){
+        Object object = request.getSession().getAttribute("operationUserId");
+        int userId;
+        if(object != null){
+            userId = Integer.valueOf(String.valueOf(object));
+        }else userId=0;
+        String userName = userMapper.getMassageById(userId).getUsername();
+        String newFileName=userName+".jpg";
+        String path = "d:/MyOffice/images/Users/";
+        File file=new File(path+newFileName);
+        if(file.exists())
+        {
+            return path+newFileName;
+        }else
+       return null;
     }
 }

@@ -8,5 +8,5 @@ import java.io.IOException;
 
 public interface HeadPortraitService {
     int headUpload(MultipartFile file, HttpServletRequest request) throws IOException;
-    int headDownload(HttpServletRequest request, HttpServletResponse response);
+    String getHeadUrl(HttpServletRequest request);
 }
