@@ -15,13 +15,13 @@ import javax.validation.Valid;
 public class FileManageController {
     @Autowired
     FileManageService fileManageService;
-    @ApiOperation(value = "三级菜单")
-    @ResponseBody
-    @RequestMapping(value = "/threemenu", method = RequestMethod.GET)
-    public RespBean threeMenu() {
-
-        return RespBean.ok(fileManageService.threeMenu());
-    }
+//    @ApiOperation(value = "三级菜单")
+//    @ResponseBody
+//    @RequestMapping(value = "/threemenu", method = RequestMethod.GET)
+//    public RespBean threeMenu() {
+//
+//        return RespBean.ok(fileManageService.threeMenu());
+//    }
     @ApiOperation(value = "n级菜单")
     @ResponseBody
 //    @RequestMapping(value = "/nmenu", method = RequestMethod.POST)

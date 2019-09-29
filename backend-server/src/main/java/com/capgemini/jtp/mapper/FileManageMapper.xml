@@ -11,15 +11,15 @@
        <result column="createUser" jdbcType="VARCHAR" property="createUser" />
    </resultMap>
 
- <select id="getChildren" resultType="String">
-       select fileId from file where parentId = #{parent}
+ <select id="getChildren" resultType="com.capgemini.jtp.vo.response.FileTestRespVo">
+       select fileId,fileName,fileType,remark from file where parentId = #{parent}
    </select>
-    <select id="getParent" resultType="String">
-       select parentId from file where fileId = #{children}
+    <select id="getParent" resultType="com.capgemini.jtp.vo.response.FileTestRespVo">
+       select fileId,fileName,fileType,remark from file where fileId = #{children}
    </select>
 
-    <select id="getRootName" resultType="String">
-       select fileId from file where parentId=0
+    <select id="getRootName" resultType="com.capgemini.jtp.vo.response.FileTestRespVo">
+       select fileId,fileName,fileType,remark from file where parentId=0
    </select>
 
 
