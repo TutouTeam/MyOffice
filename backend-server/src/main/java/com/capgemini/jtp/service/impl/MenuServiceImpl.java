@@ -110,6 +110,7 @@ public class MenuServiceImpl implements MenuService {
 ////    }
 
 
+    @Override
     public List<FileInfo> getTree() {
         List<FileInfo> tree = fileInfoMapper.getTree();//返回所有父级
         List<FileInfo> allTree = fileInfoMapper.getAllMenus();//返回所有数据
