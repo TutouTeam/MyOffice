@@ -3,6 +3,7 @@ package com.capgemini.jtp.controller;
 import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.HeadPortraitService;
 import com.capgemini.jtp.vo.base.RespBean;
+import com.capgemini.jtp.vo.request.UserNameVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,9 +52,9 @@ public class HeadPortraitController {
     @ApiOperation(value = "显示头像")
     @ResponseBody
     @RequestMapping(value = "/getHeadUrl", method = RequestMethod.POST)
-    public RespBean getHeadUrl(@Valid @RequestBody String userName ,HttpServletRequest request) throws IOException{
+    public RespBean getHeadUrl(@Valid @RequestBody UserNameVo  userNameVo, HttpServletRequest request) throws IOException{
 
-        String  string =headPortraitService.getHeadUrl(userName,request);
+        String  string =headPortraitService.getHeadUrl(userNameVo.getUserName(),request);
         if(string==null)
         {
             return RespBean.error("没有找到相应头像");
