@@ -27,7 +27,7 @@ public class AddFileReq {
     /**
      * 文件名称
      */
-    private String fileName;
+    private String label;
     /**
      * 文件类型
      */

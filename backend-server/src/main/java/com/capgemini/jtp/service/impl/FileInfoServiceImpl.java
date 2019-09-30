@@ -102,7 +102,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         filePath.append(fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()).toString());
         filePath.append('\\');
         filePath.append('\\');
-        filePath.append(addFileReq.getFileName());
+        filePath.append(addFileReq.getLabel());
         fileInfo.setFilePath(filePath.toString());
         return fileInfoMapper.addFileInfo(fileInfo);
     }
@@ -137,7 +137,7 @@ public class FileInfoServiceImpl implements FileInfoService {
         filePath.append(fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()).toString());
         filePath.append('\\');
         filePath.append('\\');
-        filePath.append(addFileReq.getFileName());
+        filePath.append(addFileReq.getLabel());
         fileInfo.setFilePath(filePath.toString());
 //        String filePath = fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()) + "\\" + "\\" + addFileReq.getFileName();
         File file=new File(filePath.toString()); //假设你要创建的目录是 d:/xxx
@@ -228,7 +228,7 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public Integer createFile(CreateFileReq addFileReq) {
         FileInfo fileInfo = ConvertUtils.convertCreateFileInfoToFileInfo(addFileReq);
-        File file = new File(fileInfo.getFilePath() + "\\" + fileInfo.getFileName());
+        File file = new File(fileInfo.getFilePath() + "\\" + fileInfo.getLabel());
 
         try {
             file.createNewFile();

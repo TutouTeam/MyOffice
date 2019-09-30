@@ -26,7 +26,7 @@ public class ListRecycleBinResp {
     /**
      *文件名称
      */
-    private String fileName;
+    private String label;
 
     /**
      *文件路径

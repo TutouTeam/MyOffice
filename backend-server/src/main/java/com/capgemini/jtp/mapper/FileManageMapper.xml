@@ -12,14 +12,14 @@
    </resultMap>
 
  <select id="getChildren" resultType="com.capgemini.jtp.vo.response.FileTestRespVo">
-       select fileId,fileName,fileType,remark from file where parentId = #{parent}
+       select fileId,label,fileType,remark from file where parentId = #{parent}
    </select>
     <select id="getParent" resultType="com.capgemini.jtp.vo.response.FileTestRespVo">
-       select fileId,fileName,fileType,remark from file where fileId = #{children}
+       select fileId,label,fileType,remark from file where fileId = #{children}
    </select>
 
     <select id="getRootName" resultType="com.capgemini.jtp.vo.response.FileTestRespVo">
-       select fileId,fileName,fileType,remark from file where parentId=0
+       select fileId,label,fileType,remark from file where parentId=0
    </select>
 
 
