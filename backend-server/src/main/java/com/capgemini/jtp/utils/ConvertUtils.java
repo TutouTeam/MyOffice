@@ -8,6 +8,8 @@ import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 /**
  * create by: MmmLll_Shen
  * description:
@@ -64,11 +66,30 @@ public class ConvertUtils {
         fileInfo.setFileName(addFileReq.getFileName());
         fileInfo.setFileType(addFileReq.getFileType());
         fileInfo.setFileOwner(addFileReq.getFileOwner());
-        fileInfo.setCreateDate(addFileReq.getCreateDate());
+        fileInfo.setCreateDate(new Date());
         fileInfo.setParentId(addFileReq.getParentId());
-        fileInfo.setRemark(addFileReq.getRemark());
-        fileInfo.setFilePath(addFileReq.getFilePath());
+        if(addFileReq.getRemark() != null && addFileReq.getRemark() != ""){
+            fileInfo.setRemark(addFileReq.getRemark());
+        }
+
+//        fileInfo.setFilePath(addFileReq.getFilePath());
         return fileInfo;
+    }
+
+
+    /**
+     * 将新建文件的信息转为FileInfo类型
+     * @return
+     */
+    public static AccessoryInfo convertAddAccessoryInfoToAccessoryInfo(AddAccessoryReq addAccessoryReq) {
+        AccessoryInfo accessoryInfo = new AccessoryInfo();
+        accessoryInfo.setFileId(addAccessoryReq.getFileId());
+        accessoryInfo.setAccessoryName(addAccessoryReq.getAccessoryName());
+        accessoryInfo.setAccessorySize(addAccessoryReq.getAccessorySize());
+        accessoryInfo.setCreateDate(new Date());
+        accessoryInfo.setAccessoryType(addAccessoryReq.getAccessoryType());
+
+        return accessoryInfo;
     }
 
     /**
@@ -150,7 +171,7 @@ public class ConvertUtils {
     public static FileInfo convertMoveFileToRecycleBinReqToFileInfo(MoveFileToRecycleBinReq moveFileToRecycleBinReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(moveFileToRecycleBinReq.getFileId());
-        fileInfo.setDeleteDate(moveFileToRecycleBinReq.getDeleteDate());
+//        fileInfo.setDeleteDate(moveFileToRecycleBinReq.getDeleteDate());
         fileInfo.setParentId(moveFileToRecycleBinReq.getParentId());
         return fileInfo;
     }
@@ -166,7 +187,7 @@ public class ConvertUtils {
         listRecycleBinResp.setFileId(fileInfo.getFileId());
         listRecycleBinResp.setFileName(fileInfo.getFileName());
         listRecycleBinResp.setFilePath(fileInfo.getFilePath());
-        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
+//        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
         listRecycleBinResp.setLastParentId(fileInfo.getLastParentId());
         return listRecycleBinResp;
     }
@@ -181,7 +202,7 @@ public class ConvertUtils {
 
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(fileReductionReq.getFileId());
-        fileInfo.setLastParentId(fileReductionReq.getLastParentId());
+//        fileInfo.setLastParentId(fileReductionReq.getLastParentId());
         return fileInfo;
 
     }

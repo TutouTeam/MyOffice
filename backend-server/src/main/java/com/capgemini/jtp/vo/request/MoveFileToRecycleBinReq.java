@@ -24,9 +24,9 @@ public class MoveFileToRecycleBinReq {
 
     private int parentId;
 
-    /**
-     * 删除时间
-     */
-    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS, timezone=DateUtils.DEFAULT_ZONE)
-    private Date deleteDate;
+//    /**
+//     * 删除时间
+//     */
+//    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS, timezone=DateUtils.DEFAULT_ZONE)
+//    private Date deleteDate;
 }
