@@ -29,8 +29,9 @@ public class JtpSysApplication {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
 		String path1="D:\\MyOffice\\images\\temps";
 		File f1=new File(path1);
-		if(!f1.exists())
+		if(!f1.exists()){
 			f1.mkdirs();
+		}
 		factory.setLocation("D:\\MyOffice\\images\\temps");
 
 		return factory.createMultipartConfig();

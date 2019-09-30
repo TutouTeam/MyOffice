@@ -3,38 +3,6 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.capgemini.jtp.mapper.FileInfoMapper">
-
-<!--    <resultMap id="MenuList" type="com.capgemini.jtp.entity.FileInfo">-->
-<!--        <id column="fileId" property="fileId" jdbcType="INTEGER"/>-->
-<!--        <result column="fileName" property="fileName" jdbcType="VARCHAR"/>-->
-
-<!--        <collection property="children" ofType="com.capgemini.jtp.entity.FileInfo">-->
-<!--            <id column="fileId2" property="fileId"/>-->
-<!--            <result column="fileName2" property="fileName" jdbcType="VARCHAR"/>-->
-<!--            <collection property="children" ofType="com.capgemini.jtp.entity.FileInfo">-->
-<!--                <id column="fileId3" property="fileId"/>-->
-<!--                <result column="fileName3" property="fileName" jdbcType="VARCHAR"/>-->
-<!--            </collection>-->
-<!--            &lt;!&ndash;            <collection property="children" ofType="com.capgemini.jtp.entity.FileInfo">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <id column="fileid2" property="fileId"/>&ndash;&gt;-->
-<!--            &lt;!&ndash;                <result column="fileName2" property="fileName" jdbcType="VARCHAR"/>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </collection>&ndash;&gt;-->
-<!--            &lt;!&ndash;            <collection property="children" ofType="com.capgemini.jtp.entity.FileInfo">&ndash;&gt;-->
-<!--            &lt;!&ndash;                <id column="fileid3" property="fileId"/>&ndash;&gt;-->
-<!--            &lt;!&ndash;                <result column="fileName3" property="fileName" jdbcType="VARCHAR"/>&ndash;&gt;-->
-<!--            &lt;!&ndash;            </collection>&ndash;&gt;-->
-
-
-<!--        </collection>-->
-
-<!--    </resultMap>-->
-
-
-<!--        <select id="menuTree" resultMap="MenuList">&ndash;&gt;-->
-<!--     select  m1.`fileId`,m1.`fileName`, m2.`fileId` as fileId2, m2.`fileName` as fileName2, m3.`fileId` as fileId3,m3.`fileName` as fileName3-->
-<!--      from file m1,file m2,file m3-->
-<!--     where m1.`fileId`=m2.`parentId` and m2.`fileId`=m3.`parentId`-->
-<!--            </select>-->
     <select id="listCurrentDirDocument" resultType="com.capgemini.jtp.entity.FileInfo">
         select * from file where `parentId` = #{fileInfo.parentId,jdbcType=INTEGER}
     </select>
@@ -53,7 +21,7 @@
 
     <select id="listAccessoryInfo" resultType="com.capgemini.jtp.entity.AccessoryInfo">
         select * from accessory_file where `fileId` in (select `fileId` from file where `parentId` = #{fileInfo.fileId}
-        and `ifDelete` = 0)
+        and `ifDelete` = '0')
     </select>
 
     <insert id="addFileInfo" parameterType="com.capgemini.jtp.entity.FileInfo">
@@ -66,7 +34,7 @@
 
 
     <insert id="addAccessoryInfo" parameterType="com.capgemini.jtp.entity.AccessoryInfo">
-        insert into accessoryfile (`fileId`, `accessoryName`, `accessorySize`, `accessoryType`, `createDate`, `accessoryPath`) values
+        insert into accessory_file (`fileId`, `accessoryName`, `accessorySize`, `accessoryType`, `createDate`, `accessoryPath`) values
         (#{accessoryInfo.fileId,jdbcType=INTEGER}, #{accessoryInfo.accessoryName,jdbcType=VARCHAR},
         #{accessoryInfo.accessorySize,jdbcType=INTEGER}, #{accessoryInfo.accessoryType,jdbcType=INTEGER},
          #{accessoryInfo.createDate}, #{accessoryInfo.accessoryPath,jdbcType=VARCHAR} )
@@ -81,30 +49,46 @@
     </delete>
 
     <update id="MoveFileToRecycleBin" parameterType="com.capgemini.jtp.entity.FileInfo">
-        update file set `ifDelete` = 1 , `deleteDate` = #{fileInfo.deleteDate} where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
+        update file set `ifDelete` = '1' where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
     </update>
 
     <select id="listRecycleBin" resultType="com.capgemini.jtp.entity.FileInfo">
-        select * from file where `ifDelete` = 1
+        select * from file where `ifDelete` = '1'
     </select>
 
     <update id="fileReduction" parameterType="com.capgemini.jtp.entity.FileInfo">
-        update file set `ifDelete` = 0 where `fileId` = #{fileInfo.fileId}
+        update file set `ifDelete` = '0' where `fileId` = #{fileInfo.fileId}
     </update>
 
+<!--    <select id="fileSearch" resultType="com.capgemini.jtp.entity.FileInfo">-->
+<!--        select * from file where `ifDelete` = '0'-->
+<!--        <if test="fileSearch.fileName != null">-->
+<!--            and `fileName` = #{fileSearch.fileName,jdbcType=VARCHAR}-->
+<!--        </if>-->
+<!--        <if test="fileSearch.fileOwner != null">-->
+<!--            and `fileOwner` = #{fileSearch.fileOwner,jdbcType=VARCHAR}-->
+<!--        </if>-->
+<!--        <if test="fileSearch.startDate != null and fileSearch.endDate != null">-->
+<!--            and `createDate` between #{fileSearch.startDate} and #{fileSearch.endDate}-->
+<!--        </if>-->
+<!--    </select>-->
+
     <select id="fileSearch" resultType="com.capgemini.jtp.entity.FileInfo">
-        select * from file where `ifDelete` = 0
+        select * from file where `ifDelete` = '0'
         <if test="fileSearch.fileName != null">
-            and `fileName` = #{fileSearch.fileName,jdbcType=VARCHAR}
+            and `fileName` like concat(concat('%',#{fileSearch.fileName,jdbcType=VARCHAR}),'%')
         </if>
         <if test="fileSearch.fileOwner != null">
-            and `fileOwner` = #{fileSearch.fileOwner,jdbcType=VARCHAR}
+            and `fileOwner` like concat(concat('%',#{fileSearch.fileOwner,jdbcType=VARCHAR}),'%')
         </if>
         <if test="fileSearch.startDate != null and fileSearch.endDate != null">
-            and `createDate` between #{fileSearch.startDate} and #{fileSearch.endDate}
+            and `createDate` between #{fileSearch.startDate,jdbcType=TIMESTAMP} and #{fileSearch.endDate,jdbcType=TIMESTAMP}
         </if>
-
     </select>
+
+
+
+
 
     <select id="getFileDetail" resultType="com.capgemini.jtp.entity.FileInfo">
         select * from file where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
@@ -121,14 +105,18 @@
 
     <!-- 获取所有Menu -->
         <select id="getAllMenus" resultType="com.capgemini.jtp.entity.FileInfo">
-        SELECT * FROM file
+        SELECT * FROM file where ifDelete = '0'
       </select>
 
     <!-- 获取所有父级Menu -->
 
     <select id="getTree" resultType="com.capgemini.jtp.entity.FileInfo">
- SELECT *  from file
- where fileId in (select f2.parentId from file f1 left join file f2 on f1.fileId=f2.parentId  )
+        SELECT *  from file where ifDelete = '0'
+        and fileId in (select f2.parentId from file f1 left join file f2 on f1.fileId=f2.parentId  )
   </select>
+    <select id="getFilePathByFileId" resultType="String">
+        select `filePath` from file where `fileId` = #{fileId,jdbcType=INTEGER}
+    </select>
+
 
 </mapper>

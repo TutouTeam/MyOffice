@@ -6,6 +6,7 @@ import com.capgemini.jtp.entity.FileInfo;
 import com.capgemini.jtp.entity.FileTypeInfo;
 import com.capgemini.jtp.entity.Menu;
 import com.capgemini.jtp.vo.request.FileSearchReq;
+import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -72,5 +73,6 @@ public interface FileInfoMapper {
      */
     Integer getFileTypeByFileId(@Param(value = "fileId") int fileId);
 
+    String getFilePathByFileId(@Param(value = "fileId") int fileId);
 
 }

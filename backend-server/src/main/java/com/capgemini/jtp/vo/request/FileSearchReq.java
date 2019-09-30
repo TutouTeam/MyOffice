@@ -45,4 +45,16 @@ public class FileSearchReq {
      */
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS, timezone=DateUtils.DEFAULT_ZONE)
     private Date createDate;
+
+
+
+    /**
+     * 搜索的类型：
+     *  0 表示没有特殊限定
+     *  1 搜索本日
+     *  2 搜索本周
+     *  3 搜索本月
+     */
+    private int limit;
+
 }

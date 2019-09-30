@@ -21,6 +21,10 @@ public interface FileInfoService {
 
     public Integer addFileToDb(AddFileReq addFileReq);
 
+    public Integer addAccessoryToDb(AddAccessoryReq addAccessoryReq);
+
+    public Boolean addFileToDesk(AddFileReq addFileReq);
+
     public Integer uploadFileToDb(UploadFileReq uploadFileReq);
 
     public Integer uploadFileToDisk(MultipartFile file);
