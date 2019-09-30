@@ -126,6 +126,12 @@
     </foreach>
   </delete>
 
-
+  <!-- 根据userId和messageId判断消息是否已读 -->
+  <select id="ifReanByUserIdAndMessageId" parameterType="com.capgemini.jtp.vo.request.MessageIfRead"
+          resultType="string">
+    SELECT ifRead FROM message_to_user
+    WHERE messageId = #{messageIfRead.messageId}
+    AND toUserId = #{messageIfRead.userId}
+  </select>
   
 </mapper>

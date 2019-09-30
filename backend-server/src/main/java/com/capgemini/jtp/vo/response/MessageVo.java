@@ -85,4 +85,8 @@ public class MessageVo {
     @JsonFormat(pattern = DateUtils.DEFAULT_FORMAT,timezone=DateUtils.DEFAULT_ZONE)
     @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date publishTime;
+
+
+    //消息是否被当前用户已读
+    private String ifReadByUser;
 }
