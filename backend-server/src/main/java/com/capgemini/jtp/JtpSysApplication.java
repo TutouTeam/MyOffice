@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.MultipartConfigElement;
+import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
@@ -26,6 +27,10 @@ public class JtpSysApplication {
 	@Bean
 	MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
+		String path1="D:\\MyOffice\\images\\temps";
+		File f1=new File(path1);
+		if(!f1.exists())
+			f1.mkdirs();
 		factory.setLocation("D:\\MyOffice\\images\\temps");
 
 		return factory.createMultipartConfig();

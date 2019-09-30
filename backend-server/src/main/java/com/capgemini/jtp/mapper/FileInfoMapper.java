@@ -4,6 +4,7 @@ package com.capgemini.jtp.mapper;
 import com.capgemini.jtp.entity.AccessoryInfo;
 import com.capgemini.jtp.entity.FileInfo;
 import com.capgemini.jtp.entity.FileTypeInfo;
+import com.capgemini.jtp.entity.Menu;
 import com.capgemini.jtp.vo.request.FileSearchReq;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
@@ -21,6 +22,20 @@ import java.util.List;
 @Repository
 //@Component(value = "FileInfoMapper")
 public interface FileInfoMapper {
+    /**
+     * 菜单中所有信息
+     * @return
+     */
+     List<FileInfo> getAllMenus();
+
+    /**
+     * 所有父级菜单
+     * @return
+     */
+    List<FileInfo> getTree();
+
+
+
     List<FileInfo> listCurrentDirDocument(@Param(value = "fileInfo") FileInfo fileInfo);
 
     String getFileTypeName(@Param(value = "fileType") int fileType);
@@ -49,7 +64,7 @@ public interface FileInfoMapper {
     FileInfo getFileDetail(@Param(value = "fileInfo") FileInfo fileInfo);
 
     String getAccessorySize(@Param(value = "accessoryInfo") AccessoryInfo accessoryInfo);
-
+//    List<FileInfo> menuTree();
 
     /**
      * create by: MmmLll_Shen

@@ -51,39 +51,16 @@ public class HeadPortraitController {
 
     @ApiOperation(value = "显示头像")
     @ResponseBody
-    @RequestMapping(value = "/getload", method = RequestMethod.POST)
-    public void getimg(HttpServletRequest request, HttpServletResponse response) throws IOException{
+    @RequestMapping(value = "/getHeadUrl", method = RequestMethod.GET)
+    public RespBean getHeadUrl(HttpServletRequest request) throws IOException{
 
-        Object object = request.getSession().getAttribute("operationUserId");
-        int userId=0;
-        if(object != null){
-            userId = Integer.valueOf(String.valueOf(object));
+        String string =headPortraitService.getHeadUrl(request);
+        if(string==null)
+        {
+            return RespBean.error("没有找到相应头像");
+        }else {
+            return RespBean.ok(string);
         }
-        String userName = userMapper.getMassageById(userId).getUsername();
-
-        String newFileName=userName+".jpg";
-        //ServletContext sc = request.getSession().getServletContext();
-        //String path = sc.getRealPath("/img/")+ DateUtils.getCurrentDateTime()+ File.separator;//设定文件保存的目录
-        String path = "d:/MyOffice/images/Users/";
-
-        try {
-            FileInputStream hFile=new FileInputStream(path+userName);
-            int i=hFile.available();
-            byte data[]=new byte[i];
-            hFile.read(data);
-            hFile.close();
-            response.setContentType("application/x-jpg");
-            OutputStream toClient=response.getOutputStream();
-            toClient.write(data);
-            toClient.close();
-        }catch (IOException e){
-            PrintWriter toClient=response.getWriter();
-            response.setContentType("text/html;charset=utf-8");
-            toClient.write("无法打开图片");
-            toClient.close();
-        }
-
-
     }
 
 

@@ -102,6 +102,18 @@
         select `fileType` from file where `fileId` = #{fileId,jdbcType=INTEGER}
     </select>
 
+
+    <!-- 获取所有Menu -->
+        <select id="getAllMenus" resultType="com.capgemini.jtp.entity.FileInfo">
+        SELECT * FROM file
+      </select>
+
+    <!-- 获取所有父级Menu -->
+
+    <select id="getTree" resultType="com.capgemini.jtp.entity.FileInfo">
+ SELECT *  from file
+ where fileId in (select f2.parentId from file f1 left join file f2 on f1.fileId=f2.parentId  )
+  </select>
     <select id="getFilePathByFileId" resultType="String">
         select `filePath` from file where `fileId` = #{fileId,jdbcType=INTEGER}
     </select>
