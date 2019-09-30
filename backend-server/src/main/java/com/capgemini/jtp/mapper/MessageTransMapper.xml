@@ -66,7 +66,7 @@
   <select id="getMessagesByFromUserId" parameterType="Integer"
           resultType="com.capgemini.jtp.entity.Message">
     SELECT * FROM message WHERE fromUserId = #{fromUserId}
-    and ifPublish = 1
+    and ifPublish = '1'
     and isDeleted = '0'
   </select>
 
@@ -74,7 +74,7 @@
   <select id="getMessagesByFromUserIdAndNotPublish" parameterType="Integer"
           resultType="com.capgemini.jtp.entity.Message">
     SELECT * FROM message WHERE fromUserId = #{fromUserId}
-    and ifPublish = 0
+    and ifPublish = '0'
     and isDeleted = '0'
   </select>
 
@@ -125,5 +125,7 @@
       #{messageId}
     </foreach>
   </delete>
+
+
   
 </mapper>

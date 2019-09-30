@@ -12,7 +12,7 @@
     </select>
     
     <update id="updateFileInfoById" >
-        update file set `fileName` = #{fileInfo.fileName,jdbcType=VARCHAR},
+        update file set `label` = #{fileInfo.label,jdbcType=VARCHAR},
         `remark` = #{fileInfo.remark,jdbcType=VARCHAR},
         `fileType` =
         (select `fileTypeId` from filetype where `fileTypeImage` = #{fileTypeInfo.fileTypeImage,jdbcType=VARCHAR})
@@ -25,8 +25,8 @@
     </select>
 
     <insert id="addFileInfo" parameterType="com.capgemini.jtp.entity.FileInfo">
-        insert into file (`fileName`, `fileType`, `remark`, `fileOwner`, `createDate`, `parentId`, `filePath`) VALUES
-        (#{fileInfo.fileName,jdbcType=VARCHAR}, #{fileInfo.fileType,jdbcType=INTEGER}, #{fileInfo.remark,jdbcType=VARCHAR},
+        insert into file (`label`, `fileType`, `remark`, `fileOwner`, `createDate`, `parentId`, `filePath`) VALUES
+        (#{fileInfo.label,jdbcType=VARCHAR}, #{fileInfo.fileType,jdbcType=INTEGER}, #{fileInfo.remark,jdbcType=VARCHAR},
         #{fileInfo.fileOwner,jdbcType=VARCHAR},#{fileInfo.createDate},
         #{fileInfo.parentId,jdbcType=INTEGER}, #{fileInfo.filePath,jdbcType=VARCHAR})
     </insert>
@@ -75,8 +75,8 @@
 
     <select id="fileSearch" resultType="com.capgemini.jtp.entity.FileInfo">
         select * from file where `ifDelete` = '0'
-        <if test="fileSearch.fileName != null">
-            and `fileName` like concat(concat('%',#{fileSearch.fileName,jdbcType=VARCHAR}),'%')
+        <if test="fileSearch.label != null">
+            and `label` like concat(concat('%',#{fileSearch.label,jdbcType=VARCHAR}),'%')
         </if>
         <if test="fileSearch.fileOwner != null">
             and `fileOwner` like concat(concat('%',#{fileSearch.fileOwner,jdbcType=VARCHAR}),'%')

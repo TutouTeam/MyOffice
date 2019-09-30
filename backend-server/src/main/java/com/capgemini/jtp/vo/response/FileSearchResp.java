@@ -21,7 +21,7 @@ public class FileSearchResp {
     /**
      * 文件名称
      */
-    private String fileName;
+    private String label;
 
     /**
      * 所在文件夹

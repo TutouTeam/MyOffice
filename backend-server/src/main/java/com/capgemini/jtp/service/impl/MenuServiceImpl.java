@@ -117,7 +117,7 @@ public class MenuServiceImpl implements MenuService {
         List<FileInfo> treeList = new ArrayList<>();
         for (FileInfo list : tree) {
             if(list.getParentId()==0){
-            list.setTreeList(treeList(allTree,list.getFileId()));
+            list.setChildren(treeList(allTree,list.getFileId()));
             treeList.add(list);
             }
         }
@@ -128,7 +128,7 @@ public class MenuServiceImpl implements MenuService {
         for (FileInfo tree : list) {
             if (tree.getParentId() == rootId.intValue()) {
                 List<FileInfo> tempList = treeList(list, tree.getFileId());
-                tree.setTreeList(tempList);
+                tree.setChildren(tempList);
                 newList.add(tree);
             }
         }

@@ -24,7 +24,7 @@ public class ConvertUtils {
      */
     public static ListFileInfoResp convertFileInfoToListFileInfoResp(FileInfo fileInfo) {
         ListFileInfoResp listFileInfoResp = new ListFileInfoResp();
-        listFileInfoResp.setFileName(fileInfo.getFileName());
+        listFileInfoResp.setLabel(fileInfo.getLabel());
         listFileInfoResp.setRemark(fileInfo.getRemark());
         listFileInfoResp.setFileOwner(fileInfo.getFileOwner());
         listFileInfoResp.setCreateDate(fileInfo.getCreateDate());
@@ -40,7 +40,7 @@ public class ConvertUtils {
     public static FileInfo convertEditFileInfoReqToFileInfo(EditFileInfoReq editFileInfoReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(editFileInfoReq.getFileId());
-        fileInfo.setFileName(editFileInfoReq.getFileName());
+        fileInfo.setLabel(editFileInfoReq.getFileName());
         fileInfo.setRemark(editFileInfoReq.getRemark());
         return fileInfo;
     }
@@ -63,7 +63,7 @@ public class ConvertUtils {
      */
     public static FileInfo convertAddFileInfoToFileInfo(AddFileReq addFileReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(addFileReq.getFileName());
+        fileInfo.setLabel(addFileReq.getLabel());
         fileInfo.setFileType(addFileReq.getFileType());
         fileInfo.setFileOwner(addFileReq.getFileOwner());
         fileInfo.setCreateDate(new Date());
@@ -99,7 +99,7 @@ public class ConvertUtils {
      */
     public static FileInfo convertUploadFileInfoToFileInfo(UploadFileReq uploadFileReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(uploadFileReq.getAccessoryName());
+        fileInfo.setLabel(uploadFileReq.getAccessoryName());
         fileInfo.setFileType(uploadFileReq.getAccessoryType());
         fileInfo.setFileOwner(uploadFileReq.getFileOwner());
         fileInfo.setCreateDate(uploadFileReq.getCreateDate());
@@ -134,7 +134,7 @@ public class ConvertUtils {
 
     public static FileInfo convertCreateFileInfoToFileInfo(CreateFileReq createFileReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(createFileReq.getFileName());
+        fileInfo.setLabel(createFileReq.getFileName());
         fileInfo.setRemark(createFileReq.getRemark());
         fileInfo.setParentId(createFileReq.getParentId());
         fileInfo.setFileOwner(createFileReq.getFileOwner());
@@ -152,7 +152,7 @@ public class ConvertUtils {
 
     public static FileInfo convertCreateDirInfoToFileInfo(CreateDirReq createDirReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(createDirReq.getFileName());
+        fileInfo.setLabel(createDirReq.getFileName());
         fileInfo.setFilePath(createDirReq.getFilePath());
         fileInfo.setRemark(createDirReq.getRemark());
         fileInfo.setCreateDate(createDirReq.getCreateDate());
@@ -185,7 +185,7 @@ public class ConvertUtils {
     public static ListRecycleBinResp convertFileInfoToListRecycleBinResp(FileInfo fileInfo) {
         ListRecycleBinResp listRecycleBinResp = new ListRecycleBinResp();
         listRecycleBinResp.setFileId(fileInfo.getFileId());
-        listRecycleBinResp.setFileName(fileInfo.getFileName());
+        listRecycleBinResp.setLabel(fileInfo.getLabel());
         listRecycleBinResp.setFilePath(fileInfo.getFilePath());
 //        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
         listRecycleBinResp.setLastParentId(fileInfo.getLastParentId());
@@ -215,7 +215,7 @@ public class ConvertUtils {
      */
     public static FileSearchResp convertFileInfoToFileSearchResp(FileInfo fileInfo) {
         FileSearchResp fileSearchResp = new FileSearchResp();
-        fileSearchResp.setFileName(fileInfo.getFileName());
+        fileSearchResp.setLabel(fileInfo.getLabel());
         fileSearchResp.setFileOwner(fileInfo.getFileOwner());
         fileSearchResp.setCreateDate(fileInfo.getCreateDate());
         fileSearchResp.setFilePath(fileInfo.getFilePath());
@@ -255,7 +255,7 @@ public class ConvertUtils {
      */
     public static FileDetailResp convertFileInfoToFileDetailResp(FileInfo fileInfo) {
         FileDetailResp fileDetailResp = new FileDetailResp();
-        fileDetailResp.setFileName(fileInfo.getFileName());
+        fileDetailResp.setLabel(fileInfo.getLabel());
         fileDetailResp.setFileType(fileInfo.getFileType());
         fileDetailResp.setRemark(fileInfo.getRemark());
         fileDetailResp.setFileOwner(fileInfo.getFileOwner());
@@ -298,7 +298,7 @@ public class ConvertUtils {
     public static  FileInfo convertDeletedFileInfoToFileInfo(DeleteFileReq deleteFileReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(deleteFileReq.getFileId());
-        fileInfo.setFileName(deleteFileReq.getFilePathAndName());
+        fileInfo.setLabel(deleteFileReq.getFilePathAndName());
         return fileInfo;
     }
 

@@ -26,7 +26,7 @@ public class FileInfo {
     /**
      * 文件名称
      */
-    private String fileName;
+    private String label;
     /**
      * 文件类型
      */
@@ -65,7 +65,7 @@ public class FileInfo {
 
     private int lastParentId;//??????????????????????????????
 
-    private List<FileInfo> treeList =new ArrayList<>();
+    private List<FileInfo> children =new ArrayList<>();
 
 
 
