@@ -97,9 +97,9 @@ public class FileInfoController {
     @ApiOperation(value = "新建文件夹或者文件")
     public RespBean addFile(@RequestBody AddFileReq addFileReq) {
         System.out.println("----------------------------" + addFileReq.getFilePath());
-        if(fileInfoMapper.getFileTypeByFileId(addFileReq.getParentId()) != 1){
-            return RespBean.error("不能在此处新建文件夹或者文件");
-        }else {
+//        if(fileInfoMapper.getFileTypeByFileId(addFileReq.getParentId()) != 1){
+//            return RespBean.error("不能在此处新建文件夹或者文件");
+//        }else {
             if (fileInfoService.addFileToDb(addFileReq) != 0) {
                 //在此新建文件到磁盘
                 if(fileInfoService.addFileToDesk(addFileReq)){
@@ -111,7 +111,7 @@ public class FileInfoController {
             }else {
                 return RespBean.error("新建失败");
             }
-        }
+//        }
     }
 
 
@@ -124,9 +124,9 @@ public class FileInfoController {
     @ApiOperation(value = "新建附件")
     public RespBean addAccessoryToDb(@RequestBody AddAccessoryReq addAccessoryReq) {
 //        System.out.println("----------------------------" + addFileReq.getFilePath());
-        if(fileInfoMapper.getFileTypeByFileId(addAccessoryReq.getFileId()) != 3){
-            return RespBean.error("不能在此处新建附件");
-        }else {
+//        if(fileInfoMapper.getFileTypeByFileId(addAccessoryReq.getFileId()) != 3){
+//            return RespBean.error("不能在此处新建附件");
+//        }else {
             if (fileInfoService.addAccessoryToDb(addAccessoryReq) != 0) {
                 //在此新建文件到磁盘
                     return RespBean.okMessage("新建成功");
@@ -134,7 +134,7 @@ public class FileInfoController {
             }else {
                 return RespBean.error("新建失败");
             }
-        }
+//        }
     }
 
 
@@ -144,7 +144,7 @@ public class FileInfoController {
      * create time: 11:31 2019/9/29
      */
     @RequestMapping(value = "/addAccessoryToDesk",method = RequestMethod.POST)
-    @ApiOperation(value = "新建附件:附件默认只能新建在文件中")
+    @ApiOperation(value = "新建附件到磁盘")
     public RespBean addAccessoryToDesk( @RequestParam("file") MultipartFile file) {
         if (file.isEmpty()) {
             return RespBean.error("请选择文件");
