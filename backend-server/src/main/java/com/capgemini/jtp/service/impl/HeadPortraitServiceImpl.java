@@ -5,6 +5,8 @@ import com.capgemini.jtp.service.HeadPortraitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
@@ -101,8 +103,53 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
         File file=new File(path+newFileName);
         if(file.exists())
         {
-            return path+newFileName;
+            return "http://localhost:8085/HeadPortrait/getImg?url="+path+newFileName;
         }else
        return null;
+    }
+    public void getImg(String url,HttpServletRequest request,
+                HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("image/jpeg");
+        File file = new File(url);
+        ServletOutputStream outputStream = response.getOutputStream();
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] bytes = new byte[1024];
+        int len;
+        while ((len=fileInputStream.read(bytes)) != -1){
+            outputStream.write(bytes,0,len);
+        }
+
+        outputStream.flush();
+        fileInputStream.close();
+        outputStream.close();
+
+    }
+    public void getImgs(HttpServletRequest request,
+                 HttpServletResponse response) throws IOException{
+        request.setCharacterEncoding("utf-8");
+        Object object = request.getSession().getAttribute("operationUserId");
+        int userId;
+        if(object != null){
+            userId = Integer.valueOf(String.valueOf(object));
+        }else userId=0;
+        String userName = userMapper.getMassageById(userId).getUsername();
+        String newFileName=userName+".jpg";
+        String path = "d:/MyOffice/images/Users/";
+
+        response.setContentType("image/jpeg");
+        File file = new File(path+newFileName);
+        ServletOutputStream outputStream = response.getOutputStream();
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] bytes = new byte[1024];
+
+        int len;
+        while ((len=fileInputStream.read(bytes)) != -1){
+            outputStream.write(bytes,0,len);
+        }
+
+        outputStream.flush();
+        fileInputStream.close();
+        outputStream.close();
     }
 }

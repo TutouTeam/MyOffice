@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 
 @RestController
 @Api("头像")
@@ -54,7 +52,7 @@ public class HeadPortraitController {
     @RequestMapping(value = "/getHeadUrl", method = RequestMethod.GET)
     public RespBean getHeadUrl(HttpServletRequest request) throws IOException{
 
-        String string =headPortraitService.getHeadUrl(request);
+        String  string =headPortraitService.getHeadUrl(request);
         if(string==null)
         {
             return RespBean.error("没有找到相应头像");
@@ -62,6 +60,24 @@ public class HeadPortraitController {
             return RespBean.ok(string);
         }
     }
+    @ApiOperation(value = "头像1")
+    @ResponseBody
+    @RequestMapping(value = "/getImg", method = RequestMethod.GET)
+    public void getFile(@RequestParam("url")String url,HttpServletRequest request,
+                        HttpServletResponse response) throws IOException {
+        headPortraitService.getImg(url,request,response);
+
+
+    }
+    @ApiOperation(value = "头像2")
+    @ResponseBody
+    @RequestMapping(value = "/getImgs", method = RequestMethod.GET)
+    public void getFile(HttpServletRequest request,
+                        HttpServletResponse response) throws IOException {
+
+        headPortraitService.getImgs(request,response);
+    }
+
 
 
 }
