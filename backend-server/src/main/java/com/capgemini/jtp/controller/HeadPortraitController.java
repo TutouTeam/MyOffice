@@ -12,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.io.*;
 
 @RestController
@@ -49,10 +50,10 @@ public class HeadPortraitController {
 
     @ApiOperation(value = "显示头像")
     @ResponseBody
-    @RequestMapping(value = "/getHeadUrl", method = RequestMethod.GET)
-    public RespBean getHeadUrl(HttpServletRequest request) throws IOException{
+    @RequestMapping(value = "/getHeadUrl", method = RequestMethod.POST)
+    public RespBean getHeadUrl(@Valid @RequestBody String userName ,HttpServletRequest request) throws IOException{
 
-        String  string =headPortraitService.getHeadUrl(request);
+        String  string =headPortraitService.getHeadUrl(userName,request);
         if(string==null)
         {
             return RespBean.error("没有找到相应头像");
