@@ -19,7 +19,7 @@ public interface MenuService {
     public List<Menu> getMenusByHrId();
 //    public Map<String, List<FileInfo>> getMenuTree();
 //    Map<String, List<FileInfo>> getMenuTree();
-public List<FileInfo> getTree();
+    public List<FileInfo> getTree();
 //    public List<FileInfo> getTree();
 //
 //    public List<Long> getMenusByRid(Long rid);

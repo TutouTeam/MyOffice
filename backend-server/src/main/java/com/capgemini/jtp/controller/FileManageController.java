@@ -30,8 +30,10 @@ public class FileManageController {
         Object object=fileManageService.nMenu(n);
         if(object!=null) {
             return RespBean.ok(object);
-        }else
+        }else{
             return RespBean.error("菜单返回失败");
+        }
+
 
     }
 }

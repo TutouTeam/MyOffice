@@ -18,5 +18,5 @@ public class FileReductionReq {
      */
     private int fileId;
 
-    private int lastParentId;
+//    private int lastParentId;
 }

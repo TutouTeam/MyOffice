@@ -314,6 +314,15 @@ public class MessageServiceImpl implements MessageService {
         messageVo.setCreateTime(message.getCreateTime());
         messageVo.setIsPublished(message.getIfPublish());
         messageVo.setPublishTime(message.getRecordTime());
+
+        //判断消息是否被当前用户已读
+        MessageIfRead messageIfRead = new MessageIfRead();
+        messageIfRead.setUserId(UserUtils.getCurrentUser().getUserId());
+        messageIfRead.setMessageId(message.getMessageId());
+        messageVo.setIfReadByUser(messageTransMapper.ifReanByUserIdAndMessageId(messageIfRead));
+
+
+
         messageVo.setRecipients(messageTransMapper.getRecipientsByMessageId(message.getMessageId())
         .stream().map(userService::convertToVo).collect(Collectors.toList()));
 

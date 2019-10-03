@@ -3,6 +3,7 @@ package com.capgemini.jtp.mapper;
 import com.capgemini.jtp.entity.Message;
 import com.capgemini.jtp.entity.MessageTrans;
 import com.capgemini.jtp.entity.User;
+import com.capgemini.jtp.vo.request.MessageIfRead;
 import com.capgemini.jtp.vo.request.MessageReadVo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
@@ -44,5 +45,6 @@ public interface MessageTransMapper {
 
     Integer deleteMessagesToCollection(@Param("messageIds") List<Integer> messageIds);
 
+    String ifReanByUserIdAndMessageId(@Param("messageIfRead")MessageIfRead messageIfRead);
 
 }

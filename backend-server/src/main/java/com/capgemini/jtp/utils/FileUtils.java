@@ -9,7 +9,7 @@ package com.capgemini.jtp.utils;
  */
 public class FileUtils {
 
-    public static final String ACCESSORY_PATH = "F:\\Users\\文档管理\\附件\\";
+    public static final String ACCESSORY_PATH = "D:\\MyOffice\\文档管理\\附件\\";
 
-    public static final String RECYCLE_BIN_PATH = "F:\\Users\\文档管理\\回收站\\";
+    public static final String RECYCLE_BIN_PATH = "D:\\MyOffice\\文档管理\\回收站\\";
 }

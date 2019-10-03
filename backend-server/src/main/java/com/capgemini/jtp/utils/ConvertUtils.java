@@ -8,6 +8,8 @@ import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Date;
+
 /**
  * create by: MmmLll_Shen
  * description:
@@ -22,7 +24,7 @@ public class ConvertUtils {
      */
     public static ListFileInfoResp convertFileInfoToListFileInfoResp(FileInfo fileInfo) {
         ListFileInfoResp listFileInfoResp = new ListFileInfoResp();
-        listFileInfoResp.setFileName(fileInfo.getFileName());
+        listFileInfoResp.setLabel(fileInfo.getLabel());
         listFileInfoResp.setRemark(fileInfo.getRemark());
         listFileInfoResp.setFileOwner(fileInfo.getFileOwner());
         listFileInfoResp.setCreateDate(fileInfo.getCreateDate());
@@ -38,7 +40,7 @@ public class ConvertUtils {
     public static FileInfo convertEditFileInfoReqToFileInfo(EditFileInfoReq editFileInfoReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(editFileInfoReq.getFileId());
-        fileInfo.setFileName(editFileInfoReq.getFileName());
+        fileInfo.setLabel(editFileInfoReq.getFileName());
         fileInfo.setRemark(editFileInfoReq.getRemark());
         return fileInfo;
     }
@@ -61,14 +63,33 @@ public class ConvertUtils {
      */
     public static FileInfo convertAddFileInfoToFileInfo(AddFileReq addFileReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(addFileReq.getFileName());
+        fileInfo.setLabel(addFileReq.getLabel());
         fileInfo.setFileType(addFileReq.getFileType());
         fileInfo.setFileOwner(addFileReq.getFileOwner());
-        fileInfo.setCreateDate(addFileReq.getCreateDate());
+        fileInfo.setCreateDate(new Date());
         fileInfo.setParentId(addFileReq.getParentId());
-        fileInfo.setRemark(addFileReq.getRemark());
-        fileInfo.setFilePath(addFileReq.getFilePath());
+        if(addFileReq.getRemark() != null && addFileReq.getRemark() != ""){
+            fileInfo.setRemark(addFileReq.getRemark());
+        }
+
+//        fileInfo.setFilePath(addFileReq.getFilePath());
         return fileInfo;
+    }
+
+
+    /**
+     * 将新建文件的信息转为FileInfo类型
+     * @return
+     */
+    public static AccessoryInfo convertAddAccessoryInfoToAccessoryInfo(AddAccessoryReq addAccessoryReq) {
+        AccessoryInfo accessoryInfo = new AccessoryInfo();
+        accessoryInfo.setFileId(addAccessoryReq.getFileId());
+        accessoryInfo.setAccessoryName(addAccessoryReq.getAccessoryName());
+        accessoryInfo.setAccessorySize(addAccessoryReq.getAccessorySize());
+        accessoryInfo.setCreateDate(new Date());
+        accessoryInfo.setAccessoryType(addAccessoryReq.getAccessoryType());
+
+        return accessoryInfo;
     }
 
     /**
@@ -78,7 +99,7 @@ public class ConvertUtils {
      */
     public static FileInfo convertUploadFileInfoToFileInfo(UploadFileReq uploadFileReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(uploadFileReq.getAccessoryName());
+        fileInfo.setLabel(uploadFileReq.getAccessoryName());
         fileInfo.setFileType(uploadFileReq.getAccessoryType());
         fileInfo.setFileOwner(uploadFileReq.getFileOwner());
         fileInfo.setCreateDate(uploadFileReq.getCreateDate());
@@ -113,7 +134,7 @@ public class ConvertUtils {
 
     public static FileInfo convertCreateFileInfoToFileInfo(CreateFileReq createFileReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(createFileReq.getFileName());
+        fileInfo.setLabel(createFileReq.getFileName());
         fileInfo.setRemark(createFileReq.getRemark());
         fileInfo.setParentId(createFileReq.getParentId());
         fileInfo.setFileOwner(createFileReq.getFileOwner());
@@ -131,7 +152,7 @@ public class ConvertUtils {
 
     public static FileInfo convertCreateDirInfoToFileInfo(CreateDirReq createDirReq) {
         FileInfo fileInfo = new FileInfo();
-        fileInfo.setFileName(createDirReq.getFileName());
+        fileInfo.setLabel(createDirReq.getFileName());
         fileInfo.setFilePath(createDirReq.getFilePath());
         fileInfo.setRemark(createDirReq.getRemark());
         fileInfo.setCreateDate(createDirReq.getCreateDate());
@@ -150,7 +171,7 @@ public class ConvertUtils {
     public static FileInfo convertMoveFileToRecycleBinReqToFileInfo(MoveFileToRecycleBinReq moveFileToRecycleBinReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(moveFileToRecycleBinReq.getFileId());
-        fileInfo.setDeleteDate(moveFileToRecycleBinReq.getDeleteDate());
+//        fileInfo.setDeleteDate(moveFileToRecycleBinReq.getDeleteDate());
         fileInfo.setParentId(moveFileToRecycleBinReq.getParentId());
         return fileInfo;
     }
@@ -164,9 +185,9 @@ public class ConvertUtils {
     public static ListRecycleBinResp convertFileInfoToListRecycleBinResp(FileInfo fileInfo) {
         ListRecycleBinResp listRecycleBinResp = new ListRecycleBinResp();
         listRecycleBinResp.setFileId(fileInfo.getFileId());
-        listRecycleBinResp.setFileName(fileInfo.getFileName());
+        listRecycleBinResp.setLabel(fileInfo.getLabel());
         listRecycleBinResp.setFilePath(fileInfo.getFilePath());
-        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
+//        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
         listRecycleBinResp.setLastParentId(fileInfo.getLastParentId());
         return listRecycleBinResp;
     }
@@ -181,7 +202,7 @@ public class ConvertUtils {
 
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(fileReductionReq.getFileId());
-        fileInfo.setLastParentId(fileReductionReq.getLastParentId());
+//        fileInfo.setLastParentId(fileReductionReq.getLastParentId());
         return fileInfo;
 
     }
@@ -194,7 +215,7 @@ public class ConvertUtils {
      */
     public static FileSearchResp convertFileInfoToFileSearchResp(FileInfo fileInfo) {
         FileSearchResp fileSearchResp = new FileSearchResp();
-        fileSearchResp.setFileName(fileInfo.getFileName());
+        fileSearchResp.setLabel(fileInfo.getLabel());
         fileSearchResp.setFileOwner(fileInfo.getFileOwner());
         fileSearchResp.setCreateDate(fileInfo.getCreateDate());
         fileSearchResp.setFilePath(fileInfo.getFilePath());
@@ -234,7 +255,7 @@ public class ConvertUtils {
      */
     public static FileDetailResp convertFileInfoToFileDetailResp(FileInfo fileInfo) {
         FileDetailResp fileDetailResp = new FileDetailResp();
-        fileDetailResp.setFileName(fileInfo.getFileName());
+        fileDetailResp.setLabel(fileInfo.getLabel());
         fileDetailResp.setFileType(fileInfo.getFileType());
         fileDetailResp.setRemark(fileInfo.getRemark());
         fileDetailResp.setFileOwner(fileInfo.getFileOwner());
@@ -277,7 +298,7 @@ public class ConvertUtils {
     public static  FileInfo convertDeletedFileInfoToFileInfo(DeleteFileReq deleteFileReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(deleteFileReq.getFileId());
-        fileInfo.setFileName(deleteFileReq.getFilePathAndName());
+        fileInfo.setLabel(deleteFileReq.getFilePathAndName());
         return fileInfo;
     }
 

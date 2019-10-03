@@ -41,7 +41,7 @@ public class MessageController {
 
     @ApiOperation("获取一条消息")
     @GetMapping("/{messageId}")
-    RespBean getMessage(@PathVariable int messageId) {
+    public RespBean getMessage(@PathVariable int messageId) {
         RespVos<MessageVo> respVos = messageService.getMessage(messageId);
 
         if (respVos != null && respVos.getSize() == 1) {
@@ -53,7 +53,7 @@ public class MessageController {
 
     @ApiOperation("获取信息列表")
     @PostMapping("/list")
-    RespBean listMessages(@RequestBody MessageSearchVo messageSearchVo) {
+    public RespBean listMessages(@RequestBody MessageSearchVo messageSearchVo) {
         RespVos<MessageVo> respVos = messageService.listMessages(messageSearchVo);
 
         if (respVos != null && respVos.getSize() > 0) {
@@ -65,7 +65,7 @@ public class MessageController {
 
     @ApiOperation("获取与当前用户相关的所有消息!")
     @GetMapping("/getMessagesByUserId")
-    RespBean getMessagesByUserId() {
+    public RespBean getMessagesByUserId() {
         RespVos<MessageVo> respVos = messageService.getMessagesByUserId(
                 UserUtils.getCurrentUser().getUserId()
         );
@@ -77,7 +77,7 @@ public class MessageController {
 
     @ApiOperation("获取发送给当前用户的所有消息!")
     @GetMapping("/")
-    RespBean getMessagesByRecipientId() {
+    public RespBean getMessagesByRecipientId() {
         RespVos<MessageVo> respVos = messageService.getMessagesByRecipientId(
                 UserUtils.getCurrentUser().getUserId()
         );
@@ -89,7 +89,7 @@ public class MessageController {
 
     @ApiOperation("获取当前用户已经发送的所有信息")
     @GetMapping("/getPublishedMessages")
-    RespBean getPublishedMessages() {
+    public RespBean getPublishedMessages() {
         RespVos<MessageVo> respVos = messageService.getMessagesByFromUserId(
                 UserUtils.getCurrentUser().getUserId()
         );
@@ -101,7 +101,7 @@ public class MessageController {
 
     @ApiOperation("获取当前用户草稿箱的所有信息")
     @GetMapping("/getNotPublishedMessages")
-    RespBean getNotPublishedMessages() {
+    public RespBean getNotPublishedMessages() {
         RespVos<MessageVo> respVos = messageService.getMessagesByFromUserIdAndNotPublish(
                 UserUtils.getCurrentUser().getUserId()
         );
@@ -113,7 +113,7 @@ public class MessageController {
 
     @ApiOperation("获取当前用户回收站的所有信息")
     @GetMapping("/getDeletedMessages")
-    RespBean getDeletedMessages() {
+    public RespBean getDeletedMessages() {
         RespVos<MessageVo> respVos = messageService.getDeletedMessages(
                 UserUtils.getCurrentUser().getUserId()
         );
@@ -127,7 +127,7 @@ public class MessageController {
 //    @ControllerLog(name = "添加信息为草稿")
     @ApiOperation("添加消息为草稿")
     @PostMapping("/add")
-    RespBean addMessage(@RequestBody MessageEditVo messageEditVo) {
+    public RespBean addMessage(@RequestBody MessageEditVo messageEditVo) {
         messageEditVo.setCreateUserId(UserUtils.getCurrentUser().getUserId());
         return messageService.addMessage(messageEditVo) > 0 ? RespBean.ok("添加成功!") : RespBean.error("添加失败!");
     }
@@ -135,14 +135,14 @@ public class MessageController {
 //    @ControllerLog(name = "修改草稿")
     @ApiOperation("修改草稿")
     @PostMapping("/update")
-    RespBean updateMessage(@RequestBody MessageEditVo messageEditVo) {
+    public RespBean updateMessage(@RequestBody MessageEditVo messageEditVo) {
         return messageService.updateMessage(messageEditVo) > 0 ? RespBean.ok("更新成功!") : RespBean.error("更新失败!");
     }
 
 //    @ControllerLog(name = "删除消息")
     @ApiOperation("彻底删除消息")
     @PostMapping("/deleteMessages")
-    RespBean deleteMessages(@RequestBody DeleteVo deleteVo) {
+    public RespBean deleteMessages(@RequestBody DeleteVo deleteVo) {
         Integer res = messageService.deleteMessages(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条消息!") : RespBean.error("删除失败!");
@@ -150,7 +150,7 @@ public class MessageController {
 
     @ApiOperation("删除消息到回收站")
     @PostMapping("/deleteMessagesToCollection")
-    RespBean deleteMessagesToCollection(@RequestBody DeleteVo deleteVo) {
+    public RespBean deleteMessagesToCollection(@RequestBody DeleteVo deleteVo) {
         Integer res = messageService.deleteMessagesToCollection(deleteVo.getIds());
 
         return res > 0 ? RespBean.ok("成功删除" + res + "条消息!") : RespBean.error("删除失败!");
@@ -159,7 +159,7 @@ public class MessageController {
 //    @ControllerLog(name = "发送消息")
     @ApiOperation("发送消息")
     @GetMapping("/publish/{messageId}")
-    RespBean sendMessage(@PathVariable int messageId) {
+    public RespBean sendMessage(@PathVariable int messageId) {
         Integer res = messageService.publishMessage(messageId);
 
         return res > 0 ? RespBean.ok("成功将消息发送给" + res + "个用户!") : RespBean.error("发送失败!");
@@ -168,7 +168,7 @@ public class MessageController {
 //    @ControllerLog(name = "阅读消息")
     @ApiOperation("阅读消息/将消息标记为已读")
     @PostMapping("/read")
-    RespBean readMessages(@RequestBody MessageReadVo messageReadVo) {
+    public RespBean readMessages(@RequestBody MessageReadVo messageReadVo) {
         Integer res = messageService.readMessages(messageReadVo);
 
         return res > 0 ? RespBean.ok("成功阅读" + res + "条信息!") : RespBean.error("阅读失败!");
@@ -185,7 +185,7 @@ public class MessageController {
 
     @ApiOperation("根据搜索项查找对应的users")
     @PostMapping("/selectUsers")
-    RespBean selectUsers(@RequestBody MessageUserSearchVo messageUserSearchVo) {
+    public RespBean selectUsers(@RequestBody MessageUserSearchVo messageUserSearchVo) {
         List<User> userList = new ArrayList<>();
         userList = messageService.listUser(messageUserSearchVo);
         if(userList != null){

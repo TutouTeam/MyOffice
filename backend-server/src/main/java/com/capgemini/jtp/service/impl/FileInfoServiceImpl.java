@@ -5,8 +5,10 @@ import com.capgemini.jtp.entity.FileInfo;
 import com.capgemini.jtp.entity.FileTypeInfo;
 import com.capgemini.jtp.mapper.FileInfoMapper;
 import com.capgemini.jtp.service.FileInfoService;
+import com.capgemini.jtp.utils.ConverLog;
 import com.capgemini.jtp.utils.ConvertUtils;
 import com.capgemini.jtp.utils.FileUtils;
+import com.capgemini.jtp.utils.TimeFrame;
 import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.FileDetailResp;
 import com.capgemini.jtp.vo.response.FileSearchResp;
@@ -17,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.mail.Folder;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -94,8 +98,52 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public Integer addFileToDb(AddFileReq addFileReq) {
         FileInfo fileInfo = ConvertUtils.convertAddFileInfoToFileInfo(addFileReq);
-
+        StringBuilder filePath = new StringBuilder();
+        filePath.append(fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()).toString());
+        filePath.append('\\');
+        filePath.append('\\');
+        filePath.append(addFileReq.getLabel());
+        fileInfo.setFilePath(filePath.toString());
         return fileInfoMapper.addFileInfo(fileInfo);
+    }
+
+
+    /**
+     * create by: MmmLll_Shen
+     * description:新建附件到数据库
+     * create time: 16:48 2019/9/29
+     */
+    @Override
+    public Integer addAccessoryToDb(AddAccessoryReq addAccessoryReq) {
+        AccessoryInfo accessoryInfo = ConvertUtils.convertAddAccessoryInfoToAccessoryInfo(addAccessoryReq);
+        StringBuilder filePath = new StringBuilder();
+        filePath.append(fileInfoMapper.getFilePathByFileId(addAccessoryReq.getFileId()).toString());
+        filePath.append('\\');
+        filePath.append('\\');
+        filePath.append(addAccessoryReq.getAccessoryName());
+        accessoryInfo.setAccessoryPath(filePath.toString());
+        return fileInfoMapper.addAccessoryInfo(accessoryInfo);
+    }
+
+   /**
+    * create by: MmmLll_Shen
+    * description:新建文件到磁盘
+    * create time: 14:47 2019/9/29
+    */
+    @Override
+    public Boolean addFileToDesk(AddFileReq addFileReq) {
+        FileInfo fileInfo = ConvertUtils.convertAddFileInfoToFileInfo(addFileReq);
+        StringBuilder filePath = new StringBuilder();
+        filePath.append(fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()).toString());
+        filePath.append('\\');
+        filePath.append('\\');
+        filePath.append(addFileReq.getLabel());
+        fileInfo.setFilePath(filePath.toString());
+//        String filePath = fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()) + "\\" + "\\" + addFileReq.getFileName();
+        File file=new File(filePath.toString()); //假设你要创建的目录是 d:/xxx
+
+
+        return file.mkdir();
 
     }
 
@@ -180,7 +228,7 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public Integer createFile(CreateFileReq addFileReq) {
         FileInfo fileInfo = ConvertUtils.convertCreateFileInfoToFileInfo(addFileReq);
-        File file = new File(fileInfo.getFilePath() + "\\" + fileInfo.getFileName());
+        File file = new File(fileInfo.getFilePath() + "\\" + fileInfo.getLabel());
 
         try {
             file.createNewFile();
@@ -253,20 +301,51 @@ public class FileInfoServiceImpl implements FileInfoService {
         return fileInfoMapper.fileReduction(fileInfo);
     }
 
-    /**
-     * 文件搜索
-     * @param fileSearchReq
-     * @return
-     */
+//    /**
+//     * 文件搜索
+//     * @param fileSearchReq
+//     * @return
+//     */
+//
+//    @Override
+//    public List<FileSearchResp> fileSearch(FileSearchReq fileSearchReq) {
+//        List<FileInfo> fileInfos = fileInfoMapper.fileSearch(fileSearchReq);
+//        List<FileSearchResp> fileSearchResps = new ArrayList<>();
+//        for (FileInfo fileInfo : fileInfos) {
+//            fileSearchResps.add(ConvertUtils.convertFileInfoToFileSearchResp(fileInfo));
+//        }
+//        return fileSearchResps;
+//    }
 
+
+    /**
+     * create by: MmmLll_Shen
+     * description:文件搜索
+     * create time: 9:37 2019/9/30
+     */
     @Override
     public List<FileSearchResp> fileSearch(FileSearchReq fileSearchReq) {
-        List<FileInfo> fileInfos = fileInfoMapper.fileSearch(fileSearchReq);
-        List<FileSearchResp> fileSearchResps = new ArrayList<>();
-        for (FileInfo fileInfo : fileInfos) {
-            fileSearchResps.add(ConvertUtils.convertFileInfoToFileSearchResp(fileInfo));
+        List<FileSearchResp> fileSearchRespArrayList = new ArrayList<>();
+        Integer choose = fileSearchReq.getLimit();
+        if (choose != null) {
+            Date now = new Date();
+            if (choose == 1) {
+                fileSearchReq.setStartDate(TimeFrame.startOfDay(now));
+                fileSearchReq.setEndDate(TimeFrame.endOfDay(now));
+            } else if (choose == 2) {
+                fileSearchReq.setStartDate(TimeFrame.firstDateOfWeek(now));
+                fileSearchReq.setEndDate(TimeFrame.lastDateOfWeek(now));
+            } else if (choose == 3) {
+                fileSearchReq.setStartDate(TimeFrame.firstDateOfWonth(now));
+                fileSearchReq.setEndDate(TimeFrame.lastDateOfMonth(now));
+            }
         }
-        return fileSearchResps;
+        List<FileInfo> fileInfoList = fileInfoMapper.fileSearch(fileSearchReq);
+        for (FileInfo fileInfo : fileInfoList) {
+            fileSearchRespArrayList.add(ConverLog.convertFileInfoToFileSearchResp(fileInfo));
+        }
+
+        return fileSearchRespArrayList;
     }
 
 
