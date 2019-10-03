@@ -5,6 +5,7 @@ import com.capgemini.jtp.entity.Schedule;
 import com.capgemini.jtp.mapper.MeetingInfoMapper;
 import com.capgemini.jtp.mapper.PrecontractMapper;
 import com.capgemini.jtp.mapper.ScheduleMapper;
+import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.MyScheduleService;
 import com.capgemini.jtp.vo.request.DepartScheduleVo;
 import com.capgemini.jtp.vo.request.ScheduleAddVo;
@@ -12,12 +13,10 @@ import com.capgemini.jtp.vo.request.ScheduleVo;
 import com.capgemini.jtp.vo.response.DepartGetRespVo;
 import com.capgemini.jtp.vo.response.ScheduleRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class MyScheduleServiceImpl implements MyScheduleService {
@@ -37,6 +36,8 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     DepartScheduleVo departScheduleVo;
     @Autowired
     DepartGetRespVo departGetRespVo;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    Date date;
     /**
      * 返回所有的个人日程信息
      * @return
@@ -165,6 +166,7 @@ public class MyScheduleServiceImpl implements MyScheduleService {
      * 部门日程模糊搜索
      */
     public List<DepartGetRespVo> departSchedule(DepartScheduleVo departScheduleVo){
+
         Calendar calendar=Calendar.getInstance();
         calendar.setTime(departScheduleVo.getSelectTime());//设置时间为查询时间
         int week0=calendar.get(Calendar.DAY_OF_WEEK);//判断是周几
@@ -179,6 +181,16 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         Iterator<DepartGetRespVo> iterator = departGetRespVoList.iterator();//遍历
         while (iterator.hasNext()){
             DepartGetRespVo d=iterator.next();
+            List<Date> dateList=new ArrayList<>();
+            int m=0;
+            while (m<7){//本周每天的日期
+                calendar.add(Calendar.DATE,(7-week0+m));
+                date=calendar.getTime();
+                dateList.add(date);
+                m++;
+            }
+            d.setDateList(dateList);
+            d.setChineseName(scheduleMapper.getChineseNameByUserName(d.getCreateUser()));//获取中文名字
             String s=(String)d.getScheduleId();//获得的每个创建者符合条件的日程Id字符串
             List<Integer> list=new ArrayList<>();
             List<Schedule> list1=new ArrayList<>();

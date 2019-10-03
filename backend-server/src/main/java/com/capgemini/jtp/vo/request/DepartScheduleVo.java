@@ -28,6 +28,7 @@ public class DepartScheduleVo {
      * 日期
      */
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD,timezone=DateUtils.DEFAULT_ZONE)
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date selectTime;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date time1;

@@ -21,5 +21,6 @@ public interface ScheduleMapper {
     List<DepartGetRespVo> getScheduleByName(@Param("departSchedule") DepartScheduleVo departScheduleVo);//模糊查询部门日程
     Integer getLastSchedule();//查询最后一条记录 scheduleId
     Integer getScheduleIdByCreateTime(@Param("createTimes") Date createTimes);//查询id根据创建时间
+    String getChineseNameByUserName(@Param("userName")String userName);
 
 }
