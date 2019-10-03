@@ -15,6 +15,12 @@
         <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
         <result column="ifPrivate" jdbcType="VARCHAR" property="ifPrivate" />
     </resultMap>
+    <resultMap id="DepartResultMap" type="com.capgemini.jtp.vo.response.DepartGetRespVo">
+        <result column="createUser" property="createUser"/>
+
+        <result column="group_concat(scheduleId)"  property="scheduleId" />
+
+    </resultMap>
     <select id="listSchedule" resultMap="BaseResultMap">
        select * from schedule where scheduleId != 0
    </select>
@@ -57,13 +63,20 @@
         where scheduleId = #{Schedule.scheduleId,jdbcType=INTEGER}
     </update>
 
-    <select id="getScheduleByName" resultMap="BaseResultMap">
-       select DISTINCT * from schedule
-        where <if test="departSchedule.departId != null  " >(createUser in (select userName from `user` where departId = #{departSchedule.departId,jdbcType=INTEGER}))</if>
-        <if test="departSchedule.userName != null and departSchedule.userName != '' ">and ((select chineseName from `user` where userName= schedule.createUser) like concat(concat('%',#{departSchedule.userName,jdbcType=VARCHAR}),'%'))</if>
-        <if test="departSchedule.selectTime != null ">and  (date(beginTime) = date(#{departSchedule.selectTime}))</if>
-        <if test="departSchedule.selectTime != null  ">and   (#{departSchedule.selectTime} BETWEEN beginTime AND endTime)</if>
-        or (createUser =#{departSchedule.userName,jdbcType=VARCHAR})
+    <select id="getScheduleByName" resultMap="DepartResultMap">
+
+       select DISTINCT createUser,group_concat(scheduleId) from schedule
+
+        where 1=1
+        <if test="departSchedule.departId != null and departSchedule.departId !=0  " >and(createUser in (select userName from `user` where departId = #{departSchedule.departId,jdbcType=INTEGER})) </if>
+        <if test="departSchedule.Name != null and departSchedule.Name != '' ">
+            and((select chineseName from `user` where userName= schedule.createUser) like concat(concat('%',#{departSchedule.Name,jdbcType=VARCHAR}),'%')) </if>
+<!--        <if test="departSchedule.selectTime != null ">or  (date(beginTime) = date(#{departSchedule.selectTime}))</if>-->
+<!--        <if test="departSchedule.selectTime != null  ">or   (#{departSchedule.selectTime} BETWEEN beginTime AND endTime)</if>-->
+        <if test="departSchedule.selectTime != null  ">and (beginTime BETWEEN #{departSchedule.time1} and #{departSchedule.time2})</if>
+
+        <if test="departSchedule.userName != null and departSchedule.userName != '' ">or (createUser =#{departSchedule.userName,jdbcType=VARCHAR})</if>
+        group by createUser
 
 
    </select>

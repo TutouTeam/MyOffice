@@ -3,6 +3,7 @@ package com.capgemini.jtp.vo.request;
 import com.capgemini.jtp.utils.DateUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -28,6 +29,10 @@ public class DepartScheduleVo {
      */
     @JsonFormat(pattern = DateUtils.YYYY_MM_DD,timezone=DateUtils.DEFAULT_ZONE)
     private Date selectTime;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date time1;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    private Date time2;
 
 
     /**

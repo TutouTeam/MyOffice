@@ -9,10 +9,14 @@ import com.capgemini.jtp.service.MyScheduleService;
 import com.capgemini.jtp.vo.request.DepartScheduleVo;
 import com.capgemini.jtp.vo.request.ScheduleAddVo;
 import com.capgemini.jtp.vo.request.ScheduleVo;
+import com.capgemini.jtp.vo.response.DepartGetRespVo;
 import com.capgemini.jtp.vo.response.ScheduleRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -31,6 +35,8 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     MeetingInfoMapper meetingInfoMapper;
     @Autowired
     DepartScheduleVo departScheduleVo;
+    @Autowired
+    DepartGetRespVo departGetRespVo;
     /**
      * 返回所有的个人日程信息
      * @return
@@ -158,7 +164,40 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     /**
      * 部门日程模糊搜索
      */
-    public List<Schedule> departSchedule(DepartScheduleVo departScheduleVo){
-        return scheduleMapper.getScheduleByName(departScheduleVo);
-    };
+    public List<DepartGetRespVo> departSchedule(DepartScheduleVo departScheduleVo){
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(departScheduleVo.getSelectTime());//设置时间为查询时间
+        int week0=calendar.get(Calendar.DAY_OF_WEEK);//判断是周几
+
+        calendar.add(Calendar.DATE,7-week0);//本周第一天
+        departScheduleVo.setTime2(calendar.getTime());
+
+        calendar.add(Calendar.DATE,-6);//本周最后一天
+        departScheduleVo.setTime1(calendar.getTime());
+
+        List<DepartGetRespVo> departGetRespVoList =scheduleMapper.getScheduleByName(departScheduleVo);//部门日程搜索结果
+        Iterator<DepartGetRespVo> iterator = departGetRespVoList.iterator();//遍历
+        while (iterator.hasNext()){
+            DepartGetRespVo d=iterator.next();
+            String s=(String)d.getScheduleId();//获得的每个创建者符合条件的日程Id字符串
+            List<Integer> list=new ArrayList<>();
+            List<Schedule> list1=new ArrayList<>();
+            for (int i=0;i<7;i++){
+                list.add(null);
+                list1.add(null);
+            }
+            for(String retval:s.split(",")){//将字符串分开
+                Schedule schedule= scheduleMapper.listByScheduleId(Integer.valueOf(retval));
+                calendar.setTime(schedule.getBeginTime());//将查询到的日程放到一周中对应的位置
+                int week=calendar.get(Calendar.DAY_OF_WEEK);
+                list.set(week,Integer.valueOf(retval));
+                list1.set(week,schedule);
+            }
+            d.setScheduleIdList(list);
+            d.setScheduleList(list1);
+        }
+        return departGetRespVoList;
+
+
+    }
 }
