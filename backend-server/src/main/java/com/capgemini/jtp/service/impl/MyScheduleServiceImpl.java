@@ -171,20 +171,23 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         calendar.setTime(departScheduleVo.getSelectTime());//设置时间为查询时间
         int week0=calendar.get(Calendar.DAY_OF_WEEK);//判断是周几
 
-        calendar.add(Calendar.DATE,7-week0);//本周第一天
+        calendar.add(Calendar.DATE,7-week0);//本周最后第一天
         departScheduleVo.setTime2(calendar.getTime());
 
-        calendar.add(Calendar.DATE,-6);//本周最后一天
+        calendar.add(Calendar.DATE,-6);//本周第一天
         departScheduleVo.setTime1(calendar.getTime());
 
         List<DepartGetRespVo> departGetRespVoList =scheduleMapper.getScheduleByName(departScheduleVo);//部门日程搜索结果
         Iterator<DepartGetRespVo> iterator = departGetRespVoList.iterator();//遍历
+
         while (iterator.hasNext()){
             DepartGetRespVo d=iterator.next();
             List<Date> dateList=new ArrayList<>();
             int m=0;
+            calendar.setTime(departScheduleVo.getTime1());//设置时间为第一天
+            calendar.add(Calendar.DATE,-1);
             while (m<7){//本周每天的日期
-                calendar.add(Calendar.DATE,(7-week0+m));
+                calendar.add(Calendar.DATE,1);
                 date=calendar.getTime();
                 dateList.add(date);
                 m++;
