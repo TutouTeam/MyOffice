@@ -185,7 +185,7 @@ public class MyScheduleServiceImpl implements MyScheduleService {
             List<Date> dateList=new ArrayList<>();
             int m=0;
             calendar.setTime(departScheduleVo.getTime1());//设置时间为第一天
-            calendar.add(Calendar.DATE,-1);
+            
             while (m<7){//本周每天的日期
                 calendar.add(Calendar.DATE,1);
                 date=calendar.getTime();
