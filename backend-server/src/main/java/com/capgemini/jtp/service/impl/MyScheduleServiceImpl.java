@@ -80,18 +80,18 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         //把日程添加到数据库
         Integer integer = scheduleMapper.insertSchedule(schedule);
         //添加预约信息
-        if (scheduleAddVo.getUserIdList().size()>0)
-        {
-
-            precontract.setScheduleId(scheduleMapper.getScheduleIdByCreateTime(scheduleAddVo.getCreateTime()));//判断一下数据库是否创建时间唯一一条
-            //precontract.setUserId(scheduleAddVo.getUserId());
-            List<String> list= scheduleAddVo.getUserIdList();//所以预约的人
-            for (String s:list){
-                precontract.setUserId(s);
-                integer  &= precontractMapper.insertPrecontract(precontract);
-            }
-
-        }
+//        if (scheduleAddVo.getUserIdList().size()>0)
+////        {
+////
+////            precontract.setScheduleId(scheduleMapper.getScheduleIdByCreateTime(scheduleAddVo.getCreateTime()));//判断一下数据库是否创建时间唯一一条
+////            //precontract.setUserId(scheduleAddVo.getUserId());
+////            List<String> list= scheduleAddVo.getUserIdList();//所以预约的人
+////            for (String s:list){
+////                precontract.setUserId(s);
+////                integer  &= precontractMapper.insertPrecontract(precontract);
+////            }
+////
+////        }
         return integer;
 
     };
@@ -117,13 +117,15 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         Integer integer =scheduleMapper.updateScheduleById(schedule);
         //
         //更新预约信息表
-        precontract.setScheduleId(scheduleVo.getScheduleId());
-        precontractMapper.deleteaPrecByScheduleId(precontract.getScheduleId());
-        List<String> list= scheduleVo.getUserIdList();
-        for (String s:list){
-            precontract.setUserId(s);
-             integer &= precontractMapper.insertPrecontract(precontract);
-        }
+//        precontract.setScheduleId(scheduleVo.getScheduleId());
+//        precontractMapper.deleteaPrecByScheduleId(precontract.getScheduleId());
+//        List<String> list= scheduleVo.getUserIdList();
+//        for (String s:list){
+//            precontract.setUserId(s);
+//             integer &= precontractMapper.insertPrecontract(precontract);
+//        }
+
+
        // precontract.setUserId(scheduleVo.getUserId());
         //返回所有该日程id的所有预约id
 //        List<Integer> list= precontractMapper.selectPrecByScheduleId(scheduleVo.getScheduleId());
@@ -185,7 +187,7 @@ public class MyScheduleServiceImpl implements MyScheduleService {
             List<Date> dateList=new ArrayList<>();
             int m=0;
             calendar.setTime(departScheduleVo.getTime1());//设置时间为第一天
-            
+
             while (m<7){//本周每天的日期
                 calendar.add(Calendar.DATE,1);
                 date=calendar.getTime();
