@@ -16,8 +16,9 @@
         where roleId = #{roleAdd.roleId,jdbcType=INTEGER}
     </update>
     <delete id="deleteRoleById" parameterType="int">
-       DELETE FROM role WHERE roleId=#{roleId}
+       DELETE FROM role WHERE roleId=#{roleId};
 
+       DELETE FROM role_right WHERE roleId=#{roleId}
     </delete>
     <insert id="addRoleById" parameterType="com.capgemini.jtp.vo.request.RoleAddVo">
      insert into role (`roleName`, `roleDesc`)
@@ -25,7 +26,12 @@
 
             (
             #{roleAddVo.roleName,jdbcType=VARCHAR}, #{roleAddVo.roleDesc,jdbcType=VARCHAR}
-            )
+            );
+     insert into role_right(roleId,nodeId)
+     values
+     (
+     last_insert_id(),23
+    )
     </insert>
     <select id="listUserState" resultType="com.capgemini.jtp.vo.response.UserStateRespVo">
         select * from user_state where userStateId >= 0
@@ -34,4 +40,25 @@
        select *
        from role
    </select>
+    <insert id="addPowerById" parameterType="com.capgemini.jtp.vo.request.AddVo">
+       insert into  role_right(`roleId`,`nodeId`)
+       VALUES(
+          #{addVo.roleId,jdbcType=INTEGER},
+
+            #{addVo.nodeId,jdbcType=INTEGER}
+
+)
+
+    </insert>
+<!--    <select id="isPowerById" resultType="com.capgemini.jtp.vo.request.AddVo">-->
+<!--       select count(*) from role_right-->
+<!--      where-->
+<!--        roleId = #{addVo.roleId,jdbcType=INTEGER} and-->
+
+<!--         nodeId = #{addVo.nodeId,jdbcType=INTEGER}-->
+
+
+
+<!--    </select>-->
+
 </mapper>
