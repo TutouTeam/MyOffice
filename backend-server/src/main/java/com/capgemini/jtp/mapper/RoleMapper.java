@@ -3,6 +3,8 @@ package com.capgemini.jtp.mapper;
 
 
 import com.capgemini.jtp.entity.Role;
+
+import com.capgemini.jtp.vo.request.AddVo;
 import com.capgemini.jtp.vo.request.RoleAddVo;
 import com.capgemini.jtp.vo.response.RoleListVo;
 import com.capgemini.jtp.vo.response.UserStateRespVo;
@@ -19,4 +21,6 @@ public interface RoleMapper {
     Integer addRoleById(@Param("roleAddVo") RoleAddVo roleAddVo);
     List<UserStateRespVo> listUserState();
     List<Role> getListRole();
+    Integer addPowerById(@Param("addVo") AddVo addVo);
+//    Integer isPowerById(@Param("addVo") AddVo addVo);
 }
