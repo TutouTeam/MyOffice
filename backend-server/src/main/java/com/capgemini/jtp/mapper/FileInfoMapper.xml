@@ -20,8 +20,7 @@
     </update>
 
     <select id="listAccessoryInfo" resultType="com.capgemini.jtp.entity.AccessoryInfo">
-        select * from accessory_file where `fileId` in (select `fileId` from file where `parentId` = #{fileInfo.fileId}
-        and `ifDelete` = '0')
+        select * from accessory_file where `fileId` = #{fileInfo.fileId}
     </select>
 
     <insert id="addFileInfo" parameterType="com.capgemini.jtp.entity.FileInfo">
@@ -49,7 +48,9 @@
     </delete>
 
     <update id="MoveFileToRecycleBin" parameterType="com.capgemini.jtp.entity.FileInfo">
-        update file set `ifDelete` = '1' where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
+        update file set `ifDelete` = '1',
+        `deleteDate` = #{fileInfo.deleteDate,jdbcType=TIMESTAMP}
+        where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
     </update>
 
     <select id="listRecycleBin" resultType="com.capgemini.jtp.entity.FileInfo">
