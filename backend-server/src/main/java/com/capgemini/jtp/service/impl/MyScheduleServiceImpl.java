@@ -176,6 +176,7 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         calendar.add(Calendar.DATE,7-week0);//本周最后第一天
         departScheduleVo.setTime2(calendar.getTime());
 
+
         calendar.add(Calendar.DATE,-6);//本周第一天
         departScheduleVo.setTime1(calendar.getTime());
 
@@ -190,8 +191,10 @@ public class MyScheduleServiceImpl implements MyScheduleService {
 
             while (m<7){//本周每天的日期
                 calendar.add(Calendar.DATE,1);
+
                 date=calendar.getTime();
                 dateList.add(date);
+                System.out.println("----------"+dateList);
                 m++;
             }
             d.setDateList(dateList);
@@ -207,8 +210,8 @@ public class MyScheduleServiceImpl implements MyScheduleService {
                 Schedule schedule= scheduleMapper.listByScheduleId(Integer.valueOf(retval));
                 calendar.setTime(schedule.getBeginTime());//将查询到的日程放到一周中对应的位置
                 int week=calendar.get(Calendar.DAY_OF_WEEK);
-                list.set(week,Integer.valueOf(retval));
-                list1.set(week,schedule);
+                list.set(week-1,Integer.valueOf(retval));
+                list1.set(week-1,schedule);
             }
             d.setScheduleIdList(list);
             d.setScheduleList(list1);
