@@ -53,6 +53,8 @@ public interface FileInfoMapper {
 
     Integer deleteFile(@Param(value = "fileInfo") FileInfo fileInfo);
 
+    Integer deleteAccessory(@Param(value = "accessoryInfo") AccessoryInfo accessoryInfo);
+
     Integer MoveFileToRecycleBin(@Param(value = "fileInfo") FileInfo fileInfo);
 
     List<FileInfo> listRecycleBin();
@@ -74,5 +76,7 @@ public interface FileInfoMapper {
     Integer getFileTypeByFileId(@Param(value = "fileId") int fileId);
 
     String getFilePathByFileId(@Param(value = "fileId") int fileId);
+
+    String getAccessoryPathByAccessoryId(@Param(value = "accessoryId") int accessoryId);
 
 }

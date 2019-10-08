@@ -145,11 +145,11 @@ public class FileInfoController {
      */
     @RequestMapping(value = "/addAccessoryToDesk",method = RequestMethod.POST)
     @ApiOperation(value = "新建附件到磁盘")
-    public RespBean addAccessoryToDesk( @RequestParam("file") MultipartFile file) {
+    public RespBean addAccessoryToDesk( @RequestParam("file") MultipartFile file,@RequestBody AddAccessoryReq addAccessoryReq) {
         if (file.isEmpty()) {
             return RespBean.error("请选择文件");
         }
-        if (fileInfoService.uploadFileToDisk(file) != 0) {
+        if (fileInfoService.uploadFileToDisk(file,addAccessoryReq) != 0) {
             return RespBean.okMessage("上传成功");
         }else {
             return RespBean.error("上传失败");
@@ -264,19 +264,37 @@ public class FileInfoController {
     }
 
 
+
+    /**
+     * 删除附件
+     * @param deleteAccessoryReq
+     * @return
+     */
+    @RequestMapping(value = "/deleteAccessory",method = RequestMethod.POST)
+    @ApiOperation(value = "删除附件")
+    public RespBean deleteFile(@RequestBody DeleteAccessoryReq deleteAccessoryReq) {
+        if (fileInfoService.deleteFileFromDisk(fileInfoMapper.getAccessoryPathByAccessoryId(deleteAccessoryReq.getAccessoryId())) != 0
+            && fileInfoService.deleteAccessory(deleteAccessoryReq) != 0) {
+            return RespBean.okMessage("删除成功");
+        }else {
+            return RespBean.error("删除失败");
+        }
+    }
+
+
     /**
      * 查询文件详情
      * @param fileDetailReq
      * @return
      */
-//    @RequestMapping(value = "/fileDetail",method = RequestMethod.POST)
-//    @ApiOperation(value = "文件详情")
-//    @ApiImplicitParam(paramType = "",name = "fileDetail",value = "文件详情",dataType = "fileDetailResp")
-//    public RespBean getFileDetail(@RequestBody FileDetailReq fileDetailReq) {
-//        FileDetailResp fileDetailResp = fileInfoService.getFileDetail(fileDetailReq);
-//
-//        return RespBean.ok("查询成功",fileDetailResp);
-//    }
+    @RequestMapping(value = "/fileDetail",method = RequestMethod.POST)
+    @ApiOperation(value = "文件详情")
+    @ApiImplicitParam(paramType = "",name = "fileDetail",value = "文件详情",dataType = "fileDetailResp")
+    public RespBean getFileDetail(@RequestBody FileDetailReq fileDetailReq) {
+        FileDetailResp fileDetailResp = fileInfoService.getFileDetail(fileDetailReq);
+
+        return RespBean.ok("查询成功",fileDetailResp);
+    }
 
 
 }

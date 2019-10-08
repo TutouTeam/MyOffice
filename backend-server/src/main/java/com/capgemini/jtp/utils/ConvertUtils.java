@@ -303,6 +303,19 @@ public class ConvertUtils {
     }
 
 
+    /**
+     * 将删除附件请求类转为 AccessoryInfo 类型
+     * @param deleteAccessoryReq
+     * @return
+     */
+    public static  AccessoryInfo convertDeletedAccessoryInfoToAccessoryInfo(DeleteAccessoryReq deleteAccessoryReq) {
+        AccessoryInfo accessoryInfo = new AccessoryInfo();
+        accessoryInfo.setAccessoryId(deleteAccessoryReq.getAccessoryId());
+        accessoryInfo.setAccessoryName(deleteAccessoryReq.getAccessoryPathAndName());
+        return accessoryInfo;
+    }
+
+
     public static User convertUserVoToEntity(UserEditVo userEditVo) {
         User user = new User();
         user.setUserId(userEditVo.getUserId());

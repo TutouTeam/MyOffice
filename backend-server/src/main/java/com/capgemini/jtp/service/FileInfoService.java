@@ -27,9 +27,11 @@ public interface FileInfoService {
 
     public Integer uploadFileToDb(UploadFileReq uploadFileReq);
 
-    public Integer uploadFileToDisk(MultipartFile file);
+    public Integer uploadFileToDisk(MultipartFile file, AddAccessoryReq addAccessoryReq);
 
     public Integer deleteFile(DeleteFileReq deleteFileReq);
+
+    public Integer deleteAccessory(DeleteAccessoryReq deleteAccessoryReq);
 
     public Integer createFile(CreateFileReq addFileReq);
 

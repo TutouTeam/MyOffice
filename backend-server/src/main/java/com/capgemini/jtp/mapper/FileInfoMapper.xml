@@ -47,6 +47,10 @@
         delete from file where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
     </delete>
 
+    <delete id="deleteAccessory" parameterType="com.capgemini.jtp.entity.AccessoryInfo">
+        delete from accessory_file where `accessoryId` = #{accessoryInfo.accessoryId,jdbcType=INTEGER}
+    </delete>
+
     <update id="MoveFileToRecycleBin" parameterType="com.capgemini.jtp.entity.FileInfo">
         update file set `ifDelete` = '1',
         `deleteDate` = #{fileInfo.deleteDate,jdbcType=TIMESTAMP}
@@ -117,6 +121,10 @@
   </select>
     <select id="getFilePathByFileId" resultType="String">
         select `filePath` from file where `fileId` = #{fileId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAccessoryPathByAccessoryId" resultType="String">
+        select `accessoryPath` from accessory_file where `accessoryId` = #{accessoryId,jdbcType=INTEGER}
     </select>
 
 
