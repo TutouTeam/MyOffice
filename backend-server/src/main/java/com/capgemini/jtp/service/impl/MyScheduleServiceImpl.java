@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -38,6 +39,7 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     DepartGetRespVo departGetRespVo;
     @DateTimeFormat(pattern="yyyy-MM-dd")
     Date date;
+    String dateString;
     /**
      * 返回所有的个人日程信息
      * @return
@@ -185,16 +187,19 @@ public class MyScheduleServiceImpl implements MyScheduleService {
 
         while (iterator.hasNext()){
             DepartGetRespVo d=iterator.next();
-            List<Date> dateList=new ArrayList<>();
+            List<String > dateList=new ArrayList<>();
             int m=0;
             calendar.setTime(departScheduleVo.getTime1());//设置时间为第一天
 
             while (m<7){//本周每天的日期
+                SimpleDateFormat simp02=new SimpleDateFormat("dd");
+
                 calendar.add(Calendar.DATE,1);
 
                 date=calendar.getTime();
-                dateList.add(date);
-                System.out.println("----------"+dateList);
+                dateString=simp02.format(date);
+                dateList.add(dateString);
+
                 m++;
             }
             d.setDateList(dateList);

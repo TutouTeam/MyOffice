@@ -14,7 +14,7 @@ public class DepartGetRespVo {
     private String chineseName;
     private Object  scheduleId;
     @DateTimeFormat(pattern="yyyy-MM-dd")
-    private List<Date> dateList;
+    private List<String > dateList;
     private List<Integer > scheduleIdList;
     private List<Schedule> ScheduleList;
 }

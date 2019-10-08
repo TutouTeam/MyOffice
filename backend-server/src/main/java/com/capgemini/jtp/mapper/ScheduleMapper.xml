@@ -73,12 +73,15 @@
         ifPrivate = 0
         <if test="departSchedule.departId != null and departSchedule.departId !=0  " >and(createUser in (select userName from `user` where departId = #{departSchedule.departId,jdbcType=INTEGER})) </if>
         <if test="departSchedule.Name != null and departSchedule.Name != '' ">
-            and((select chineseName from `user` where userName= schedule.createUser) like concat(concat('%',#{departSchedule.Name,jdbcType=VARCHAR}),'%')) </if>
+            and((select chineseName from `user` where userName= schedule.createUser) like concat(concat('%',#{departSchedule.Name,jdbcType=VARCHAR}),'%'))
+
+            </if>
 <!--        <if test="departSchedule.selectTime != null ">or  (date(beginTime) = date(#{departSchedule.selectTime}))</if>-->
 <!--        <if test="departSchedule.selectTime != null  ">or   (#{departSchedule.selectTime} BETWEEN beginTime AND endTime)</if>-->
         <if test="departSchedule.selectTime != null  ">and (beginTime BETWEEN #{departSchedule.time1} and #{departSchedule.time2})</if>
 
-        <if test="departSchedule.userName != null and departSchedule.userName != '' ">or (createUser =#{departSchedule.userName,jdbcType=VARCHAR})</if>
+        <if test="departSchedule.Name != null and departSchedule.Name != '' and departSchedule.userName != null and departSchedule.userName != ''">or ((createUser =#{departSchedule.userName,jdbcType=VARCHAR})and (beginTime BETWEEN #{departSchedule.time1} and #{departSchedule.time2}))</if>
+
         group by createUser
 
 
