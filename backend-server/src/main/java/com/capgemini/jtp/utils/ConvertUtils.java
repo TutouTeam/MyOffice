@@ -171,7 +171,7 @@ public class ConvertUtils {
     public static FileInfo convertMoveFileToRecycleBinReqToFileInfo(MoveFileToRecycleBinReq moveFileToRecycleBinReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(moveFileToRecycleBinReq.getFileId());
-//        fileInfo.setDeleteDate(moveFileToRecycleBinReq.getDeleteDate());
+        fileInfo.setDeleteDate(new Date());
         fileInfo.setParentId(moveFileToRecycleBinReq.getParentId());
         return fileInfo;
     }
@@ -187,7 +187,7 @@ public class ConvertUtils {
         listRecycleBinResp.setFileId(fileInfo.getFileId());
         listRecycleBinResp.setLabel(fileInfo.getLabel());
         listRecycleBinResp.setFilePath(fileInfo.getFilePath());
-//        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
+        listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
         listRecycleBinResp.setLastParentId(fileInfo.getLastParentId());
         return listRecycleBinResp;
     }

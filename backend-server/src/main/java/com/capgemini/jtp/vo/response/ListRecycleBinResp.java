@@ -38,11 +38,11 @@ public class ListRecycleBinResp {
      */
     private int fileType;
 
-//    /**
-//     * 删除时间
-//     */
-//    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS, timezone=DateUtils.DEFAULT_ZONE)
-//    private Date deleteDate;
+    /**
+     * 删除时间
+     */
+    @JsonFormat(pattern = DateUtils.YYYY_MM_DD_HH_MM_SS, timezone=DateUtils.DEFAULT_ZONE)
+    private Date deleteDate;
 
     private int lastParentId;
 
