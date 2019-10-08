@@ -22,5 +22,7 @@ public interface RoleMapper {
     List<UserStateRespVo> listUserState();
     List<Role> getListRole();
     Integer addPowerById(@Param("addVo") AddVo addVo);
-//    Integer isPowerById(@Param("addVo") AddVo addVo);
+    Integer isPowerById(int roleId);
+    Integer deletePowerById(int roleId);
+    Integer addPowerByIdOne(int roleId);
 }

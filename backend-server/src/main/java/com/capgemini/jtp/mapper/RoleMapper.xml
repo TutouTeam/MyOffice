@@ -41,7 +41,7 @@
        from role
    </select>
     <insert id="addPowerById" parameterType="com.capgemini.jtp.vo.request.AddVo">
-       insert into  role_right(`roleId`,`nodeId`)
+       insert  into  role_right(`roleId`,`nodeId`)
        VALUES(
           #{addVo.roleId,jdbcType=INTEGER},
 
@@ -50,15 +50,22 @@
 )
 
     </insert>
-<!--    <select id="isPowerById" resultType="com.capgemini.jtp.vo.request.AddVo">-->
-<!--       select count(*) from role_right-->
-<!--      where-->
-<!--        roleId = #{addVo.roleId,jdbcType=INTEGER} and-->
+    <select id="isPowerById" resultType="int">
+       select count(*) from role_right
+      where
+      roleId=#{roleId}
+    </select>
+    <delete id="deletePowerById" parameterType="int">
 
-<!--         nodeId = #{addVo.nodeId,jdbcType=INTEGER}-->
+       DELETE FROM role_right WHERE roleId=#{roleId}
+    </delete>
 
+    <insert id="addPowerByIdOne" parameterType="int">
 
-
-<!--    </select>-->
-
+     insert into role_right(roleId,nodeId)
+     values
+     (
+    #{roleId},23
+    )
+    </insert>
 </mapper>
