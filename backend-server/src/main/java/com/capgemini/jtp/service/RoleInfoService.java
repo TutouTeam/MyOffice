@@ -1,6 +1,7 @@
 package com.capgemini.jtp.service;
 
 import com.capgemini.jtp.entity.Role;
+import com.capgemini.jtp.vo.request.AddPowerVo;
 import com.capgemini.jtp.vo.request.MyNoteDeleteVo;
 import com.capgemini.jtp.vo.request.RoleAddVo;
 import com.capgemini.jtp.vo.request.RoleDeleteVo;
@@ -18,5 +19,6 @@ public interface RoleInfoService {
     public Integer updateRole(RoleAddVo roleAddVo);
     public Integer deleteRole(int roleId);
     public Integer addRole(RoleAddVo roleAddVo);
+    public Integer addPowerRole(AddPowerVo addPowerVo);
 
 }

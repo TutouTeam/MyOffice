@@ -95,9 +95,9 @@ public class SystemLoginLogController {
     @RequestMapping(value = "/roleList/delete", method = RequestMethod.POST)
     public RespBean deleteNote(@Valid @RequestBody RoleDeleteVo roleDeleteVo) {
         if(roleInfoService.deleteRole(roleDeleteVo.getRoleId())!=0)
-            return RespBean.okMessage("便签删除成功");
+            return RespBean.okMessage("角色删除成功");
         else
-            return RespBean.error("便签删除失败");
+            return RespBean.error("角色删除失败");
     }
 
 
@@ -111,4 +111,19 @@ public class SystemLoginLogController {
 
     }
 
+    @ApiOperation(value="分配角色权限")
+    @RequestMapping(value = "/roleList/addPower",method = RequestMethod.POST)
+    public RespBean addPowerById(@RequestBody AddPowerVo addPowerVo){
+        if(roleInfoService.addPowerRole(addPowerVo)!=0)
+            return RespBean.okMessage("分配成功");
+//        else{
+//            if(roleInfoService.addPowerRole(addPowerVo)==-1)
+//            {
+//
+//                return RespBean.error("权限分配重复，请重新分配");
+//            }
+           else
+                return RespBean.error("分配失败");
+
+    }
 }

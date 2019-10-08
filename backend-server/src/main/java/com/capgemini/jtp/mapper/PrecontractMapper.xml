@@ -34,7 +34,6 @@ CREATE TEMPORARY  TABLE temp_table
     <insert id="insertPrecontract">
         insert into pre_contract (`scheduleId`,userId)
         values
-
             (
             #{Precontract.scheduleId,jdbcType=INTEGER},#{Precontract.userId,jdbcType=VARCHAR}
             )
