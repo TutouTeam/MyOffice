@@ -3,7 +3,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.capgemini.jtp.mapper.RoleMapper">
    <select id="listRole" resultType="com.capgemini.jtp.vo.response.RoleListVo">
-       select roleName,roleDesc
+       select roleId,roleName,roleDesc
        from role
    </select>
     <update id="updateRoleById" parameterType="com.capgemini.jtp.vo.request.RoleAddVo">

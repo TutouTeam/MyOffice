@@ -172,9 +172,9 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return
      */
     @Override
-    public Integer uploadFileToDisk(MultipartFile file, AddAccessoryReq addAccessoryReq) {
+    public Integer uploadFileToDisk(MultipartFile file, String accessoryPath) {
         String fileName = file.getOriginalFilename();
-        File dest = new File(addAccessoryReq.getAccessoryPath());
+        File dest = new File(accessoryPath);
         try {
             file.transferTo(dest);
             return 1;
