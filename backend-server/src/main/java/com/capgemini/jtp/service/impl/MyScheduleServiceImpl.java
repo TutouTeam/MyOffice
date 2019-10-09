@@ -5,15 +5,19 @@ import com.capgemini.jtp.entity.Schedule;
 import com.capgemini.jtp.mapper.MeetingInfoMapper;
 import com.capgemini.jtp.mapper.PrecontractMapper;
 import com.capgemini.jtp.mapper.ScheduleMapper;
+import com.capgemini.jtp.mapper.UserMapper;
 import com.capgemini.jtp.service.MyScheduleService;
 import com.capgemini.jtp.vo.request.DepartScheduleVo;
 import com.capgemini.jtp.vo.request.ScheduleAddVo;
 import com.capgemini.jtp.vo.request.ScheduleVo;
+import com.capgemini.jtp.vo.response.DepartGetRespVo;
 import com.capgemini.jtp.vo.response.ScheduleRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Service
 public class MyScheduleServiceImpl implements MyScheduleService {
@@ -31,6 +35,11 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     MeetingInfoMapper meetingInfoMapper;
     @Autowired
     DepartScheduleVo departScheduleVo;
+    @Autowired
+    DepartGetRespVo departGetRespVo;
+    @DateTimeFormat(pattern="yyyy-MM-dd")
+    Date date;
+    String dateString;
     /**
      * 返回所有的个人日程信息
      * @return
@@ -73,18 +82,18 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         //把日程添加到数据库
         Integer integer = scheduleMapper.insertSchedule(schedule);
         //添加预约信息
-        if (scheduleAddVo.getUserIdList().size()>0)
-        {
-
-            precontract.setScheduleId(scheduleMapper.getScheduleIdByCreateTime(scheduleAddVo.getCreateTime()));//判断一下数据库是否创建时间唯一一条
-            //precontract.setUserId(scheduleAddVo.getUserId());
-            List<String> list= scheduleAddVo.getUserIdList();//所以预约的人
-            for (String s:list){
-                precontract.setUserId(s);
-                integer  &= precontractMapper.insertPrecontract(precontract);
-            }
-
-        }
+//        if (scheduleAddVo.getUserIdList().size()>0)
+////        {
+////
+////            precontract.setScheduleId(scheduleMapper.getScheduleIdByCreateTime(scheduleAddVo.getCreateTime()));//判断一下数据库是否创建时间唯一一条
+////            //precontract.setUserId(scheduleAddVo.getUserId());
+////            List<String> list= scheduleAddVo.getUserIdList();//所以预约的人
+////            for (String s:list){
+////                precontract.setUserId(s);
+////                integer  &= precontractMapper.insertPrecontract(precontract);
+////            }
+////
+////        }
         return integer;
 
     };
@@ -110,13 +119,15 @@ public class MyScheduleServiceImpl implements MyScheduleService {
         Integer integer =scheduleMapper.updateScheduleById(schedule);
         //
         //更新预约信息表
-        precontract.setScheduleId(scheduleVo.getScheduleId());
-        precontractMapper.deleteaPrecByScheduleId(precontract.getScheduleId());
-        List<String> list= scheduleVo.getUserIdList();
-        for (String s:list){
-            precontract.setUserId(s);
-             integer &= precontractMapper.insertPrecontract(precontract);
-        }
+//        precontract.setScheduleId(scheduleVo.getScheduleId());
+//        precontractMapper.deleteaPrecByScheduleId(precontract.getScheduleId());
+//        List<String> list= scheduleVo.getUserIdList();
+//        for (String s:list){
+//            precontract.setUserId(s);
+//             integer &= precontractMapper.insertPrecontract(precontract);
+//        }
+
+
        // precontract.setUserId(scheduleVo.getUserId());
         //返回所有该日程id的所有预约id
 //        List<Integer> list= precontractMapper.selectPrecByScheduleId(scheduleVo.getScheduleId());
@@ -158,7 +169,60 @@ public class MyScheduleServiceImpl implements MyScheduleService {
     /**
      * 部门日程模糊搜索
      */
-    public List<Schedule> departSchedule(DepartScheduleVo departScheduleVo){
-        return scheduleMapper.getScheduleByName(departScheduleVo);
-    };
+    public List<DepartGetRespVo> departSchedule(DepartScheduleVo departScheduleVo){
+
+        Calendar calendar=Calendar.getInstance();
+        calendar.setTime(departScheduleVo.getSelectTime());//设置时间为查询时间
+        int week0=calendar.get(Calendar.DAY_OF_WEEK);//判断是周几
+
+        calendar.add(Calendar.DATE,7-week0);//本周最后第一天
+        departScheduleVo.setTime2(calendar.getTime());
+
+
+        calendar.add(Calendar.DATE,-6);//本周第一天
+        departScheduleVo.setTime1(calendar.getTime());
+
+        List<DepartGetRespVo> departGetRespVoList =scheduleMapper.getScheduleByName(departScheduleVo);//部门日程搜索结果
+        Iterator<DepartGetRespVo> iterator = departGetRespVoList.iterator();//遍历
+
+        while (iterator.hasNext()){
+            DepartGetRespVo d=iterator.next();
+            List<String > dateList=new ArrayList<>();
+            int m=0;
+            calendar.setTime(departScheduleVo.getTime1());//设置时间为第一天
+
+            while (m<7){//本周每天的日期
+                SimpleDateFormat simp02=new SimpleDateFormat("dd");
+
+                calendar.add(Calendar.DATE,1);
+
+                date=calendar.getTime();
+                dateString=simp02.format(date);
+                dateList.add(dateString);
+
+                m++;
+            }
+            d.setDateList(dateList);
+            d.setChineseName(scheduleMapper.getChineseNameByUserName(d.getCreateUser()));//获取中文名字
+            String s=(String)d.getScheduleId();//获得的每个创建者符合条件的日程Id字符串
+            List<Integer> list=new ArrayList<>();
+            List<Schedule> list1=new ArrayList<>();
+            for (int i=0;i<7;i++){
+                list.add(null);
+                list1.add(null);
+            }
+            for(String retval:s.split(",")){//将字符串分开
+                Schedule schedule= scheduleMapper.listByScheduleId(Integer.valueOf(retval));
+                calendar.setTime(schedule.getBeginTime());//将查询到的日程放到一周中对应的位置
+                int week=calendar.get(Calendar.DAY_OF_WEEK);
+                list.set(week-1,Integer.valueOf(retval));
+                list1.set(week-1,schedule);
+            }
+            d.setScheduleIdList(list);
+            d.setScheduleList(list1);
+        }
+        return departGetRespVoList;
+
+
+    }
 }

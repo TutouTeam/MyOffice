@@ -13,9 +13,7 @@
     
     <update id="updateFileInfoById" >
         update file set `label` = #{fileInfo.label,jdbcType=VARCHAR},
-        `remark` = #{fileInfo.remark,jdbcType=VARCHAR},
-        `fileType` =
-        (select `fileTypeId` from filetype where `fileTypeImage` = #{fileTypeInfo.fileTypeImage,jdbcType=VARCHAR})
+        `remark` = #{fileInfo.remark,jdbcType=VARCHAR}
          where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
     </update>
 
@@ -45,6 +43,10 @@
 
     <delete id="deleteFile" parameterType="com.capgemini.jtp.entity.FileInfo">
         delete from file where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteAccessory" parameterType="com.capgemini.jtp.entity.AccessoryInfo">
+        delete from accessory_file where `accessoryId` = #{accessoryInfo.accessoryId,jdbcType=INTEGER}
     </delete>
 
     <update id="MoveFileToRecycleBin" parameterType="com.capgemini.jtp.entity.FileInfo">
@@ -117,6 +119,10 @@
   </select>
     <select id="getFilePathByFileId" resultType="String">
         select `filePath` from file where `fileId` = #{fileId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAccessoryPathByAccessoryId" resultType="String">
+        select `accessoryPath` from accessory_file where `accessoryId` = #{accessoryId,jdbcType=INTEGER}
     </select>
 
 

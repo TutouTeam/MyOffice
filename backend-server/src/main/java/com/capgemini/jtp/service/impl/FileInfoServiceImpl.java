@@ -69,8 +69,8 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public Integer editCurrentDocment(EditFileInfoReq editFileInfoReq) {
         FileInfo fileInfo = ConvertUtils.convertEditFileInfoReqToFileInfo(editFileInfoReq);
-        FileTypeInfo fileTypeInfo = ConvertUtils.convertEditFileInfoReqToFileTypeInfo(editFileInfoReq);
-        if (fileInfoMapper.updateFileInfoById(fileInfo,fileTypeInfo) != 0) {
+//        FileTypeInfo fileTypeInfo = ConvertUtils.convertEditFileInfoReqToFileTypeInfo(editFileInfoReq);
+        if (fileInfoMapper.updateFileInfoById(fileInfo) != 0) {
             return 1;
         }
         else {
@@ -172,9 +172,9 @@ public class FileInfoServiceImpl implements FileInfoService {
      * @return
      */
     @Override
-    public Integer uploadFileToDisk(MultipartFile file) {
+    public Integer uploadFileToDisk(MultipartFile file, String accessoryPath) {
         String fileName = file.getOriginalFilename();
-        File dest = new File(FileUtils.ACCESSORY_PATH + fileName);
+        File dest = new File(accessoryPath);
         try {
             file.transferTo(dest);
             return 1;
@@ -218,6 +218,51 @@ public class FileInfoServiceImpl implements FileInfoService {
             return 0;
         }
     }
+
+
+
+    /**
+     * 删除附件
+     * @param deleteAccessoryReq
+     * @return
+     */
+
+    @Override
+    public Integer deleteAccessory(DeleteAccessoryReq deleteAccessoryReq) {
+
+        AccessoryInfo accessoryInfo = ConvertUtils.convertDeletedAccessoryInfoToAccessoryInfo(deleteAccessoryReq);
+        return fileInfoMapper.deleteAccessory(accessoryInfo);
+    }
+
+//    /**
+//     * 从磁盘删除附件
+//     * @param filePathAndName
+//     * @return
+//     */
+//
+//    @Override
+//    public Integer deleteAccessoryFromDisk(String filePathAndName) {
+//        try {
+//            String filePath = filePathAndName;
+//            filePath = filePath.toString();
+//            File myDelFile = new File(filePath);
+//            myDelFile.delete();
+//            return 1;
+//        } catch (Exception e) {
+//
+//            e.printStackTrace();
+//            return 0;
+//        }
+//    }
+
+
+
+
+
+
+
+
+
 
     /**
      * 新建文件
@@ -301,21 +346,6 @@ public class FileInfoServiceImpl implements FileInfoService {
         return fileInfoMapper.fileReduction(fileInfo);
     }
 
-//    /**
-//     * 文件搜索
-//     * @param fileSearchReq
-//     * @return
-//     */
-//
-//    @Override
-//    public List<FileSearchResp> fileSearch(FileSearchReq fileSearchReq) {
-//        List<FileInfo> fileInfos = fileInfoMapper.fileSearch(fileSearchReq);
-//        List<FileSearchResp> fileSearchResps = new ArrayList<>();
-//        for (FileInfo fileInfo : fileInfos) {
-//            fileSearchResps.add(ConvertUtils.convertFileInfoToFileSearchResp(fileInfo));
-//        }
-//        return fileSearchResps;
-//    }
 
 
     /**
@@ -360,10 +390,10 @@ public class FileInfoServiceImpl implements FileInfoService {
 
         FileDetailResp fileDetailResp =
                 ConvertUtils.convertFileInfoToFileDetailResp(fileInfoMapper.getFileDetail(fileInfo));
-
-        AccessoryInfo accessoryInfo = ConvertUtils.convertFileDetailReqToAccessoryInfo(fileDetailReq);
-
-        fileDetailResp.setAccessorySize(fileInfoMapper.getAccessorySize(accessoryInfo));
+//
+//        AccessoryInfo accessoryInfo = ConvertUtils.convertFileDetailReqToAccessoryInfo(fileDetailReq);
+//
+//        fileDetailResp.setAccessorySize(fileInfoMapper.getAccessorySize(accessoryInfo));
         return fileDetailResp;
     }
 

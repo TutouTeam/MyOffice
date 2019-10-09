@@ -18,6 +18,9 @@ import java.util.Date;
 @Getter
 @Setter
 public class FileSearchResp {
+    //文件Id
+    private int fileId;
+
     /**
      * 文件名称
      */

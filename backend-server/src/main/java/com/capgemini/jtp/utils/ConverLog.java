@@ -63,6 +63,7 @@ public class ConverLog {
      */
     public static FileSearchResp convertFileInfoToFileSearchResp(FileInfo fileInfo) {
         FileSearchResp fileSearchResp = new FileSearchResp();
+        fileSearchResp.setFileId(fileInfo.getFileId());
         fileSearchResp.setLabel(fileInfo.getLabel());
         fileSearchResp.setFileOwner(fileInfo.getFileOwner());
         fileSearchResp.setCreateDate(fileInfo.getCreateDate());

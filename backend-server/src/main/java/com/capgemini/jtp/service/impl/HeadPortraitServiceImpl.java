@@ -5,6 +5,8 @@ import com.capgemini.jtp.service.HeadPortraitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
@@ -16,6 +18,13 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
 
     @Autowired
     UserMapper userMapper;
+
+    /**
+     * 上传头像 并用当前用户的userName 命名，
+     * @param file
+     * @param request
+     * @return
+     */
     @Override
     public int headUpload(MultipartFile file, HttpServletRequest request)  {
         String fileName=file.getOriginalFilename();
@@ -88,8 +97,63 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
 
         return i;
     }
+
+    /**
+     * 获得该用户的头像url里面包含get方法
+     * @param userName
+     * @param request
+     * @return
+     */
     @Override
-   public String  getHeadUrl(HttpServletRequest request){
+   public String  getHeadUrl(String userName,HttpServletRequest request){
+
+        String newFileName=userName+".jpg";
+        String path = "d:/MyOffice/images/Users/";
+        File file=new File(path+newFileName);
+        if(file.exists())
+        {
+            return "http://localhost:8085/HeadPortrait/getImg?url="+path+newFileName;
+        }else
+       return null;
+    }
+
+    /**
+     * 根据url通过流输出到浏览器
+     * @param url
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @Override
+    public void getImg(String url,HttpServletRequest request,
+                HttpServletResponse response) throws IOException {
+        request.setCharacterEncoding("utf-8");
+        response.setContentType("image/jpeg");
+        File file = new File(url);
+        ServletOutputStream outputStream = response.getOutputStream();
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] bytes = new byte[1024];
+        int len;
+        while ((len=fileInputStream.read(bytes)) != -1){
+            outputStream.write(bytes,0,len);
+        }
+
+        outputStream.flush();
+        fileInputStream.close();
+        outputStream.close();
+
+    }
+
+    /**
+     * 通过流输出当前登录用户的头像
+     * @param request
+     * @param response
+     * @throws IOException
+     */
+    @Override
+    public void getImgs(HttpServletRequest request,
+                 HttpServletResponse response) throws IOException{
+        request.setCharacterEncoding("utf-8");
         Object object = request.getSession().getAttribute("operationUserId");
         int userId;
         if(object != null){
@@ -98,11 +162,20 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
         String userName = userMapper.getMassageById(userId).getUsername();
         String newFileName=userName+".jpg";
         String path = "d:/MyOffice/images/Users/";
-        File file=new File(path+newFileName);
-        if(file.exists())
-        {
-            return path+newFileName;
-        }else
-       return null;
+
+        response.setContentType("image/jpeg");
+        File file = new File(path+newFileName);
+        ServletOutputStream outputStream = response.getOutputStream();
+        FileInputStream fileInputStream = new FileInputStream(file);
+        byte[] bytes = new byte[1024];
+
+        int len;
+        while ((len=fileInputStream.read(bytes)) != -1){
+            outputStream.write(bytes,0,len);
+        }
+
+        outputStream.flush();
+        fileInputStream.close();
+        outputStream.close();
     }
 }
