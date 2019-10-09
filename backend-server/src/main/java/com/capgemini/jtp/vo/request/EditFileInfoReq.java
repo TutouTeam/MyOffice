@@ -22,20 +22,10 @@ public class EditFileInfoReq {
     /**
      * 文件名称
      */
-    private String fileName;
+    private String label;
 
     /**
      *备注
      */
     private  String remark;
-
-    /**
-     *文件类型图标
-     */
-    private String fileTypeImage;
-
-    /**
-     *上传文件所在路径
-     */
-    private String accessoryPath;
 }

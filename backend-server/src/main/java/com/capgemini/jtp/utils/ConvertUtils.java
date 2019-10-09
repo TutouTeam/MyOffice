@@ -40,7 +40,7 @@ public class ConvertUtils {
     public static FileInfo convertEditFileInfoReqToFileInfo(EditFileInfoReq editFileInfoReq) {
         FileInfo fileInfo = new FileInfo();
         fileInfo.setFileId(editFileInfoReq.getFileId());
-        fileInfo.setLabel(editFileInfoReq.getFileName());
+        fileInfo.setLabel(editFileInfoReq.getLabel());
         fileInfo.setRemark(editFileInfoReq.getRemark());
         return fileInfo;
     }
@@ -49,12 +49,12 @@ public class ConvertUtils {
      *@Description:编辑文件请求转换为文件类型信息
      *@Date:2019-08-30
      */
-    public static FileTypeInfo convertEditFileInfoReqToFileTypeInfo(EditFileInfoReq editFileInfoReq) {
-        FileTypeInfo fileTypeInfo = new FileTypeInfo();
-
-        fileTypeInfo.setFileTypeImage(editFileInfoReq.getFileTypeImage());
-        return fileTypeInfo;
-    }
+//    public static FileTypeInfo convertEditFileInfoReqToFileTypeInfo(EditFileInfoReq editFileInfoReq) {
+//        FileTypeInfo fileTypeInfo = new FileTypeInfo();
+//
+//        fileTypeInfo.setFileTypeImage(editFileInfoReq.getFileTypeImage());
+//        return fileTypeInfo;
+//    }
 
 
     /**
@@ -300,6 +300,19 @@ public class ConvertUtils {
         fileInfo.setFileId(deleteFileReq.getFileId());
         fileInfo.setLabel(deleteFileReq.getFilePathAndName());
         return fileInfo;
+    }
+
+
+    /**
+     * 将删除附件请求类转为 AccessoryInfo 类型
+     * @param deleteAccessoryReq
+     * @return
+     */
+    public static  AccessoryInfo convertDeletedAccessoryInfoToAccessoryInfo(DeleteAccessoryReq deleteAccessoryReq) {
+        AccessoryInfo accessoryInfo = new AccessoryInfo();
+        accessoryInfo.setAccessoryId(deleteAccessoryReq.getAccessoryId());
+        accessoryInfo.setAccessoryName(deleteAccessoryReq.getAccessoryPathAndName());
+        return accessoryInfo;
     }
 
 

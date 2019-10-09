@@ -116,13 +116,14 @@ public class SystemLoginLogController {
     public RespBean addPowerById(@RequestBody AddPowerVo addPowerVo){
         if(roleInfoService.addPowerRole(addPowerVo)!=0)
             return RespBean.okMessage("分配成功");
-        else{
+//        else{
 //            if(roleInfoService.addPowerRole(addPowerVo)==-1)
-////            {
-////
-////                return RespBean.error("权限分配重复，请重新分配");
-////            }else
+//            {
+//
+//                return RespBean.error("权限分配重复，请重新分配");
+//            }
+           else
                 return RespBean.error("分配失败");
 
-    }}
+    }
 }

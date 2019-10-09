@@ -47,8 +47,10 @@ public class RoleInfoServiceImpl implements RoleInfoService {
         List<Integer> a=addPowerVo.getNodeId();
         AddVo addVo =new AddVo();
         int sta=0;
-
-        for (int b : a){
+        if(roleMapper.isPowerById(addPowerVo.getRoleId())!=0){
+            roleMapper.deletePowerById(addPowerVo.getRoleId());
+            roleMapper.addPowerByIdOne(addPowerVo.getRoleId());}
+           for (int b : a){
             addVo.setRoleId(addPowerVo.getRoleId());
             addVo.setNodeId(b);
 
