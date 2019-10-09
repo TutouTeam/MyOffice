@@ -145,11 +145,11 @@ public class FileInfoController {
      */
     @RequestMapping(value = "/addAccessoryToDesk",method = RequestMethod.POST)
     @ApiOperation(value = "新建附件到磁盘")
-    public RespBean addAccessoryToDesk( @RequestParam("file") MultipartFile file,@RequestBody AddAccessoryReq addAccessoryReq) {
+    public RespBean addAccessoryToDesk( @RequestParam("file") MultipartFile file,String accessoryPath) {
         if (file.isEmpty()) {
             return RespBean.error("请选择文件");
         }
-        if (fileInfoService.uploadFileToDisk(file,addAccessoryReq) != 0) {
+        if (fileInfoService.uploadFileToDisk(file,accessoryPath) != 0) {
             return RespBean.okMessage("上传成功");
         }else {
             return RespBean.error("上传失败");
@@ -295,6 +295,23 @@ public class FileInfoController {
 
         return RespBean.ok("查询成功",fileDetailResp);
     }
+    
+    
+    /**
+     * create by: MmmLll_Shen
+     * description:退出按钮
+     * create time: 11:03 2019/10/9
+     */
+    @RequestMapping(value = "/exit",method = RequestMethod.POST)
+    @ApiOperation(value = "退出按钮：只删除磁盘中的附件")
+    public RespBean exit(@RequestBody DeleteAccessoryReq deleteAccessoryReq) {
+        if (fileInfoService.deleteFileFromDisk(deleteAccessoryReq.getAccessoryPathAndName()) != 0) {
+            return RespBean.okMessage("退出成功");
+        }else {
+            return RespBean.error("退出失败");
+        }
+    }
+
 
 
 }
