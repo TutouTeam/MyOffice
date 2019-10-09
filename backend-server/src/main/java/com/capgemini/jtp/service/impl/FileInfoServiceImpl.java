@@ -69,8 +69,8 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public Integer editCurrentDocment(EditFileInfoReq editFileInfoReq) {
         FileInfo fileInfo = ConvertUtils.convertEditFileInfoReqToFileInfo(editFileInfoReq);
-        FileTypeInfo fileTypeInfo = ConvertUtils.convertEditFileInfoReqToFileTypeInfo(editFileInfoReq);
-        if (fileInfoMapper.updateFileInfoById(fileInfo,fileTypeInfo) != 0) {
+//        FileTypeInfo fileTypeInfo = ConvertUtils.convertEditFileInfoReqToFileTypeInfo(editFileInfoReq);
+        if (fileInfoMapper.updateFileInfoById(fileInfo) != 0) {
             return 1;
         }
         else {

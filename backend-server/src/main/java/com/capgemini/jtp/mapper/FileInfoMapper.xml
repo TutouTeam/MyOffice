@@ -13,9 +13,7 @@
     
     <update id="updateFileInfoById" >
         update file set `label` = #{fileInfo.label,jdbcType=VARCHAR},
-        `remark` = #{fileInfo.remark,jdbcType=VARCHAR},
-        `fileType` =
-        (select `fileTypeId` from filetype where `fileTypeImage` = #{fileTypeInfo.fileTypeImage,jdbcType=VARCHAR})
+        `remark` = #{fileInfo.remark,jdbcType=VARCHAR}
          where `fileId` = #{fileInfo.fileId,jdbcType=INTEGER}
     </update>
 

@@ -40,8 +40,7 @@ public interface FileInfoMapper {
 
     String getFileTypeName(@Param(value = "fileType") int fileType);
 
-    Integer updateFileInfoById(@Param(value = "fileInfo") FileInfo fileInfo,
-                               @Param(value = "fileTypeInfo") FileTypeInfo fileTypeInfo);
+    Integer updateFileInfoById(@Param(value = "fileInfo") FileInfo fileInfo);
 
     List<AccessoryInfo> listAccessoryInfo(@Param(value = "fileInfo") FileInfo fileInfo);
 
