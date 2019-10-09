@@ -9,6 +9,7 @@ public class RoleListVo {
     /**
      * 角色名称
      */
+    private int roleId;
     private String roleName;
     /**
      * 角色描述

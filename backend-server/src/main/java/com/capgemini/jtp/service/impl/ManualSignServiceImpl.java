@@ -58,6 +58,14 @@ public class ManualSignServiceImpl implements ManualSignService {
     public List<ManualVo> listManualSearch(ManualSearchVo manualSearchVo) {
 
         List<ManualVo> viewSignList = manualMapper.SearchManualHistory(manualSearchVo);
+        for(ManualVo manualVo:viewSignList){
+            if(manualVo.getSignTag().equals("1")){
+                manualVo.setSignTag("签到");
+
+            }else
+                manualVo.setSignTag("签退");
+
+        }
 
         return viewSignList;
 
@@ -81,26 +89,31 @@ public class ManualSignServiceImpl implements ManualSignService {
 //        统计时间段内有多少个周六周日,与其他天数
         Date start=countSignSearchVo.getStartTime();
         Calendar sta = Calendar.getInstance();
+        // 从一个 Calendar 对象中获取 Date 对象
         sta.setTime(start);
+        // 所以我们必需先获得一个实例，然后设置 Date 对象
         Date stop=countSignSearchVo.getStopTime();
         Calendar sto = Calendar.getInstance();
         sto.setTime(stop);
-        int weekend=0;
+        int weekend=0;  //周数
         int countTime=0;
         List<String> strDate = new ArrayList<>();
         while(start.getTime()<=stop.getTime()){
+
+         //计算周
             if (sta.get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY ||
                     sta.get(Calendar.DAY_OF_WEEK) == Calendar.SATURDAY) {
-                weekend+=1;
+                weekend+=1;  //并无特殊应用的点，主要为了总天数排除周六周日
             }
             else {
+                //平日
                 countTime += 1;
                 String str1 = DateFormatUtils.format(sta.getTime(), "yyyy-MM-dd");
                 strDate.add(str1);
 
             }
-            sta.add(Calendar.DAY_OF_YEAR, 1);
-            start= sta.getTime();
+            sta.add(Calendar.DAY_OF_YEAR, 1);//一年当中的第几天
+            start= sta.getTime();//为实现下一层循环，进行天数递增
         }
 
 
@@ -113,12 +126,12 @@ public class ManualSignServiceImpl implements ManualSignService {
             if(name.equals(countSignVo.getUserName())){continue;}
             name=countSignVo.getUserName();
             countSignVo.setUserName(name);
-            countSignVo.setLate(manualMapper.countLate(countSignSearchVo));
-            countSignVo.setLeaveEarly(manualMapper.countLeaveEarly(countSignSearchVo));
+            countSignVo.setLate(manualMapper.countLate(countSignSearchVo));//迟到次数
+            countSignVo.setLeaveEarly(manualMapper.countLeaveEarly(countSignSearchVo));//早退次数
 
-            int contyear=manualMapper.listYearTime(countSignSearchVo);
-            countSignVo.setAbsenteeism(countTime-contyear);
-            DecimalFormat df=new DecimalFormat("0.00");
+            int contyear=manualMapper.listYearTime(countSignSearchVo);//按条件搜索的总签到天数
+            countSignVo.setAbsenteeism(countTime-contyear); //计算矿工天数counttime 为上述代码所获得的时间区间总天数，除去周六周日
+            DecimalFormat df=new DecimalFormat("0.00");//定义结果格式
             String percentage = df.format((float)((float)contyear/(float)countTime)*(float)100);
             System.out.println(percentage+" "+contyear+" "+countTime);
             countSignVo.setAttendance(percentage+"%");
