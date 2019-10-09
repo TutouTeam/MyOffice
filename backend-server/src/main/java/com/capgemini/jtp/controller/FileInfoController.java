@@ -121,12 +121,13 @@ public class FileInfoController {
      * create time: 10:29 2019/9/23
      */
     @RequestMapping(value = "/addAccessoryToDb",method = RequestMethod.POST)
-    @ApiOperation(value = "新建附件")
+    @ApiOperation(value = "新建附件（无fileId）")
     public RespBean addAccessoryToDb(@RequestBody AddAccessoryReq addAccessoryReq) {
 //        System.out.println("----------------------------" + addFileReq.getFilePath());
 //        if(fileInfoMapper.getFileTypeByFileId(addAccessoryReq.getFileId()) != 3){
 //            return RespBean.error("不能在此处新建附件");
 //        }else {
+        addAccessoryReq.setFileId(fileInfoMapper.selectMaxId());
             if (fileInfoService.addAccessoryToDb(addAccessoryReq) != 0) {
                 //在此新建文件到磁盘
                     return RespBean.okMessage("新建成功");
@@ -134,6 +135,24 @@ public class FileInfoController {
             }else {
                 return RespBean.error("新建失败");
             }
+//        }
+    }
+
+
+    @RequestMapping(value = "/addAccessoryToDbHasFileId",method = RequestMethod.POST)
+    @ApiOperation(value = "新建附件（有fileId）")
+    public RespBean addAccessoryToDbHasFileId(@RequestBody AddAccessoryReq addAccessoryReq) {
+//        System.out.println("----------------------------" + addFileReq.getFilePath());
+//        if(fileInfoMapper.getFileTypeByFileId(addAccessoryReq.getFileId()) != 3){
+//            return RespBean.error("不能在此处新建附件");
+//        }else {
+        if (fileInfoService.addAccessoryToDb(addAccessoryReq) != 0) {
+            //在此新建文件到磁盘
+            return RespBean.okMessage("新建成功");
+
+        }else {
+            return RespBean.error("新建失败");
+        }
 //        }
     }
 
