@@ -5,6 +5,7 @@ import com.capgemini.jtp.entity.AccessoryInfo;
 import com.capgemini.jtp.entity.FileInfo;
 import com.capgemini.jtp.entity.FileTypeInfo;
 import com.capgemini.jtp.entity.Menu;
+import com.capgemini.jtp.vo.request.DeleteFileAndAccessoryReq;
 import com.capgemini.jtp.vo.request.FileSearchReq;
 import io.swagger.models.auth.In;
 import org.apache.ibatis.annotations.Param;
@@ -79,5 +80,9 @@ public interface FileInfoMapper {
     String getAccessoryPathByAccessoryId(@Param(value = "accessoryId") int accessoryId);
 
     int selectMaxId();
+
+    Integer deleteFileByPath(@Param(value = "filePath") String filePath);
+
+    Integer getFileIdByPath(@Param(value = "filePath") String filePath);
 
 }

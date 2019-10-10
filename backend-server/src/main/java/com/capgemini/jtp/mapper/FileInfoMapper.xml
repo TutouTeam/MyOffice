@@ -129,5 +129,13 @@
         select max(fileId) from file
     </select>
 
+    <delete id="deleteFileByPath" parameterType="STRING">
+        delete from file where `filePath` = #{filePath,jdbcType=VARCHAR}
+    </delete>
+
+    <select id="getFileIdByPath" resultType="Integer">
+        select fileId from file where filePath = #{filePath,jdbcType=VARCHAR}
+    </select>
+
 
 </mapper>

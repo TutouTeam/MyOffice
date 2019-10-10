@@ -179,8 +179,6 @@ public class FileInfoController {
 
 
 
-
-
     /**
      * 将文件放入回收站
      * @param moveFileToRecycleBinReq
@@ -217,26 +215,6 @@ public class FileInfoController {
         }
     }
 
-///////////////////////////////////////////////////////////////
-//    /**
-//     * 退出并删除文件
-//     * @param fileName
-//     * @return
-//     */
-//    @RequestMapping(value = "/exitAndDeleteFile/{fileName}",method = RequestMethod.POST)
-//    @ApiOperation(value = "退出并删除文件")
-//    @ApiImplicitParam(paramType = "", name = "exitAndDeleteFile",value = "退出并删除文件")
-//    public RespBean exitAndDeleteFile(@PathVariable(value = "fileName") String fileName) {
-//        if (fileName != null) {
-//            if (fileInfoService.deleteFileFromDisk(FileUtils.ACCESSORY_PATH + fileName) != 0) {
-//                return RespBean.okMessage("退出成功，已删除文件");
-//            }else {
-//                return RespBean.error("删除失败");
-//            }
-//        }else {
-//            return RespBean.okMessage("退出成功");
-//        }
-//    }
 
     /**
      * 查询回收站
@@ -318,7 +296,7 @@ public class FileInfoController {
     
     /**
      * create by: MmmLll_Shen
-     * description:退出按钮
+     * description:退出按钮（编辑时的退出按钮）
      * create time: 11:03 2019/10/9
      */
     @RequestMapping(value = "/exit",method = RequestMethod.POST)
@@ -332,6 +310,39 @@ public class FileInfoController {
     }
 
 
+
+    /**
+     * create by: MmmLll_Shen
+     * description:退出按钮（创建时的退出按钮）
+     * create time: 11:03 2019/10/9
+     */
+    @RequestMapping(value = "/exitTwo",method = RequestMethod.POST)
+    @ApiOperation(value = "退出按钮：删除磁盘中的文件和数据库中的文件")
+    public RespBean exitTwo(@RequestBody DeleteFileAndAccessoryReq deleteFileAndAccessoryReq) {
+        //首先判断有没有在数据库库中创建文件
+        String[] strArr = deleteFileAndAccessoryReq.getFilePathAndName().split("\\\\");
+        StringBuilder filePath = new StringBuilder();
+        for (int i = 0; i < strArr.length - 1; i++){
+            filePath.append(strArr[i]);
+            filePath.append('\\');
+            filePath.append('\\');
+        }
+        filePath.append(strArr[strArr.length - 1]);
+
+
+        if(fileInfoMapper.getFileIdByPath(filePath.toString()) != null && fileInfoMapper.getFileIdByPath(filePath.toString()) != 0 ){
+            if (fileInfoService.deleteFileFromDisk(deleteFileAndAccessoryReq.getAccessoryPathAndName()) != 0
+            && fileInfoService.deleteFileFromDisk(deleteFileAndAccessoryReq.getFilePathAndName()) != 0
+            && fileInfoMapper.deleteFileByPath(filePath.toString()) != 0) {
+                return RespBean.okMessage("退出成功");
+            }else {
+                return RespBean.error("退出失败");
+            }
+        }
+        else {
+            return RespBean.ok("退出成功");
+        }
+    }
 
 
 
@@ -356,9 +367,6 @@ public class FileInfoController {
             return RespBean.error("上传失败");
         }
     }
-
-
-
 
 
 
