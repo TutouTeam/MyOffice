@@ -125,5 +125,9 @@
         select `accessoryPath` from accessory_file where `accessoryId` = #{accessoryId,jdbcType=INTEGER}
     </select>
 
+    <select id="selectMaxId" resultType="Integer">
+        select max(fileId) from file
+    </select>
+
 
 </mapper>
