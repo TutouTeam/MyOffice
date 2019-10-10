@@ -19,6 +19,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -366,6 +369,53 @@ public class FileInfoController {
     }
 
 
+    /**
+     * create by: MmmLll_Shen
+     * description:下载文件
+     * create time: 16:15 2019/10/10
+     */
+    @RequestMapping(value = "/testDownload", method = RequestMethod.GET)
+    @ApiOperation(value = "下载文件")
+    public void testDownload(HttpServletResponse res,String filePath) throws UnsupportedEncodingException {
+        String[] strArr = filePath.split("\\\\");
+        System.out.println("-------------------------" + strArr[strArr.length - 1]);
+
+        String file = strArr[strArr.length - 1];
+        String[] strArr2 = file.split("\\.");
+        String file2 = strArr2[strArr2.length - 1];
+
+        StringBuilder fileName = new StringBuilder();
+        fileName.append(String.valueOf("."));
+        fileName.append(String.valueOf(file2));
+
+        res.setHeader("content-type", "application/octet-stream");
+        res.setContentType("application/octet-stream;charset=utf-8");
+        res.setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileName.toString(),"utf-8"));
+        byte[] buff = new byte[1024];
+        BufferedInputStream bis = null;
+        OutputStream os = null;
+        try {
+            os = res.getOutputStream();
+            bis = new BufferedInputStream(new FileInputStream(new File(filePath)));
+            int i = bis.read(buff);
+            while (i != -1) {
+                os.write(buff, 0, buff.length);
+                os.flush();
+                i = bis.read(buff);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (bis != null) {
+                try {
+                    bis.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        System.out.println("success");
+    }
 
 
 
