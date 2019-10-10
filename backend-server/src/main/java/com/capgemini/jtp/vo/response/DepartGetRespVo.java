@@ -16,5 +16,5 @@ public class DepartGetRespVo {
     @DateTimeFormat(pattern="yyyy-MM-dd")
     private List<String > dateList;
     private List<Integer > scheduleIdList;
-    private List<Schedule> ScheduleList;
+    private List<ScheduleResVo> ScheduleList;
 }

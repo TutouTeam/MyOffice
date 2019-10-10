@@ -11,6 +11,7 @@ import com.capgemini.jtp.vo.request.DepartScheduleVo;
 import com.capgemini.jtp.vo.request.ScheduleAddVo;
 import com.capgemini.jtp.vo.request.ScheduleVo;
 import com.capgemini.jtp.vo.response.DepartGetRespVo;
+import com.capgemini.jtp.vo.response.ScheduleResVo;
 import com.capgemini.jtp.vo.response.ScheduleRespVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -190,7 +191,7 @@ public class MyScheduleServiceImpl implements MyScheduleService {
             List<String > dateList=new ArrayList<>();
             int m=0;
             calendar.setTime(departScheduleVo.getTime1());//设置时间为第一天
-
+            calendar.add(Calendar.DATE,-1);
             while (m<7){//本周每天的日期
                 SimpleDateFormat simp02=new SimpleDateFormat("dd");
 
@@ -206,17 +207,29 @@ public class MyScheduleServiceImpl implements MyScheduleService {
             d.setChineseName(scheduleMapper.getChineseNameByUserName(d.getCreateUser()));//获取中文名字
             String s=(String)d.getScheduleId();//获得的每个创建者符合条件的日程Id字符串
             List<Integer> list=new ArrayList<>();
-            List<Schedule> list1=new ArrayList<>();
+            List<ScheduleResVo> list1=new ArrayList<>();
             for (int i=0;i<7;i++){
                 list.add(null);
                 list1.add(null);
             }
             for(String retval:s.split(",")){//将字符串分开
                 Schedule schedule= scheduleMapper.listByScheduleId(Integer.valueOf(retval));
+                ScheduleResVo scheduleResVo = new ScheduleResVo();
+                scheduleResVo.setScheduleId(schedule.getScheduleId());
+                scheduleResVo.setTitle(schedule.getTitle());
+                scheduleResVo.setAddress(schedule.getAddress());
+                scheduleResVo.setMeetingId(schedule.getMeetingId());
+                scheduleResVo.setMeetingName(meetingInfoMapper.selectMeetingById(schedule.getMeetingId()).getMeetingName());
+                scheduleResVo.setBeginTime(schedule.getBeginTime());
+                scheduleResVo.setEndTime(schedule.getEndTime());
+                scheduleResVo.setSchContent(schedule.getSchContent());
+                scheduleResVo.setCreateUser(schedule.getCreateUser());
+                scheduleResVo.setCreateTime(schedule.getCreateTime());
+                scheduleResVo.setIfPrivate(schedule.getIfPrivate());
                 calendar.setTime(schedule.getBeginTime());//将查询到的日程放到一周中对应的位置
                 int week=calendar.get(Calendar.DAY_OF_WEEK);
                 list.set(week-1,Integer.valueOf(retval));
-                list1.set(week-1,schedule);
+                list1.set(week-1,scheduleResVo);
             }
             d.setScheduleIdList(list);
             d.setScheduleList(list1);

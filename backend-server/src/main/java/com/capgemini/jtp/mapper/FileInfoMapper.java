@@ -78,4 +78,6 @@ public interface FileInfoMapper {
 
     String getAccessoryPathByAccessoryId(@Param(value = "accessoryId") int accessoryId);
 
+    int selectMaxId();
+
 }
