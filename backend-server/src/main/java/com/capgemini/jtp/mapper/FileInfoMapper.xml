@@ -10,6 +10,10 @@
     <select id="getFileTypeName" resultType="String">
         select `fileTypeName` from filetype where `fileTypeId` = #{fileType,jdbcType=INTEGER}
     </select>
+
+    <select id="getAccessoryTypeName" resultType="String">
+        select `fileTypeName` from filetype where `fileTypeId` = #{accessoryType,jdbcType=INTEGER}
+    </select>
     
     <update id="updateFileInfoById" >
         update file set `label` = #{fileInfo.label,jdbcType=VARCHAR},

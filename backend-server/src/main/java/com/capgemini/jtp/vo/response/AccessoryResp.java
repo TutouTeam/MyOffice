@@ -1,4 +1,4 @@
-package com.capgemini.jtp.entity;
+package com.capgemini.jtp.vo.response;
 
 //import com.capgemini.cn.myoffice.utils.DateUtils;
 import com.capgemini.jtp.utils.DateUtils;
@@ -17,7 +17,7 @@ import java.util.Date;
 
 @Getter
 @Setter
-public class AccessoryInfo {
+public class AccessoryResp {
     /**
      * 附件ID
      */

@@ -86,7 +86,11 @@ public class FileInfoServiceImpl implements FileInfoService {
     @Override
     public List<AccessoryInfo> listAccessoryInfo(ListAccessoryReq listAccessoryReq) {
         FileInfo fileInfo = ConvertUtils.convertListAccessoryReqToFileInfo(listAccessoryReq);
-        return fileInfoMapper.listAccessoryInfo(fileInfo);
+        List<AccessoryInfo> accessoryInfoList = fileInfoMapper.listAccessoryInfo(fileInfo);
+        for(AccessoryInfo accessoryInfo : accessoryInfoList){
+            accessoryInfo.setAccessoryTypeName(fileInfoMapper.getAccessoryTypeName(accessoryInfo.getAccessoryType()));
+        }
+        return accessoryInfoList;
 
     }
 
