@@ -333,4 +333,35 @@ public class FileInfoController {
 
 
 
+
+
+    /**
+     * create by: MmmLll_Shen
+     * description:新建文件及附件
+     * create time: 10:39 2019/10/10
+     */
+    @RequestMapping(value = "/addAccessoryToDeskAndFileToDb",method = RequestMethod.POST)
+    @ApiOperation(value = "新建文件到数据库及附件到磁盘(实验接口，切勿使用)")
+    public RespBean addAccessoryToDeskAndFileToDb(FileAndAccessoryReq fileAndAccessoryReq) {
+        //先创建文件
+
+
+        //首先测试创建附件可不可以（创建路径+file）
+        if (fileAndAccessoryReq.getMultipartFile().isEmpty()) {
+            return RespBean.error("请选择文件");
+        }
+        if (fileInfoService.uploadFileToDisk(fileAndAccessoryReq.getMultipartFile(),fileAndAccessoryReq.getAccessoryPath()) != 0) {
+            return RespBean.okMessage("上传成功");
+        }else {
+            return RespBean.error("上传失败");
+        }
+    }
+
+
+
+
+
+
+
+
 }
