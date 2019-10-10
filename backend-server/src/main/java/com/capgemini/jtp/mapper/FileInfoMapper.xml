@@ -137,5 +137,13 @@
         select fileId from file where filePath = #{filePath,jdbcType=VARCHAR}
     </select>
 
+    <select id="getFileIdByLabel" resultType="Integer">
+        select fileId from file where label = #{label,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getAccessoryIdByAccessoryName" resultType="Integer">
+        select accessoryId from accessory_file where accessoryName = #{accessoryName,jdbcType=VARCHAR}
+    </select>
+
 
 </mapper>

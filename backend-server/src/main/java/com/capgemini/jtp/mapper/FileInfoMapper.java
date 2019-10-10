@@ -85,4 +85,8 @@ public interface FileInfoMapper {
 
     Integer getFileIdByPath(@Param(value = "filePath") String filePath);
 
+    Integer getFileIdByLabel(@Param(value = "label") String label);
+
+    Integer getAccessoryIdByAccessoryName(@Param(value = "accessoryName") String accessoryName);
+
 }

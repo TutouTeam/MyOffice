@@ -97,6 +97,9 @@ public class FileInfoServiceImpl implements FileInfoService {
      */
     @Override
     public Integer addFileToDb(AddFileReq addFileReq) {
+        if(fileInfoMapper.getFileIdByLabel(addFileReq.getLabel()) != null){
+            return 2;
+        }
         FileInfo fileInfo = ConvertUtils.convertAddFileInfoToFileInfo(addFileReq);
         StringBuilder filePath = new StringBuilder();
         filePath.append(fileInfoMapper.getFilePathByFileId(addFileReq.getParentId()).toString());
@@ -115,6 +118,9 @@ public class FileInfoServiceImpl implements FileInfoService {
      */
     @Override
     public Integer addAccessoryToDb(AddAccessoryReq addAccessoryReq) {
+        if (fileInfoMapper.getAccessoryIdByAccessoryName(addAccessoryReq.getAccessoryName()) != null){
+            return 2;
+        }
         AccessoryInfo accessoryInfo = ConvertUtils.convertAddAccessoryInfoToAccessoryInfo(addAccessoryReq);
         StringBuilder filePath = new StringBuilder();
         filePath.append(fileInfoMapper.getFilePathByFileId(addAccessoryReq.getFileId()).toString());

@@ -100,6 +100,9 @@ public class FileInfoController {
 //        if(fileInfoMapper.getFileTypeByFileId(addFileReq.getParentId()) != 1){
 //            return RespBean.error("不能在此处新建文件夹或者文件");
 //        }else {
+        if (fileInfoService.addFileToDb(addFileReq) == 2){
+            return RespBean.error("已经存在同名文件，创建失败");
+        }
             if (fileInfoService.addFileToDb(addFileReq) != 0) {
                 //在此新建文件到磁盘
                 if(fileInfoService.addFileToDesk(addFileReq)){
@@ -128,6 +131,9 @@ public class FileInfoController {
 //            return RespBean.error("不能在此处新建附件");
 //        }else {
         addAccessoryReq.setFileId(fileInfoMapper.selectMaxId());
+        if (fileInfoService.addAccessoryToDb(addAccessoryReq) == 2){
+            return RespBean.error("已经存在同名文件，创建失败");
+        }
             if (fileInfoService.addAccessoryToDb(addAccessoryReq) != 0) {
                 //在此新建文件到磁盘
                     return RespBean.okMessage("新建成功");
@@ -146,6 +152,9 @@ public class FileInfoController {
 //        if(fileInfoMapper.getFileTypeByFileId(addAccessoryReq.getFileId()) != 3){
 //            return RespBean.error("不能在此处新建附件");
 //        }else {
+        if (fileInfoService.addAccessoryToDb(addAccessoryReq) == 2){
+            return RespBean.error("已经存在同名文件，创建失败");
+        }
         if (fileInfoService.addAccessoryToDb(addAccessoryReq) != 0) {
             //在此新建文件到磁盘
             return RespBean.okMessage("新建成功");
@@ -174,8 +183,6 @@ public class FileInfoController {
             return RespBean.error("上传失败");
         }
     }
-
-
 
 
 
@@ -320,20 +327,10 @@ public class FileInfoController {
     @ApiOperation(value = "退出按钮：删除磁盘中的文件和数据库中的文件")
     public RespBean exitTwo(@RequestBody DeleteFileAndAccessoryReq deleteFileAndAccessoryReq) {
         //首先判断有没有在数据库库中创建文件
-        String[] strArr = deleteFileAndAccessoryReq.getFilePathAndName().split("\\\\");
-        StringBuilder filePath = new StringBuilder();
-        for (int i = 0; i < strArr.length - 1; i++){
-            filePath.append(strArr[i]);
-            filePath.append('\\');
-            filePath.append('\\');
-        }
-        filePath.append(strArr[strArr.length - 1]);
-
-
-        if(fileInfoMapper.getFileIdByPath(filePath.toString()) != null && fileInfoMapper.getFileIdByPath(filePath.toString()) != 0 ){
+        if(fileInfoMapper.getFileIdByPath(deleteFileAndAccessoryReq.getFilePathAndName()) != null && fileInfoMapper.getFileIdByPath(deleteFileAndAccessoryReq.getFilePathAndName()) != 0 ){
             if (fileInfoService.deleteFileFromDisk(deleteFileAndAccessoryReq.getAccessoryPathAndName()) != 0
             && fileInfoService.deleteFileFromDisk(deleteFileAndAccessoryReq.getFilePathAndName()) != 0
-            && fileInfoMapper.deleteFileByPath(filePath.toString()) != 0) {
+            && fileInfoMapper.deleteFileByPath(deleteFileAndAccessoryReq.getFilePathAndName()) != 0) {
                 return RespBean.okMessage("退出成功");
             }else {
                 return RespBean.error("退出失败");
