@@ -25,4 +25,5 @@ public interface RoleMapper {
     Integer isPowerById(int roleId);
     Integer deletePowerById(int roleId);
     Integer addPowerByIdOne(int roleId);
+    Integer isPowerByNodeId(int nodeId);
 }

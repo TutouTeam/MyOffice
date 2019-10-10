@@ -68,4 +68,9 @@
     #{roleId},23
     )
     </insert>
+    <select id="isPowerByNodeId" resultType="int">
+   select  count(nodeId) from role_right
+   where nodeId=#{nodeId}
+
+    </select>
 </mapper>
