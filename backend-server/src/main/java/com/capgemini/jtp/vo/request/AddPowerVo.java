@@ -8,6 +8,6 @@ import java.util.List;
 @Setter
 public class AddPowerVo {
     private int roleId;
-    List<Integer> nodeId;
+    List<Integer> nodeIds;
 
 }

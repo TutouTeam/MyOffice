@@ -113,17 +113,14 @@ public class SystemLoginLogController {
 
     @ApiOperation(value="分配角色权限")
     @RequestMapping(value = "/roleList/addPower",method = RequestMethod.POST)
-    public RespBean addPowerById(@RequestBody AddPowerVo addPowerVo){
-        if(roleInfoService.addPowerRole(addPowerVo)!=0)
-            return RespBean.okMessage("分配成功");
-//        else{
-//            if(roleInfoService.addPowerRole(addPowerVo)==-1)
-//            {
-//
-//                return RespBean.error("权限分配重复，请重新分配");
-//            }
-           else
-                return RespBean.error("分配失败");
+    public RespBean addPowerById(@RequestBody AddPowerVo addPowerVo) {
+        if (roleInfoService.addPowerRole(addPowerVo) == 0)
+                return RespBean.okMessage("分配失败");
 
+
+            else
+                return RespBean.error("分配成功");
+
+
+        }
     }
-}

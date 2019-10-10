@@ -10,6 +10,7 @@ import com.capgemini.jtp.vo.response.RoleListVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 public class RoleInfoServiceImpl implements RoleInfoService {
@@ -44,18 +45,30 @@ public class RoleInfoServiceImpl implements RoleInfoService {
 
     @Override
     public Integer addPowerRole(AddPowerVo addPowerVo) {
-        List<Integer> a=addPowerVo.getNodeId();
+        List<Integer> a=addPowerVo.getNodeIds();
         AddVo addVo =new AddVo();
+
+        /**
+         * 去重
+         */
+        List<Integer> list=new ArrayList();
+
+            for(int i=0;i<a.size();i++){
+                if(!list.contains(a.get(i))){
+                    list.add(a.get(i));
+                }
+            }
+
+
         int sta=0;
         if(roleMapper.isPowerById(addPowerVo.getRoleId())!=0){
             roleMapper.deletePowerById(addPowerVo.getRoleId());
-            roleMapper.addPowerByIdOne(addPowerVo.getRoleId());}
-           for (int b : a){
-            addVo.setRoleId(addPowerVo.getRoleId());
-            addVo.setNodeId(b);
-
-            sta= roleMapper.addPowerById(addVo);
-
+            roleMapper.addPowerByIdOne(addPowerVo.getRoleId());
+        }
+           for (int b : list){
+               addVo.setRoleId(addPowerVo.getRoleId());
+               addVo.setNodeId(b);
+               sta=roleMapper.addPowerById(addVo);
 
         }
 return sta;
