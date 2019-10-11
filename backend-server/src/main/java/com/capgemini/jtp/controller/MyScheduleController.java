@@ -8,6 +8,7 @@ import com.capgemini.jtp.vo.request.DepartScheduleVo;
 import com.capgemini.jtp.vo.request.ScheduleAddVo;
 import com.capgemini.jtp.vo.request.ScheduleDeleteVo;
 import com.capgemini.jtp.vo.request.ScheduleVo;
+import com.capgemini.jtp.vo.response.DepartGetRespVo;
 import com.capgemini.jtp.vo.response.ScheduleRespVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -80,7 +81,7 @@ public class MyScheduleController {
     @ResponseBody
     @RequestMapping(value = "/departschedule", method = RequestMethod.POST)
     public RespBean editMySchedule(@Valid @RequestBody DepartScheduleVo departScheduleVo) {
-        List<Schedule> list= myScheduleService.departSchedule(departScheduleVo);
+        List<DepartGetRespVo> list= myScheduleService.departSchedule(departScheduleVo);
         if (list.size()>0)
             return RespBean.ok("部门日程搜索成功",list);
         else

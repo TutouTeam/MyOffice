@@ -5,10 +5,12 @@ import com.capgemini.jtp.mapper.OperatelogMapper;
 import com.capgemini.jtp.service.OperateLogService;
 import com.capgemini.jtp.utils.ConverLog;
 import com.capgemini.jtp.utils.TimeFrame;
+import com.capgemini.jtp.vo.request.DeleteBatchVo;
 import com.capgemini.jtp.vo.request.OperateLogReq;
 import com.capgemini.jtp.vo.response.OperateLogResp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -59,4 +61,22 @@ public class OperateLogServiceImpl implements OperateLogService {
 
         return operateLogResps;
     }
+
+
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Integer deleteOperateLogBatch(DeleteBatchVo deleteBatchVo) {
+        String[] list = deleteBatchVo.getDeleteList().split(",");
+        Integer affectedRows = 0;
+        for(String id : list){
+            int operateId = Integer.valueOf(id);
+            //删除该登录日志信息
+            operatelogMapper.deleteByPrimaryKey(operateId);
+            affectedRows++;
+        }
+        return affectedRows;
+    }
+
+
 }

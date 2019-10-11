@@ -1,8 +1,10 @@
 package com.capgemini.jtp.utils;
 
+import com.capgemini.jtp.entity.FileInfo;
 import com.capgemini.jtp.entity.LoginLog;
 //import com.capgemini.cn.myoffice.data.domain.OperateLog;
 import com.capgemini.jtp.entity.OperateLog;
+import com.capgemini.jtp.vo.response.FileSearchResp;
 import com.capgemini.jtp.vo.response.LoginLogResp;
 import com.capgemini.jtp.vo.response.OperateLogResp;
 //import com.capgemini.jtp.vo.response.OperateLogResp;
@@ -52,4 +54,23 @@ public class ConverLog {
 
         return  operateLogResp;
     }
+
+
+    /**
+     * 将文件基本信息类转为 FileSearchResp 类型
+     * @param fileInfo
+     * @return
+     */
+    public static FileSearchResp convertFileInfoToFileSearchResp(FileInfo fileInfo) {
+        FileSearchResp fileSearchResp = new FileSearchResp();
+        fileSearchResp.setFileId(fileInfo.getFileId());
+        fileSearchResp.setLabel(fileInfo.getLabel());
+        fileSearchResp.setFileOwner(fileInfo.getFileOwner());
+        fileSearchResp.setCreateDate(fileInfo.getCreateDate());
+        fileSearchResp.setFilePath(fileInfo.getFilePath());
+        fileSearchResp.setFileType(fileInfo.getFileType());
+
+        return fileSearchResp;
+    }
+
 }

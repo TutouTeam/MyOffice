@@ -29,8 +29,14 @@ public class MyNoteServiceImpl implements MyNoteService {
 //            else
         return list;
     }
-    public List<MyNote> listNoteByUserId(int userId){
-        return myNoteMapper.listNoteByUserId(userId);
+    //返回指定用户名的便签
+    public List<MyNote> listNoteByUserName(String  userName){
+        return myNoteMapper.listNoteByUserName(userName);
+    };
+    //返回指定便签id的便签信息
+    public List<MyNote> noteByNoteId(int noteId)
+    {
+        return myNoteMapper.noteByNoteId(noteId);
     };
 
     /**
@@ -67,8 +73,8 @@ public class MyNoteServiceImpl implements MyNoteService {
         myNote.setNoteId(myNoteVo.getNoteId());
         myNote.setNoteTitle(myNoteVo.getNoteTitle());
         myNote.setNoteContent(myNoteVo.getNoteContent());
-        myNote.setCreateTime(myNoteVo.getCreateTime());
-        myNote.setCreateUser(myNoteVo.getCreateUser());
+        //myNote.setCreateTime(myNoteVo.getCreateTime());
+       // myNote.setCreateUser(myNoteVo.getCreateUser());
         return myNoteMapper.updateNoteById(myNote);
     };
 }

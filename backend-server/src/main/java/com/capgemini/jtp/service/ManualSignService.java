@@ -11,9 +11,8 @@ import java.util.List;
 
 
 public interface ManualSignService {
-    public Integer insertManualSign(ManualSignInVo manualSignInVo);
-    public Integer insertManualSignOff(ManualSignOffVo manualSignOffVo);
-    public ManualSignInSearchVo listSignInVo(int userId);
+    public ManualSignInSearchVo insertManualSign(ManualSignInVo manualSignInVo);
+    public ManualSignInSearchVo insertManualSignOff(ManualSignOffVo manualSignOffVo);
     public List<ManualVo> listManualSearch(ManualSearchVo manualSearchVo);
     public List<DepartVo> listDepart(String branchName);
     public List<BranchVo> listBranch();

@@ -9,6 +9,7 @@
         <result column="chineseName" property="chineseName"/>
         <result column="username" property="username"/>
         <result column="password" property="password"/>
+        <result column="roleId" property="roleId"/>
     </resultMap>
 
     <resultMap id="lazyLoadRoles" type="com.capgemini.jtp.entity.User" extends="BaseResultMap">
@@ -66,75 +67,91 @@
     <update id="updateUser" parameterType="com.capgemini.jtp.entity.User">
         update user
         <set>
-<!--            <if test="user.name != null">-->
-<!--                name = #{user.name,jdbcType=VARCHAR},-->
-<!--            </if>-->
-<!--            <if test="user.username != null">-->
-<!--                username = #{user.username,jdbcType=VARCHAR},-->
-<!--            </if>-->
+
+            <if test="user.username != null">
+                username = #{user.username},
+            </if>
             <if test="user.password != null and user.password !='' ">
-                password = #{user.password,jdbcType=VARCHAR},
+                password = #{user.password},
+            </if>
+            <if test="user.chineseName != null">
+                chineseName = #{user.chineseName},
+            </if>
+            <if test="user.departId != 0 and user.departId != null">
+                departId = #{user.departId},
+            </if>
+            <if test="user.gender != null and user.password !='' ">
+                gender = #{user.gender},
+            </if>
+            <if test="user.roleId != 0 and user.roleId != null">
+                roleId = #{user.roleId},
+            </if>
+            <if test="user.userStateId != 0 and user.userStateId != null">
+                userState = #{user.userStateId},
             </if>
         </set>
         where userId = #{user.userId,jdbcType=INTEGER}
     </update>
+    <select id="listUserVo" resultMap="BaseResultMap">
+        select * from `user` where userId !=0
+
+    </select>
+    <insert id="addUser">
+        insert into `user` (`chineseName`, `username`,`password`,`gender`,departId,roleId,userState)
+        values
+
+            (
+            #{user.chineseName},#{user.username},#{user.password,jdbcType=VARCHAR},#{user.gender},#{user.departId},#{user.roleId},#{user.userStateId}
+            )
+
+    </insert>
+    <delete id="deleteUserByUserId" parameterType="com.capgemini.jtp.entity.User">
+        DELETE FROM `user` WHERE userId=#{user.userId}
+    </delete>
+    <select id="getMassageById" resultType="com.capgemini.jtp.vo.response.UserMassageRespVo">
+       select  * from
+       (select a.userId,a.username,a.chineseName,a.password,a.departId,b.departName,a.gender,a.roleId,c.roleName,a.userState,d.userStateName
+       from `user` a,depart b,role c,user_state d
+       where (a.departId=b.departId and a.roleId=c.roleId and a.userState=d.userStateId))as tabel1
+       where userId=#{userId}
+   </select>
+    <select id="getMassage" resultType="com.capgemini.jtp.vo.response.UserMassageRespVo">
+       select  * from
+       (select a.userId,a.username,a.chineseName,a.password,a.departId,b.departName,a.gender,a.roleId,c.roleName,a.userState,d.userStateName
+       from `user` a,depart b,role c,user_state d
+       where (a.departId=b.departId and a.roleId=c.roleId and a.userState=d.userStateId))as tabel1
+       where userId !=0
+   </select>
+
+    <!-- 根据userId查询User -->
+    <select id="getUser" resultType="com.capgemini.jtp.entity.User">
+        SELECT * FROM user WHERE userId = #{userId};
+    </select>
 
 
-<!--&lt;!&ndash;    待定&ndash;&gt;-->
-<!--    <delete id="deleteRoleByUserId" parameterType="Long">-->
-<!--        DELETE FROM user_role where userid=#{userId}-->
-<!--    </delete>-->
+    <select id="selectUserListByMessageUser" parameterType="com.capgemini.jtp.vo.request.MessageUserSearchVo"
+            resultType="com.capgemini.jtp.entity.User">
+        select distinct u.* from user u, branch b, depart d
+        where u.userState = 1
+        <if test="messageUserSearchVo.branchName != null and messageUserSearchVo.branchName !='' ">
+            and b.branchName = #{messageUserSearchVo.branchName,jdbcType=VARCHAR}
+            and b.branchId = d.branchId
+        </if>
+        <if test="messageUserSearchVo.departName != null and messageUserSearchVo.departName !='' ">
+            and d.departName = #{messageUserSearchVo.departName,jdbcType=VARCHAR}
+            and u.departId = d.departId
+        </if>
+        <if test="messageUserSearchVo.chineseName != null and messageUserSearchVo.chineseName !='' ">
+            and u.chineseName like concat(concat('%',#{messageUserSearchVo.chineseName,jdbcType=VARCHAR}),'%')
+        </if>
+        <if test="messageUserSearchVo.userId != null and messageUserSearchVo.userId !=0 ">
+            and u.userId = #{messageUserSearchVo.userId,jdbcType=INTEGER}
+        </if>
+        order by u.userId
+    </select>
 
-<!--&lt;!&ndash;    待定&ndash;&gt;-->
-<!--    <insert id="addRolesForUser" parameterType="Long">-->
-<!--        INSERT INTO user_role(userid,rid) VALUES-->
-<!--        <foreach collection="rids" separator="," item="rid">-->
-<!--            (#{userId},#{rid})-->
-<!--        </foreach>-->
-<!--    </insert>-->
+    <select id="getAllUserIds" resultType="Integer">
+        SELECT userId FROM user;
+    </select>
 
-<!--&lt;!&ndash;    <delete id="deleteHr" parameterType="Long">&ndash;&gt;-->
-<!--&lt;!&ndash;        DELETE FROM hr WHERE id=#{hrId}&ndash;&gt;-->
-<!--&lt;!&ndash;    </delete>&ndash;&gt;-->
-
-<!--    <select id="getAllUser" resultType="com.capgemini.jtp.entity.User">-->
-<!--        select * from users-->
-<!--        <if test="currentId!=null">-->
-<!--            WHERE id !=#{currentId}-->
-<!--        </if>-->
-<!--    </select>-->
-
-<!--    <select id="getRoleByUserId" resultType="Long">-->
-<!--        select rid from user_role WHERE userid = #{id}-->
-<!--    </select>-->
-
-<!--    <select id="getEmpByEmpId" resultType="com.capgemini.jtp.entity.Employee">-->
-<!--        select * from employee-->
-<!--        where empId = #{empId} AND isDeleted = 0-->
-<!--    </select>-->
-
-<!--    <select id="getEmpIdById" resultType="Long">-->
-<!--        select empId from users-->
-<!--        where id = #{id}-->
-<!--    </select>-->
-
-<!--    <select id="listAllHr" resultType="com.capgemini.jtp.vo.employee.response.HrVo">-->
-<!--        select id,name,username from hr-->
-<!--        <if test="search.id != null">-->
-<!--            where-->
-<!--            id = #{search.id,jdbcType=BIGINT}-->
-<!--        </if>-->
-<!--        <if test="search.start != null and search.size != null">-->
-<!--            order by id limit #{search.start},#{search.size}-->
-<!--        </if>-->
-<!--    </select>-->
-
-
-<!--    <select id="countHr" resultType="Long">-->
-<!--        select count(*) from hr-->
-<!--        <if test="search.id != null">-->
-<!--            where-->
-<!--            id = #{search.id,jdbcType=BIGINT}-->
-<!--        </if>-->
-<!--    </select>-->
 </mapper>

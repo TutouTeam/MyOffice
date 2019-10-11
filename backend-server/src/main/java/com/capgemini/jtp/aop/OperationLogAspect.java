@@ -45,6 +45,15 @@ public class OperationLogAspect {
         return user;
     }
 
+
+    /**
+     * 查询业务操作的切面
+     */
+    @Pointcut("execution(public * com.capgemini.jtp.controller.*.select*(..))")
+    public void selectCell() {
+
+    }
+
     /**
      * 添加业务操作的切面
      */
@@ -240,6 +249,20 @@ public class OperationLogAspect {
      */
     @AfterReturning(value = "loadCell()", returning = "result")
     public void loadLog(JoinPoint joinPoint, Object result) {
+        /**
+         * 获取目标类的方法签名
+         */
+        String methodName = joinPoint.getSignature().getName();
+        insertToDatabase("查询", methodName);
+    }
+
+    /**
+     * 存储查询操作的日志
+     * @param joinPoint
+     * @param result
+     */
+    @AfterReturning(value = "selectCell()", returning = "result")
+    public void selectLog(JoinPoint joinPoint, Object result) {
         /**
          * 获取目标类的方法签名
          */
