@@ -38,6 +38,10 @@ public class ListRecycleBinResp {
      */
     private int fileType;
 
+
+    //文件所有者
+    private String fileOwner;
+
     /**
      * 删除时间
      */

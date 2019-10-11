@@ -187,6 +187,7 @@ public class ConvertUtils {
         listRecycleBinResp.setFileId(fileInfo.getFileId());
         listRecycleBinResp.setLabel(fileInfo.getLabel());
         listRecycleBinResp.setFilePath(fileInfo.getFilePath());
+        listRecycleBinResp.setFileOwner(fileInfo.getFileOwner());
         listRecycleBinResp.setDeleteDate(fileInfo.getDeleteDate());
         listRecycleBinResp.setLastParentId(fileInfo.getLastParentId());
         return listRecycleBinResp;

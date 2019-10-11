@@ -14,11 +14,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * 增删改的日志已经写完了，还差对一些特殊操作的日志信息存储
- * @Date: 2019/09/02
- * @Auth: chunlei.wang
- * @Desc: 操作日志，用户的各种操作都被记录在 OperateLog 中
+ * create by: MmmLll_Shen
+ * description:操作日志
+ * create time: 10:43 2019/10/11
  */
 
 @Aspect
