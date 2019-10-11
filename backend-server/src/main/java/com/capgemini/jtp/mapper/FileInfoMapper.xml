@@ -119,7 +119,7 @@
 
     <select id="getTree" resultType="com.capgemini.jtp.entity.FileInfo">
         SELECT *  from file where ifDelete = '0'
-        and fileId in (select f2.parentId from file f1 left join file f2 on f1.fileId=f2.parentId  )
+        and parentId='0'
   </select>
     <select id="getFilePathByFileId" resultType="String">
         select `filePath` from file where `fileId` = #{fileId,jdbcType=INTEGER}

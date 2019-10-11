@@ -2,6 +2,7 @@ package com.capgemini.jtp.mapper;
 
 import com.capgemini.jtp.entity.ManualSign;
 import com.capgemini.jtp.vo.request.CountSignSearchVo;
+import com.capgemini.jtp.vo.request.ManualSignInVo;
 import com.capgemini.jtp.vo.response.BranchVo;
 import com.capgemini.jtp.vo.response.CountSignVo;
 import com.capgemini.jtp.vo.response.DepartVo;
@@ -24,4 +25,5 @@ public interface ManualMapper {
     Integer countLate(@Param("CountSignSearchVo")CountSignSearchVo countSignSearchVo);
     Integer countLeaveEarly(@Param("CountSignSearchVo")CountSignSearchVo countSignSearchVo);
     Integer listYearTime(@Param("CountSignSearchVo")CountSignSearchVo countSignSearchVo);
+    Integer isSign(@Param("ManualSignInVo") ManualSignInVo manualSignInVo);
 }

@@ -115,11 +115,11 @@ public class SystemLoginLogController {
     @RequestMapping(value = "/roleList/addPower",method = RequestMethod.POST)
     public RespBean addPowerById(@RequestBody AddPowerVo addPowerVo) {
         if (roleInfoService.addPowerRole(addPowerVo) == 0)
-                return RespBean.okMessage("分配失败");
+                return RespBean.error("分配失败");
 
 
             else
-                return RespBean.error("分配成功");
+                return RespBean.okMessage("分配成功");
 
 
         }

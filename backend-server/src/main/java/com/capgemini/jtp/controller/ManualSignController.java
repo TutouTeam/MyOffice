@@ -1,7 +1,9 @@
 package com.capgemini.jtp.controller;
 
+import com.capgemini.jtp.mapper.ManualMapper;
 import com.capgemini.jtp.service.ManualSignService;
 
+import com.capgemini.jtp.utils.TimeFrame;
 import com.capgemini.jtp.vo.base.RespBean;
 import com.capgemini.jtp.vo.request.*;
 import com.capgemini.jtp.vo.response.BranchVo;
@@ -15,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.List;
 
 @Api("考勤信息")
@@ -24,22 +27,33 @@ public class ManualSignController {
     @Autowired
     ManualSignService manualSignService;
 
+    @Autowired
+    ManualMapper manualMapper;
+
     @RequestMapping(value = "/sign/in", method = RequestMethod.POST)
     @ApiOperation(value = "签到")
-    public ManualSignInSearchVo insertSignIn(@RequestBody ManualSignInVo manualSignInVo, HttpServletRequest request) {
+    public RespBean insertSignIn(@RequestBody ManualSignInVo manualSignInVo, HttpServletRequest request) {
         Object object = request.getSession().getAttribute("operationUserId");
         int userId = 0;
         if (object != null) {
 
             userId = Integer.valueOf(String.valueOf(object));
         }
-
         manualSignInVo.setUserId(userId);
+        Date now = new Date();
+        manualSignInVo.setStart(TimeFrame.startOfDay(now));
+        manualSignInVo.setEnd(TimeFrame.endOfDay(now));
+        manualSignInVo.setSignTime(new Date());
+        if (manualMapper.isSign(manualSignInVo) >= 2) {
+            return RespBean.error("您今日已签到成功，无法二次签到");
+        } else {
+            ManualSignInSearchVo manualSignInSearchVo = manualSignService.insertManualSign(manualSignInVo);
+            if (manualSignInSearchVo != null) {
+                return RespBean.ok(manualSignInSearchVo);
 
-                ManualSignInSearchVo manualSignInSearchVo = manualSignService.insertManualSign(manualSignInVo);
-                return manualSignInSearchVo;
-
-
+            } else
+                return RespBean.error("签到失败");
+        }
 
     }
 
@@ -53,15 +67,11 @@ public class ManualSignController {
             userId = Integer.valueOf(String.valueOf(object));
         }
         manualSignOffVo.setUserId(userId);
-
-            ManualSignInSearchVo manualSignInSearchVo = manualSignService.insertManualSignOff(manualSignOffVo);
+        ManualSignInSearchVo manualSignInSearchVo = manualSignService.insertManualSignOff(manualSignOffVo);
             return manualSignInSearchVo;
 
 
-
-
     }
-
 
 
 
@@ -69,12 +79,16 @@ public class ManualSignController {
     @ApiOperation("历史签到记录")
     public RespBean listManualSearch(@RequestBody ManualSearchVo manualSearchVo)
    {
-       List<ManualVo> viewSignList = manualSignService.listManualSearch(manualSearchVo);
-       if (viewSignList != null) {
-           return RespBean.ok(viewSignList);
-       }
-       return RespBean.error("查询失败！");
+       if(manualSearchVo.getStartTime()==null || manualSearchVo.getStopTime()==null){
+           return RespBean.error("请输入具体查询时间");
 
+       }else {
+           List<ManualVo> viewSignList = manualSignService.listManualSearch(manualSearchVo);
+           if (viewSignList != null) {
+               return RespBean.ok(viewSignList);
+           }
+           return RespBean.error("查询失败！");
+       }
 
    }
     @ApiOperation(value = "列出所有机构名称")

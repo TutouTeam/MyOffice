@@ -20,4 +20,8 @@ public class ManualSignInVo {
     private Date signTime;
     private int userId;
     private String signDesc;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date start;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private Date end;
 }
