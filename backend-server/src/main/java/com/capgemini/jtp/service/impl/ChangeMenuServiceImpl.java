@@ -34,12 +34,13 @@ public class ChangeMenuServiceImpl implements ChangeMenuService {
     public Boolean isCanUpMenu(Menu menu) {
         //首先判断该菜单是否在同级菜单的最上方
         List<Integer> departIdList = new ArrayList<>();
-        departIdList = changeMenuMapper.getDisplayOrderBynodeId(menu.getNodeId());
+        departIdList = changeMenuMapper.getDisplayOrderListBynodeId(menu.getNodeId());
         int minDepartId = departIdList.get(0);
         System.out.println("--------------minDepartId=" + minDepartId);
         //相等，即已经是最上方
-        System.out.println("menu.getDisplayOrder()" + menu.getDisplayOrder());
-        if (menu.getDisplayOrder() > minDepartId){
+//        System.out.println("menu.getDisplayOrder()" + menu.getDisplayOrder());
+        int displayOrder = changeMenuMapper.getDisplayOrderBynodeId(menu.getNodeId());
+        if (displayOrder > minDepartId){
             return true;
         }
         else{
@@ -69,12 +70,14 @@ public class ChangeMenuServiceImpl implements ChangeMenuService {
     public Boolean isCanDoneMenu(Menu menu) {
         //首先判断该菜单是否在同级菜单的最下方
         List<Integer> departIdList = new ArrayList<>();
-        departIdList = changeMenuMapper.getDisplayOrderBynodeId(menu.getNodeId());
+        departIdList = changeMenuMapper.getDisplayOrderListBynodeId(menu.getNodeId());
         int maxDepartId = departIdList.get(departIdList.size() - 1);
         System.out.println("--------------minDepartId=" + maxDepartId);
         //相等，即已经是最下方
-        System.out.println("menu.getDisplayOrder()" + menu.getDisplayOrder());
-        if (menu.getDisplayOrder() < maxDepartId){
+//        System.out.println("menu.getDisplayOrder()" + menu.getDisplayOrder());
+
+        int displayOrder = changeMenuMapper.getDisplayOrderBynodeId(menu.getNodeId());
+        if (displayOrder < maxDepartId){
             return true;
         }
         else{

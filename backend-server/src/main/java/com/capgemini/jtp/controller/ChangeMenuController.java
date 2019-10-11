@@ -4,6 +4,7 @@ package com.capgemini.jtp.controller;
 //import com.capgemini.jtp.service.StaffService;
 
 import com.capgemini.jtp.entity.Menu;
+import com.capgemini.jtp.mapper.ChangeMenuMapper;
 import com.capgemini.jtp.service.ChangeMenuService;
 import com.capgemini.jtp.vo.base.RespBean;
 import io.swagger.annotations.Api;
@@ -23,12 +24,17 @@ public class ChangeMenuController {
     @Autowired
     ChangeMenuService changeMenuService;
 
+    @Autowired
+    ChangeMenuMapper changeMenuMapper;
+
 //    @Autowired
 //    private StaffService staffService;
 
     @ApiOperation(value = "菜单上移操作")
     @PostMapping("/upMenu")
     public RespBean upMenu(@RequestBody Menu menu) {
+        menu.setParentNodeId(changeMenuMapper.getParentIdByNodeId(menu.getNodeId()));
+        menu.setDisplayOrder(changeMenuMapper.getDisplayOrderBynodeId(menu.getNodeId()));
         //先进行判断能否进行上移
         if (changeMenuService.isCanUpMenu(menu)) {
             int result = changeMenuService.upMenu(menu);
@@ -45,6 +51,8 @@ public class ChangeMenuController {
     @ApiOperation(value = "菜单下移操作")
     @PostMapping("/doneMenu")
     public RespBean doneMenu(@RequestBody Menu menu) {
+        menu.setParentNodeId(changeMenuMapper.getParentIdByNodeId(menu.getNodeId()));
+        menu.setDisplayOrder(changeMenuMapper.getDisplayOrderBynodeId(menu.getNodeId()));
         System.out.println("-1----------------" + menu.getParentNodeId());
         //先进行判断能否进行下移
         if (changeMenuService.isCanDoneMenu(menu)) {

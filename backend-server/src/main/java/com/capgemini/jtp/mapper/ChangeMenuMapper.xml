@@ -44,7 +44,7 @@
 <!--    <select id="getMenusByRid" resultType="Long">-->
 <!--        SELECT mid from menu_role WHERE rid=#{rid}-->
 <!--    </select>-->
-    <select id="getDisplayOrderBynodeId" parameterType="int" resultType="integer">
+    <select id="getDisplayOrderListBynodeId" parameterType="int" resultType="integer">
         select sf1.`displayOrder` from sys_fun sf1,sys_fun sf2 where sf2.`nodeId` = #{nodeId} and sf1.`parentNodeId` = sf2.`parentNodeId` order by sf1.`displayOrder`
     </select>
 
@@ -54,5 +54,13 @@
 
     <select id="selectMenuByParentNodeIdAndDisplayOrder" resultType="com.capgemini.jtp.entity.Menu">
         select * from sys_fun where displayOrder = #{menu.displayOrder,jdbcType=INTEGER} and parentNodeId = #{menu.parentNodeId,jdbcType=INTEGER} and nodeId != #{menu.nodeId,jdbcType=INTEGER}
+    </select>
+
+    <select id="getDisplayOrderBynodeId" parameterType="int" resultType="integer">
+        select displayOrder from sys_fun where  nodeId = #{nodeId}
+    </select>
+
+    <select id="getParentIdByNodeId" parameterType="int" resultType="integer">
+        select parentNodeId from sys_fun where  nodeId = #{nodeId}
     </select>
 </mapper>

@@ -22,9 +22,13 @@ public interface ChangeMenuMapper {
 //    List<Menu> menuTree();
 //
 //    List<Long> getMenusByRid(Long rid);
-    List<Integer> getDisplayOrderBynodeId(int nodeId);
+    List<Integer> getDisplayOrderListBynodeId(int nodeId);
 
     void setOneDisplayOrder(@Param("menu") Menu menu);
 
     Menu selectMenuByParentNodeIdAndDisplayOrder(@Param("menu") Menu menu);
+
+    int getDisplayOrderBynodeId(int nodeId);
+
+    int getParentIdByNodeId(int nodeId);
 }
