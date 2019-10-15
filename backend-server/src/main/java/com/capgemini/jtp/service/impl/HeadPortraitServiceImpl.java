@@ -18,6 +18,10 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
 
     @Autowired
     UserMapper userMapper;
+    static String path;
+    public static void setPath(String path1){
+        path=path1;
+    }
 
     /**
      * 上传头像 并用当前用户的userName 命名，
@@ -38,12 +42,12 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
         String userName = userMapper.getMassageById(userId).getUsername();
 
         String newFileName=userName+".jpg";
-        String path = "d:/MyOffice/images/Users/";
+        String path = this.path+"/Users/";
 
         File f = new File(path);
         File files;
         int temps = (int) (1 + Math.random() * (99999 - 1 + 1));
-        files = new File("d:/MyOffice/images/Users/" + temps + ".jpg");
+        files = new File(path + temps + ".jpg");
         if(!f.exists())
             f.mkdirs();
         if(!file.isEmpty()){
@@ -108,11 +112,12 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
    public String  getHeadUrl(String userName,HttpServletRequest request){
 
         String newFileName=userName+".jpg";
-        String path = "d:/MyOffice/images/Users/";
+        String path = this.path+"/Users/";
         File file=new File(path+newFileName);
         if(file.exists())
         {
-            return "http://localhost:8085/HeadPortrait/getImg?url="+path+newFileName;
+//            return "http://localhost:8085/HeadPortrait/getImg?url="+path+newFileName;
+            return "http://www.tutouteam.cn/HeadPortrait/getImg?url="+path+newFileName;
         }else
        return null;
     }
@@ -161,7 +166,7 @@ public class HeadPortraitServiceImpl implements HeadPortraitService {
         }else userId=0;
         String userName = userMapper.getMassageById(userId).getUsername();
         String newFileName=userName+".jpg";
-        String path = "d:/MyOffice/images/Users/";
+        String path = this.path+"/Users/";
 
         response.setContentType("image/jpeg");
         File file = new File(path+newFileName);

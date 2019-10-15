@@ -1,5 +1,7 @@
 package com.capgemini.jtp;
 
+import com.capgemini.jtp.service.HeadPortraitService;
+import com.capgemini.jtp.service.impl.HeadPortraitServiceImpl;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -27,12 +29,16 @@ public class JtpSysApplication {
 	@Bean
 	MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory factory = new MultipartConfigFactory();
-		String path1="D:\\MyOffice\\images\\temps";
+//		String path="D:/MyOffice/images";
+		String path="/home/ubuntu/jar/images";
+		String path1=path+"/temps";
 		File f1=new File(path1);
 		if(!f1.exists()){
 			f1.mkdirs();
 		}
-		factory.setLocation("D:\\MyOffice\\images\\temps");
+		factory.setLocation(path1);
+
+		HeadPortraitServiceImpl.setPath(path);
 
 		return factory.createMultipartConfig();
 	}
